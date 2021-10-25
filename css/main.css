@@ -25,3 +25,97 @@ body {
   margin-right: auto;
   color: black;
 }
+
+
+
+.myborder{
+  border: solid 2px black;
+  border-radius:30px;
+  color:black;
+  padding: 20px;
+  background-color:antiquewhite;
+  width: auto;
+  margin:auto;
+}
+.main {
+  padding: 16px;
+  margin-top: 30px;
+  height: 1500px; /* Used in this example to enable scrolling */
+}
+
+#sidebar {
+  width: 20%;
+  padding: 10px;
+  margin: 0;
+  float: left;
+}
+.category {
+  font-size: 0.9rem;
+  cursor: pointer
+}
+
+.list-group-item {
+  border: none;
+  padding: 0.3rem 0.4rem 0.3rem 0rem
+}
+
+.badge-primary {
+  background-color: #defadb;
+  color: #48b83e
+}
+
+.brand .check {
+  background-color: #fff;
+  top: 3px;
+  
+}
+
+.brand .tick {
+  font-size: 1rem;
+  padding-left: 25px
+  
+}
+
+
+.brand .tick:hover input~.check,
+.rating .tick:hover input~.check {
+  background-color: #f9f9f9
+}
+
+.brand .tick input:checked~.check{
+  background-color: #61b15a
+}
+
+.brand-label {
+  background-color: #defadb;
+  color: #48b83e;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  margin: 0 3px
+}
+
+#products {
+  width: 80%;
+  padding: 10px;
+  margin: 0;
+  float: right;
+}
+/* 
+@media screen and (max-width: 799px) {
+ #sidebar {
+     display:none;
+ }
+} */
+.map-responsive{
+  overflow:hidden;
+  padding-bottom:56.25%;
+  position:relative;
+  height:0;
+}
+.map-responsive iframe{
+  left:0;
+  top:0;
+  height:100%;
+  width:100%;
+  position:absolute;
+}

@@ -12,6 +12,8 @@
 
 .navbar{
     background: #eC7A11;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
 }
 
 .navbar .navbar-brand{
@@ -21,10 +23,10 @@
 }
 
 .navbar-toggler{
-    background: rgb(179, 50, 40);
-    border:none;
-    padding: 10px 6px;
-    outline :none;
+    background: rgb(179, 50, 40) !important;
+    border:none !important;
+    padding: 10px 6px !important;
+    outline :none !important;
 }
 
 .navbar-toggler span{
