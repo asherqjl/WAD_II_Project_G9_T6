@@ -29,7 +29,7 @@ class Event {
         return $this->location_name;
     }
 
-    public function getTimeVisited() {
+    public function getTime() {
         return $this->time_visited;
     }
 

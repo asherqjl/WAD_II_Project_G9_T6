@@ -14,7 +14,9 @@
     <link rel="stylesheet" href="css/navbar.css">
 
     <!-- Custom JavaScript -->
-    <script src="screen2.js"></script>
+    
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <script src="js/attractions_donghyun.js"></script>
     <script src="https://kit.fontawesome.com/fbf5c5a506.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@next"></script>
 
@@ -34,7 +36,7 @@
                     <option value="1">Adventure</option>
                     <option value="2">Arts</option>
                     <option value="3">History & Culture</option>
-                    <option value="4">Leisure & Recreation</option>
+                    <option value="4" onclick="display_leisure()">Leisure & Recreation</option>
                     <option value="5">Nature & Wildlife</option>
                     <option value="6">Others</option>
                   </select>
@@ -65,16 +67,112 @@
         
         </div>
 
-        <div class="map-responsive">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.7952471658855!2d103.84722961457254!3d1.2975487990536225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19a340000001%3A0xdb2ba83d5e574a35!2sSMU%20School%20of%20Computing%20and%20Information%20Systems!5e0!3m2!1sen!2ssg!4v1634482770562!5m2!1sen!2ssg" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        <div id="map" class="map-responsive">
         </div>
+        
 
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key 
+    * The callback parameter executes the initMap() function
+    -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT6sTbyN3xQA9bTHQYcyFVXsqAXT54zfE&callback=initMap"
+        async defer></script>
+
+    
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script>
+
+            const locations_list=[];
+            var options = {
+            method: 'GET',
+            url: 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword=attractions&language=en&apikey=UnWhZ0GbjpzxKlcM9GssA3xbSio89mM2'
+            };
+
+            axios.request(options)
+            .then(response=>{
+                
+                for (i=0; i<response.data.data.length; i++){
+                    var location= response.data.data[i].location
+                    locations_list.push([location.latitude, location.longitude])
+                }
+            
+            }).catch(function (error) {
+            console.error(error);
+            });
+            console.log(locations_list)
+        
+            
+
+
+            function initMap() {
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 11,
+                center: { lat: 1.3649170000000002, lng: 103.82287200000002 },
+            });
+
+            setMarkers(map);
+            }
+
+            // Data for the markers consisting of a name, a LatLng and a zIndex for the
+            // order in which these markers should display on top of each other.
+            const beaches = [
+            ["Bondi Beach", -33.890542, 151.274856, 4],
+            ["Coogee Beach", -33.923036, 151.259052, 5],
+            ["Cronulla Beach", -34.028249, 151.157507, 3],
+            ["Manly Beach", -33.80010128657071, 151.28747820854187, 2],
+            ["Maroubra Beach", -33.950198, 151.259302, 1],
+            ];
+
+            function setMarkers(map) {
+            // Adds markers to the map.
+            // Marker sizes are expressed as a Size of X,Y where the origin of the image
+            // (0,0) is located in the top left of the image.
+            // Origins, anchor positions and coordinates of the marker increase in the X
+            // direction to the right and in the Y direction down.
+            const image = {
+                url: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+                // This marker is 20 pixels wide by 32 pixels high.
+                size: new google.maps.Size(20, 32),
+                // The origin for this image is (0, 0).
+                origin: new google.maps.Point(0, 0),
+                // The anchor for this image is the base of the flagpole at (0, 32).
+                anchor: new google.maps.Point(0, 32),
+            };
+            // Shapes define the clickable region of the icon. The type defines an HTML
+            // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+            // The final coordinate closes the poly by connecting to the first coordinate.
+            const shape = {
+                coords: [1, 1, 1, 20, 18, 20, 18, 1],
+                type: "poly",
+            };
+
+            for (let i = 0; i < locations_list.length; i++) {
+                const attraction = locations_list[i];
+
+                new google.maps.Marker({
+                position: { lat: attraction[0], lng: attraction[1] },
+                map,
+                icon: image,
+                shape: shape,
+                title: beach[0],
+                zIndex: beach[3],
+                });
+            }
+            }
+                        
+            
+    </script>
+        
+            
+        
 
         <!-- Footer -->
 
     <script src="js/navbar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-
+        
 </body>
 </html>

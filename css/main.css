@@ -106,6 +106,13 @@ body {
      display:none;
  }
 } */
+#map {
+  overflow:hidden;
+  padding-bottom:56.25%;
+  position:relative;
+  height:0;
+}
+
 .map-responsive{
   overflow:hidden;
   padding-bottom:56.25%;
