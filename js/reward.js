@@ -1,4 +1,3 @@
-
 function myFunction() {
   var dots = document.getElementById("dots");
   var moreText = document.getElementById("more");
@@ -53,11 +52,11 @@ function myFunction() {
 // function productCard(){
 
 // }
-const app = Vue.createApp({
+const reward = Vue.createApp({
   data() {
     return {
-        productCat: [],
-        productDict:{}
+        productCat:{},
+        productDict:{},
     };
 }, 
   created(){
@@ -75,30 +74,62 @@ const app = Vue.createApp({
       axios.request(options)
       .then(response=>{
         // console.log(response.data);
-    
-          for (i=0; i<response.data.results.length; i++){
-            // put the data into a dictionary {productname:[category, image, price]}
-            var productDetails=[]; 
-            var productName = response.data.results[i].name;
-            var category = response.data.results[i].categoryName;
-            var image = response.data.results[i].images[0].url;
-            var price = response.data.results[i].price.formattedValue;
-            productDetails.push(category);
-            productDetails.push(image);
-            productDetails.push(price);
-            this.productDict[productName] = productDetails;
-
-            // retrive category data and put in a list [ladies, men, kids]
-            if (!this.productCat.includes(category)){
-              this.productCat.push(category);
-              console.log(category);
-            }
-          }
+        var productdata = response.data;
+        this.ProductDetails(productdata);
+        this.ProductCard();
           
-          return this.productDict;
       }).catch(function (error) {
         console.error(error);
       });
+  },
+  methods:{
+    ProductDetails(productdata) {
+      console.log(productdata.results.length)
+      for (i=0; i<productdata.results.length; i++){
+        // put the data into a dictionary {productname:[category, image, price]}
+        var productDetails=[]; 
+        var productName = productdata.results[i].name;
+        var category = productdata.results[i].categoryName;
+        var image = productdata.results[i].images[0].url;
+        var price = productdata.results[i].price.formattedValue;
+        productDetails.push(category);
+        productDetails.push(image);
+        productDetails.push(price);
+
+        if(!this.productDict[productName]){
+          this.productDict[productName] = productDetails;
+        }else{
+          productName += "_2";
+          this.productDict[productName] = productDetails;
+        }
+
+
+        // console.log(productName)
+        // console.log(Object.keys(this.productDict).length);
+        
+      
+        // retrive category data and put in a dictionary with total number of count [ladies:0, kids:0, men:0]
+        if (!this.productCat[category]){
+          // console.log("hi");
+          // this.productCat.push(category);
+          this.productCat[category] = 1;
+          // console.log(this.productCat)
+        }else{
+          // console.log("hey")
+          this.productCat[category] +=1;        
+        }
+      }
+      console.log(Object.keys(this.productDict).length);
+      return this.productDict;
+    },
+    ProductCard(){
+      console.log(Object.keys(this.productDict).length)
+      for (i=0; i<this.productDict.length; i++){
+        
+      }
+      
+    }
   }
 })
-const vm = app.mount('#app');
+const rw = reward.mount('#reward');
+
