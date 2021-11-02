@@ -144,7 +144,7 @@ class PostDAO {
                         :acc_email,
                         :acc_password,
                         0
-                    )";
+                    )";            
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':acc_email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':acc_password', $password, PDO::PARAM_STR);
@@ -152,6 +152,37 @@ class PostDAO {
         //STEP 3
         $status = $stmt->execute();
         
+        // STEP 4
+        $stmt = null;
+        $conn = null;
+
+        // STEP 5
+        return $status;
+    }
+    public function login($email, $password) {
+        // STEP 1
+        $connMgr = new ConnectionManager();
+        $conn = $connMgr->connect();
+
+        // STEP 2
+        $sql = "SELECT * FROM users 
+                WHERE acc_email = '$username' AND 
+            `   acc_password = '$password'";
+                    
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':acc_email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':acc_password', $password, PDO::PARAM_STR);
+        
+        //STEP 3
+        $status = $stmt->execute();
+        if($numrows > 1) { 
+            //send email to sysadmin that my site has been hacked 
+        } else if ($numrows = 0) { 
+            echo "wrong username or password";
+        }
+        else { 
+            echo "welcome dr. Falken" ;
+        }
         // STEP 4
         $stmt = null;
         $conn = null;
