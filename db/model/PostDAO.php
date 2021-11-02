@@ -174,15 +174,13 @@ class PostDAO {
         $stmt->bindParam(':acc_password', $password, PDO::PARAM_STR);
         
         //STEP 3
+        // if( $stmt->execute() ) {
         $status = $stmt->execute();
-        if($numrows > 1) { 
-            //send email to sysadmin that my site has been hacked 
-        } else if ($numrows = 0) { 
-            echo "wrong username or password";
-        }
-        else { 
-            echo "welcome dr. Falken" ;
-        }
+        //     // Step 4 - Retrieve Query Results
+        //     if( $row = $stmt->fetch() ) {
+        //         $password = $row['password'];
+        //     }
+        // }
         // STEP 4
         $stmt = null;
         $conn = null;
