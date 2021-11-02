@@ -6,7 +6,7 @@ $travel_history = $dao->getAll(); // Get an Indexed Array of Post objects
 $items = [];
 foreach( $travel_history as $place ) {
     $item = [];
-    $item["user_id"] = $post_object->getID();
+    $item["id"] = $post_object->getID();
     $item["subject"] = $post_object->getSubject();
     $item["entry"] = $post_object->getEntry();
     $item["mood"] = $post_object->getMood();
