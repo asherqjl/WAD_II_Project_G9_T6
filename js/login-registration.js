@@ -7,14 +7,14 @@ const app2 = Vue.createApp({
             loginPwd:'',
             loginEmail:'',
             showStatus: false,
-            status: 'urmudder'
+            status: ''
         };
     },
     methods: {
         register() {
             const url = 'http://localhost:8888/WAD_II_Project_G9_T6/db/register.php'
             const data = { userEmail: this.userEmail,
-                            cfmPwd: this.cfmPwd,
+                            cfmPwd: this.cfmPwd
                             
                         }
             // POST request
@@ -30,11 +30,11 @@ const app2 = Vue.createApp({
                 this.status = 'There was an error: ' + error.message 
             })  */
             // GET request
+
             axios.get(url, {
                 params: data
             })
             .then(response => {
-                console.log(response.data)
                 this.showStatus = true
                 this.status = response.data
             })
