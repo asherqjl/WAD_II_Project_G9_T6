@@ -23,7 +23,7 @@
 
 </head>
 
-<body onload = "callingapi()">
+<body >
     
     <!-- Navigation -->
     <div id="navdiv">
@@ -33,7 +33,7 @@
 
     
 
-    <div class="p-3 text-white main">
+    <div class="p-3 text-white main" id='app'>
         
         <div class= "myborder">
             <h1>Points: XXX</h1>
@@ -56,173 +56,181 @@
             illo pariatur qui, quod, consequuntur, perferendis iure explicabo et tenetur quae non
             inventore veritatis repellat eius laborum unde eaa
         </p>
-        <section id = "sidebar" class="row">
-            <div class="d-sm-flex align-items-sm-center pt-2 clear">
-                <div class="text-muted filter-label">Applied Filters:</div>
-                <div class="brand-label font-weight-bold p-0 px-1 mx-sm-1 mx-0 my-sm-0 my-2">Example 2<span class=" px-1 close">&times;</span> </div>
-                <div class="brand-label font-weight-bold p-0 px-1 mx-sm-1 mx-0">Example 3<span class=" px-1 close">&times;</span> </div>
-            </div>
-            <div class="py-3">
-                <h5 class="font-weight-bold">Categories</h5>
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center category">Home & Living<span class="badge badge-primary badge-pill">65</span> </li>
-                    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center category"> Travel & Luggage <span class="badge badge-primary badge-pill">101</span> </li>
-                    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center category"> Personal Care <span class="badge badge-primary badge-pill">32</span> </li>
-                    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center category">Coupon<span class="badge badge-primary badge-pill">48</span> </li>
-                </ul>
-            </div>
-            <div class="py-3">
-                <h5 class="font-weight-bold">Points</h5>
-                <form class="brand">
-                    <div class="form-inline d-flex align-items-center py-1"> <input type="checkbox"> <label class="tick">1-100<span class="check"></span> </label> </div>
-                    <div class="form-inline d-flex align-items-center py-1">  <input type="checkbox" checked> <label class="tick">101-200<span class="check"></span> </label> </div>
-                    <div class="form-inline d-flex align-items-center py-1"> <input type="checkbox" checked><label class="tick">201-300<span class="check"></span> </label> </div>
-                    <div class="form-inline d-flex align-items-center py-1">  <input type="checkbox"><label class="tick">301-400<span class="check"></span> </label> </div>
-                    <div class="form-inline d-flex align-items-center py-1">  <input type="checkbox"> <label class="tick">Above 401<span class="check"></span> </label> </div>
-                </form>
-            </div>
-        </section>
-        <section id = "items" class="row">
-            <div class="container">
-                <div class = "row">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col" id = "sidebar">
                     
-                    <div class = "col">
-                        <div class="row g-3 mt-2 justify-content-center">
-                            <div class="col-md-6"> <input type="text" class="form-control" placeholder="Search for products"> </div>
-                            <div class="col-md-2"> <button class="btn btn-secondary btn-block"><i class="fas fa-search"></i></button> </div>
-                        </div>                        
-                        <br>
-                        <div class="d-flex flex-row">
-                            <div class="text-muted m-2" id="res">Showing 44 results</div>
-                            <div class="ml-auto mr-lg-3 ms-auto">
-                                <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Sort by</span> <select name="sort" id="sort">
-                                        <option value="popularity"><b>Points</b></option>
-                                        <option value="prcie"><b>Name</b></option>               
-                                    </select> </div>
+                        <div class=" pt-2 clear">
+                            <div class="text-muted filter-label">Applied Filters:</div>
+                            <div class="brand-label font-weight-bold p-0 px-1 mx-sm-1 mx-0 my-sm-0 my-2">Example 2<span class=" px-1 close">&times;</span> </div>
+                            <div class="brand-label font-weight-bold p-0 px-1 mx-sm-1 mx-0">Example 3<span class=" px-1 close">&times;</span> </div>
+                        </div>
+                        <div class="py-3">
+                            <h5 class="font-weight-bold">Categories</h5>
+                            <ul class="list-group" v-for="cat in productCat">
+                                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center category">
+                                    {{cat}}<span class="badge badge-primary badge-pill">65</span> </li>
+                                <!-- <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center   category">Home & Living<span class="badge badge-primary badge-pill">65</span> </li>
+                                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center category"> Travel & Luggage <span class="badge badge-primary badge-pill">101</span> </li>
+                                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center category"> Personal Care <span class="badge badge-primary badge-pill">32</span> </li>
+                                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center  category">Coupon<span class="badge badge-primary badge-pill">48</span> </li> -->
+                            </ul>
+                        </div>
+                        <div class="py-3">
+                            <h5 class="font-weight-bold">Points</h5>
+                            <form class="brand">
+                                <div class="form-inline d-flex align-items-center py-1"> <input type="checkbox"> <label class="tick">1-100<span class="check"></span> </label> </div>
+                                <div class="form-inline d-flex align-items-center py-1">  <input type="checkbox" checked> <label class="tick">101-200<span class="check"></span> </label> </div>
+                                <div class="form-inline d-flex align-items-center py-1"> <input type="checkbox" checked><label class="tick">201-300<span class="check"></span> </label> </div>
+                                <div class="form-inline d-flex align-items-center py-1">  <input type="checkbox"><label class="tick">301-400<span class="check"></span> </label> </div>
+                                <div class="form-inline d-flex align-items-center py-1">  <input type="checkbox"> <label class="tick">Above 401<span class="check"></span> </label> </div>
+                            </form>
+                        </div>
+                    
+                </div>
+                <div class="col-md-6 col-lg-10" id = "items">
+                        <div class="container">
+                            <div class = "row">  
+                                <div class = "col">
+                                    <div class="row g-3 mt-2 justify-content-center">
+                                        <div class="col-md-6"> <input type="text" class="form-control" placeholder="Search for products"> </div>
+                                        <div class="col-md-2"> <button class="btn btn-secondary btn-block"><i class="fas fa-search"></i></button> </div>
+                                    </div>                        
+                                    <br>
+                                    <div class="d-flex flex-row">
+                                        <div class="text-muted m-2" id="res">Showing 44 results</div>
+                                        <div class="ml-auto mr-lg-3 ms-auto">
+                                            <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Sort by</span> <select name="sort" id="sort">
+                                                    <option value="popularity"><b>Points</b></option>
+                                                    <option value="prcie"><b>Name</b></option>               
+                                                </select> </div>
+                                        </div>
+                                    </div>
+                                    <!-- 1st row-->
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6 col-lg-3">
+                                            <div class="card mb-5">
+                                                <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item1">
+                                                <div class="card-body ">
+                                                    <h5 class="card-title text-dark">Clothes Packing Cubes Luggage</h5>
+                                                    <p class="card-text text-dark">100 Points</p>
+                                                    <div class = "text-center">
+                                                        <button type="button" class="btn btn-outline-primary">Redeem</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 col-lg-3">
+                                            <div class="card mb-5">
+                                                <img src="../project/item2.jfif" class="card-img-top mt-4 img-fluid" alt="item2">
+                                                <div class="card-body">
+                                                    <h5 class="card-title text-dark">Travel Bag</h5>
+                                                    <p class="card-text text-dark">300 Points</p>
+                                                    <div class = "text-center">
+                                                        <button type="button" class="btn btn-outline-primary">Redeem</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 col-lg-3">
+                                            <div class="card mb-5 ">
+                                                <img src="../project/item3.jfif" class="card-img-top mt-4 img-fluid" alt="item3">
+                                                <div class="card-body">
+                                                    <h5 class="card-title text-dark">Luggage</h5>
+                                                    <p class="card-text text-dark">500 Points</p>
+                                                    <div class = "text-center">
+                                                        <button type="button" class="btn btn-outline-primary">Redeem</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 col-lg-3">
+                                            <div class="card mb-5">
+                                                <img src="../project/item4.jfif" class="card-img-top mt-4 img-fluid" alt="item4">
+                                                <div class="card-body">
+                                                    <h5 class="card-title text-dark">Sun-Screen</h5>
+                                                    <p class="card-text text-dark">100 Points</p>
+                                                    <div class = "text-center">
+                                                        <button type="button" class="btn btn-outline-primary">Redeem</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span id="dots"></span>
+                                    <!-- 2nd row-->
+                                    <!-- <span id = "more"> -->
+                                        <div class="row">
+                                            <div class=" col-sm-12 col-md-6 col-lg-3">
+                                                <div class="card mb-5">
+                                                    <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item4">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title text-dark">Sun-Screen</h5>
+                                                        <p class="card-text text-dark">100 Points</p>
+                                                        <p class="card-text text-dark">Lorem ipsum dolor sit amet
+                                                            consectetur adipisicing elit. </p>
+                                                        <div class = "text-center">
+                                                            <button type="button" class="btn btn-outline-primary">Redeem</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6 col-lg-3">
+                                                <div class="card mb-5">
+                                                    <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item6">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title text-dark">Universal Adapter</h5>
+                                                        <p class="card-text text-dark">300 Points</p>
+                                                        <p class="card-text text-dark">Lorem ipsum dolor sit amet
+                                                            consectetur adipisicing elit. </p>
+                                                        <div class = "text-center">
+                                                            <button type="button" class="btn btn-outline-primary">Redeem</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6 col-lg-3">
+                                                <div class="card mb-5 ">
+                                                    <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item5">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title text-dark">Bag</h5>
+                                                        <p class="card-text text-dark">100 Points</p>
+                                                        <p class="card-text text-dark">Lorem ipsum dolor sit amet
+                                                            consectetur adipisicing elit. </p>
+                                                        <div class = "text-center">
+                                                            <button type="button" class="btn btn-outline-primary">Redeem</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6 col-lg-3">
+                                                <div class="card mb-5 ">
+                                                    <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item6">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title text-dark">Universal Adapter</h5>
+                                                        <p class="card-text text-dark">300 Points</p>
+                                                        <p class="card-text text-dark">Lorem ipsum dolor sit amet
+                                                            consectetur adipisicing elit. </p>
+                                                        <div class = "text-center">
+                                                            <button type="button" class="btn btn-outline-primary">Redeem</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </span>
+                
+                                    <div class = "text-center">
+                                        <button onclick = "myFunction()" type="button" id="myBtn" class="btn btn-light btn-outline-secondary">Show More</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <!-- 1st row-->
-                        <div class="row">
-                            <div class="col-sm-12 col-md-6 col-lg-3">
-                                <div class="card mb-5">
-                                    <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item1">
-                                    <div class="card-body ">
-                                        <h5 class="card-title text-dark">Clothes Packing Cubes Luggage</h5>
-                                        <p class="card-text text-dark">100 Points</p>
-                                        <div class = "text-center">
-                                            <button type="button" class="btn btn-outline-primary">Redeem</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-3">
-                                <div class="card mb-5">
-                                    <img src="../project/item2.jfif" class="card-img-top mt-4 img-fluid" alt="item2">
-                                    <div class="card-body">
-                                        <h5 class="card-title text-dark">Travel Bag</h5>
-                                        <p class="card-text text-dark">300 Points</p>
-                                        <div class = "text-center">
-                                            <button type="button" class="btn btn-outline-primary">Redeem</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-3">
-                                <div class="card mb-5 ">
-                                    <img src="../project/item3.jfif" class="card-img-top mt-4 img-fluid" alt="item3">
-                                    <div class="card-body">
-                                        <h5 class="card-title text-dark">Luggage</h5>
-                                        <p class="card-text text-dark">500 Points</p>
-                                        <div class = "text-center">
-                                            <button type="button" class="btn btn-outline-primary">Redeem</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-3">
-                                <div class="card mb-5">
-                                    <img src="../project/item4.jfif" class="card-img-top mt-4 img-fluid" alt="item4">
-                                    <div class="card-body">
-                                        <h5 class="card-title text-dark">Sun-Screen</h5>
-                                        <p class="card-text text-dark">100 Points</p>
-                                        <div class = "text-center">
-                                            <button type="button" class="btn btn-outline-primary">Redeem</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <span id="dots"></span>
-                        <!-- 2nd row-->
-                        <span id = "more">
-                            <div class="row">
-                                <div class=" col-sm-12 col-md-6 col-lg-3">
-                                    <div class="card mb-5">
-                                        <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item4">
-                                        <div class="card-body">
-                                            <h5 class="card-title text-dark">Sun-Screen</h5>
-                                            <p class="card-text text-dark">100 Points</p>
-                                            <p class="card-text text-dark">Lorem ipsum dolor sit amet
-                                                consectetur adipisicing elit. </p>
-                                            <div class = "text-center">
-                                                <button type="button" class="btn btn-outline-primary">Redeem</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-6 col-lg-3">
-                                    <div class="card mb-5">
-                                        <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item6">
-                                        <div class="card-body">
-                                            <h5 class="card-title text-dark">Universal Adapter</h5>
-                                            <p class="card-text text-dark">300 Points</p>
-                                            <p class="card-text text-dark">Lorem ipsum dolor sit amet
-                                                consectetur adipisicing elit. </p>
-                                            <div class = "text-center">
-                                                <button type="button" class="btn btn-outline-primary">Redeem</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-6 col-lg-3">
-                                    <div class="card mb-5 ">
-                                        <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item5">
-                                        <div class="card-body">
-                                            <h5 class="card-title text-dark">Bag</h5>
-                                            <p class="card-text text-dark">100 Points</p>
-                                            <p class="card-text text-dark">Lorem ipsum dolor sit amet
-                                                consectetur adipisicing elit. </p>
-                                            <div class = "text-center">
-                                                <button type="button" class="btn btn-outline-primary">Redeem</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-6 col-lg-3">
-                                    <div class="card mb-5 ">
-                                        <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item6">
-                                        <div class="card-body">
-                                            <h5 class="card-title text-dark">Universal Adapter</h5>
-                                            <p class="card-text text-dark">300 Points</p>
-                                            <p class="card-text text-dark">Lorem ipsum dolor sit amet
-                                                consectetur adipisicing elit. </p>
-                                            <div class = "text-center">
-                                                <button type="button" class="btn btn-outline-primary">Redeem</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </span>
-    
-                        <div class = "text-center">
-                            <button onclick = "myFunction()" type="button" id="myBtn" class="btn btn-light btn-outline-secondary">Show More</button>
-                        </div>
-                    </div>
+
                 </div>
             </div>
-        </section>
-
+        </div>
+        
         </div>
     </div>
     <script src="js/navbar.js"></script>

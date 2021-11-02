@@ -18,10 +18,12 @@
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
     <script src="https://unpkg.com/vue@next"></script>
 
+    <!-- Vue -->
+    <script src="https://unpkg.com/vue@next"></script>
 
     <title>Attractions</title>
 </head>
-<body onload="display_api_category()">
+<body onload="display_category_data()">
 
     <!-- Navigation -->
     <div id="navdiv">
@@ -35,7 +37,37 @@
             <button class="btn btn-outline-success btn-sm" type="submit" >Search</button>
         </div>
 
-        <div id="abc123" style="color: black;"></div>
+
+        <h1> Binding checkbox inputs. </h1>
+        <div id="attraction_cate">
+            <!-- check boxes -->
+            <!-- Single checkbox, boolean value:  -->
+            <input type="checkbox" id="checkbox" v-model="checked">
+            <label for="checkbox">Checked? {{ checked }}</label>
+            <br>
+            <!-- Multiple checkboxes, bound to the same Array: -->
+            <label><input type="checkbox" value="Jack" v-model="checkedValid">Jack Johnson</label>
+            <label><input type="checkbox" value="John" v-model="checkedValid">John Jackson</label>
+            <label><input type="checkbox" value="Mike" v-model="checkedValid">Mike Jackson</label>
+            <br>
+            <span>Checked names: {{ checkedValid }}</span>
+        </div>
+    
+        <script>
+            Vue.createApp({
+                data() {
+                    return {
+                        checked: '',
+                        checkedValid: []
+                    }
+                    
+                }
+            }).mount('#app3')
+        </script>
+
+        <div>
+            <button type="button"  id="abc123" class="btn btn-warning"  onclick="display_api_category()">Category</button>
+        </div>
 
   
 
@@ -157,6 +189,62 @@
         </div>
         </div>
     </div>
+
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    now: null,
+                    message: '',
+                    temperatureList: [],
+                };
+            },
+            created() {
+                this.getAPIcate();
+            }, // created
+            methods: {
+                getAPIcate() {
+
+                    /* Alternate code to do GET using Axios:
+                        let url = "https://api.data.gov.sg/v1/environment/air-temperature?date_time="
+                            + encodeURIComponent(nowStr);
+                        axios.get(url)
+                    */
+                    let url = 'https://tih-api.stb.gov.sg/content/v1/attractions/types?language=en&apikey=MnqCCPlkgGWec8BPY7FeV8s7MkmBxP4h';
+                    axios.get(url)
+                        .then(response => {
+                            let obj = response.data;
+                            let station_map = {};
+                            for (station of obj.metadata.stations) {
+                                station_map[station.id] = station.name;
+                            }
+
+                            this.temperatureList = [];
+                            for (reading of obj.items[0].readings) {
+
+                                this.temperatureList.push({
+                                    'id': reading.station_id,
+                                    'station': station_map[reading.station_id],
+                                    'temperature': reading.value
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            this.message = 'HTTP Error ' + error.message;
+                        });
+                }
+            }, // methods
+        });
+
+    </script>
+
+    <script src="weather-menu.js"></script>
+
+    <script>
+        const vm = app.mount('#app');
+    </script>
+
 
 
 
