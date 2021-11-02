@@ -12,7 +12,7 @@ const app2 = Vue.createApp({
     },
     methods: {
         register() {
-            const url = 'http://localhost:8888/WAD_II_Project_G9_T6/db/register.php'
+            const url = 'http://localhost/WAD_II_Project_G9_T6/db/register.php'
             const data = { userEmail: this.userEmail,
                             cfmPwd: this.cfmPwd
                             
