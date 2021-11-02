@@ -10,6 +10,7 @@
     <!-- Main Css -->
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" href="css/navbar.css">
+    <script src="https://unpkg.com/vue@next"></script>
 
     <!-- Navigation -->
     <!-- <script>
@@ -29,8 +30,11 @@
     <title>Home</title>
 </head>
 <body>
+
     <div id="navdiv">
-        <nav class="navbar navbar-expand-md">
+        <include-navbar></include-navbar>
+    </div>
+        <!-- <nav class="navbar navbar-expand-md">
         
             <div class="container-fluid">
                 <a class="navbar-brand">SmilingAcrossLocal<span style="font-size: 11px;"> SG</span></a> 
@@ -65,7 +69,7 @@
                 </div>
             </div>
         </nav>
-    </div>
+    </div> -->
     <div id="slidediv">
         <div class="container wrapper">
             <div class="card">
@@ -145,6 +149,8 @@
             </div>
         </div>
     </div>
+    <script src="js/navbar.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
         crossorigin="anonymous"></script>
