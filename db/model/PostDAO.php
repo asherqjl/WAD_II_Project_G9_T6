@@ -147,7 +147,7 @@ class PostDAO {
                     )";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':acc_email', $email, PDO::PARAM_STR);
-        $stmt->bindParam(':acc_password', $acc_password, PDO::PARAM_STR);
+        $stmt->bindParam(':acc_password', $password, PDO::PARAM_STR);
 
         //STEP 3
         $status = $stmt->execute();
