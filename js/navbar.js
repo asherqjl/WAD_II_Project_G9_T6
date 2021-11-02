@@ -1,18 +1,9 @@
 
 const app = Vue.createApp({
+    
 });
-    // DO NOT EDIT - start
-    app.component('include-navbar',{
-        data(){
-            return {
-                home: "home.html",
-                attractions: "KaiWei.html",
-                travelHistory: "zenyu.html",
-                maps: "DongHyun.html",
-                rewards: "FangTing.html"
-
-            };
-    },
+// DO NOT EDIT - start
+app.component('include-navbar',{
     template: ` 
         <div><nav class="navbar navbar-expand-md">
             <div class="container-fluid">
@@ -28,19 +19,19 @@ const app = Vue.createApp({
                             <a class="nav-link" aria-current="page" href="#"> LOGIN </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{home}}}">HOME</a>
+                            <a class="nav-link" href="home.html">HOME</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{attractions}}">ATTRACTIONS</a>
+                            <a class="nav-link" href="KaiWei.html">ATTRACTIONS</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{maps}}">MAPS</a>
+                            <a class="nav-link" href="DongHyun.html">MAPS</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{travelHistory}}">TRAVEL HISTORY</a>
+                            <a class="nav-link" href="zenyu.html">TRAVEL HISTORY</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{rewards}}">REWARDS</a>
+                            <a class="nav-link" href="FangTing.html">REWARDS</a>
                         </li>
                     </ul>
                 </div>
