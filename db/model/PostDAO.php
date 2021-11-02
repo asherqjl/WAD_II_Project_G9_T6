@@ -12,7 +12,7 @@ class PostDAO {
         // STEP 2
         $sql = "SELECT
                     location_name, time_visited, category
-                FROM post"; // SELECT * FROM post; // This will also work
+                FROM travel_history"; // SELECT * FROM post; // This will also work
         $stmt = $conn->prepare($sql);
 
         // STEP 3
@@ -20,10 +20,10 @@ class PostDAO {
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
 
         // STEP 4
-        $posts = []; // Indexed Array of Post objects
+        $travel_history = []; // Indexed Array of Post objects
         while( $row = $stmt->fetch() ) {
-            $posts[] =
-                new Post(
+            $travel_history[] =
+                new Event(
                     $row['location_name'],
                     $row['time_visited'],
                     $row['category'],
@@ -38,7 +38,7 @@ class PostDAO {
         return $posts;
     }
 
-    public function update($user_id, $points) {
+    public function update($id, $points) {
 
         // STEP 1
         $connMgr = new ConnectionManager();
@@ -53,9 +53,8 @@ class PostDAO {
                     id = :id";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->bindParam(':subject', $subject, PDO::PARAM_STR);
-        $stmt->bindParam(':entry', $entry, PDO::PARAM_STR);
-        $stmt->bindParam(':mood', $mood, PDO::PARAM_STR);
+        $stmt->bindParam(':points', $points, PDO::PARAM_INT);
+
 
         //STEP 3
         $status = $stmt->execute();
@@ -92,32 +91,31 @@ class PostDAO {
         return $status;
     }
 
-    public function add($subject, $entry, $mood) {
+    public function add($id, $location_name, $time_visited, $category) {
         // STEP 1
         $connMgr = new ConnectionManager();
         $conn = $connMgr->connect();
 
         // STEP 2
-        $sql = "INSERT INTO post
+        $sql = "INSERT INTO travel_history
                     (
-                        create_timestamp, 
-                        update_timestamp, 
-                        subject, 
-                        entry, 
-                        mood
+                        user_id, 
+                        location_name,
+                        time_visited,
+                        category
                     )
                 VALUES
                     (
-                        CURRENT_TIMESTAMP,
-                        CURRENT_TIMESTAMP,
-                        :subject,
-                        :entry,
-                        :mood
+                        :id,
+                        :location_name,
+                        :time_visited,
+                        :category
                     )";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':subject', $subject, PDO::PARAM_STR);
-        $stmt->bindParam(':entry', $entry, PDO::PARAM_STR);
-        $stmt->bindParam(':mood', $mood, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':location_name', $location_name, PDO::PARAM_STR);
+        $stmt->bindParam(':time_visited', $time_visited, PDO::PARAM_STR);
+        $stmt->bindParam(':category', $cagetory, PDO::PARAM_STR);
 
         //STEP 3
         $status = $stmt->execute();
