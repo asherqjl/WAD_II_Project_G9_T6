@@ -11,12 +11,7 @@ class PostDAO {
 
         // STEP 2
         $sql = "SELECT
-                    id,
-                    create_timestamp,
-                    update_timestamp,
-                    subject,
-                    entry,
-                    mood
+                    location_name, time_visited, category
                 FROM post"; // SELECT * FROM post; // This will also work
         $stmt = $conn->prepare($sql);
 
@@ -29,12 +24,10 @@ class PostDAO {
         while( $row = $stmt->fetch() ) {
             $posts[] =
                 new Post(
-                    $row['id'],
-                    $row['create_timestamp'],
-                    $row['update_timestamp'],
-                    $row['subject'],
-                    $row['entry'],
-                    $row['mood']);
+                    $row['location_name'],
+                    $row['time_visited'],
+                    $row['category'],
+                    );
         }
 
         // STEP 5
@@ -45,46 +38,7 @@ class PostDAO {
         return $posts;
     }
 
-    public function get($id) {
-        // STEP 1
-        $connMgr = new ConnectionManager();
-        $conn = $connMgr->connect();
-
-        // STEP 2
-        $sql = "SELECT
-                    *
-                FROM post
-                WHERE 
-                    id = :id";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-
-        // STEP 3
-        $stmt->execute();
-        $stmt->setFetchMode(PDO::FETCH_ASSOC);
-
-        // STEP 4
-        $post_object = null;
-        if( $row = $stmt->fetch() ) {
-            $post_object = 
-                new Post(
-                    $row['id'],
-                    $row['create_timestamp'],
-                    $row['update_timestamp'],
-                    $row['subject'],
-                    $row['entry'],
-                    $row['mood']);
-        }
-
-        // STEP 5
-        $stmt = null;
-        $conn = null;
-
-        // STEP 6
-        return $post_object;
-    }
-
-    public function update($id, $subject, $entry, $mood) {
+    public function update($user_id, $points) {
 
         // STEP 1
         $connMgr = new ConnectionManager();
@@ -92,12 +46,9 @@ class PostDAO {
 
         // STEP 2
         $sql = "UPDATE
-                    post
+                    acc
                 SET
-                    update_timestamp = CURRENT_TIMESTAMP,
-                    subject = :subject,
-                    entry = :entry,
-                    mood = :mood
+                    points+= :points
                 WHERE 
                     id = :id";
         $stmt = $conn->prepare($sql);

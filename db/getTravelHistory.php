@@ -1,10 +1,10 @@
 <?php
 require_once 'common.php';
 $dao = new PostDAO();
-$travel_history = $dao->getAll(); // Get an Indexed Array of Post objects
+$posts = $dao->getAll(); // Get an Indexed Array of Post objects
 
 $items = [];
-foreach( $travel_history as $place ) {
+foreach( $posts as $post_object ) {
     $item = [];
     $item["id"] = $post_object->getID();
     $item["subject"] = $post_object->getSubject();
