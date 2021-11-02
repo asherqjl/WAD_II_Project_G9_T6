@@ -16,12 +16,13 @@
     <title>Smiling Across Local</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/navbar.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <title>Rewards</title>
 
 </head>
 
-<body>
+<body >
     <div id="navdiv">
         <nav class="navbar navbar-expand-md">
         
@@ -61,7 +62,7 @@
     </div>
 
 
-
+    
 
     <div class="p-3 text-white main">
         
@@ -135,7 +136,7 @@
                         <div class="row">
                             <div class="col-sm-12 col-md-6 col-lg-3">
                                 <div class="card mb-5">
-                                    <img src="item1.jfif" class="card-img-top mt-4 img-fluid" alt="item1">
+                                    <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item1">
                                     <div class="card-body ">
                                         <h5 class="card-title text-dark">Clothes Packing Cubes Luggage</h5>
                                         <p class="card-text text-dark">100 Points</p>
@@ -147,7 +148,7 @@
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-3">
                                 <div class="card mb-5">
-                                    <img src="item2.jfif" class="card-img-top mt-4 img-fluid" alt="item2">
+                                    <img src="../project/item2.jfif" class="card-img-top mt-4 img-fluid" alt="item2">
                                     <div class="card-body">
                                         <h5 class="card-title text-dark">Travel Bag</h5>
                                         <p class="card-text text-dark">300 Points</p>
@@ -159,7 +160,7 @@
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-3">
                                 <div class="card mb-5 ">
-                                    <img src="item3.jfif" class="card-img-top mt-4 img-fluid" alt="item3">
+                                    <img src="../project/item3.jfif" class="card-img-top mt-4 img-fluid" alt="item3">
                                     <div class="card-body">
                                         <h5 class="card-title text-dark">Luggage</h5>
                                         <p class="card-text text-dark">500 Points</p>
@@ -171,7 +172,7 @@
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-3">
                                 <div class="card mb-5">
-                                    <img src="item4.jfif" class="card-img-top mt-4 img-fluid" alt="item4">
+                                    <img src="../project/item4.jfif" class="card-img-top mt-4 img-fluid" alt="item4">
                                     <div class="card-body">
                                         <h5 class="card-title text-dark">Sun-Screen</h5>
                                         <p class="card-text text-dark">100 Points</p>
@@ -188,7 +189,7 @@
                             <div class="row">
                                 <div class=" col-sm-12 col-md-6 col-lg-3">
                                     <div class="card mb-5">
-                                        <img src="item4.jfif" class="card-img-top mt-4 img-fluid" alt="item4">
+                                        <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item4">
                                         <div class="card-body">
                                             <h5 class="card-title text-dark">Sun-Screen</h5>
                                             <p class="card-text text-dark">100 Points</p>
@@ -202,7 +203,7 @@
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-3">
                                     <div class="card mb-5">
-                                        <img src="item6.jpg" class="card-img-top mt-4 img-fluid" alt="item6">
+                                        <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item6">
                                         <div class="card-body">
                                             <h5 class="card-title text-dark">Universal Adapter</h5>
                                             <p class="card-text text-dark">300 Points</p>
@@ -216,7 +217,7 @@
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-3">
                                     <div class="card mb-5 ">
-                                        <img src="item5.jpg" class="card-img-top mt-4 img-fluid" alt="item5">
+                                        <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item5">
                                         <div class="card-body">
                                             <h5 class="card-title text-dark">Bag</h5>
                                             <p class="card-text text-dark">100 Points</p>
@@ -230,7 +231,7 @@
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-3">
                                     <div class="card mb-5 ">
-                                        <img src="item6.jpg" class="card-img-top mt-4 img-fluid" alt="item6">
+                                        <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item6">
                                         <div class="card-body">
                                             <h5 class="card-title text-dark">Universal Adapter</h5>
                                             <p class="card-text text-dark">300 Points</p>
@@ -255,8 +256,33 @@
 
         </div>
     </div>
-
+   
     <script src="reward.js"></script>
+    <script>
+          var options = {
+    method: 'GET',
+    url: 'https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list',
+    params: {country: 'singapore', lang: 'en_sg', currentpage: '0', pagesize: '30'},
+    headers: {
+      'x-rapidapi-host': 'apidojo-hm-hennes-mauritz-v1.p.rapidapi.com',
+      'x-rapidapi-key': '9061375655msh14a8e669554639cp108b6bjsn1f084a105610'
+    }
+  };
+  
+  axios.request(options)
+  .then(response=>{
+    // console.log(response.data);
+      for (i=0; i<response.data.results.length; i++){
+          var productName = response.data.results[i].name;
+          var category = response.data.results[i].categoryName;
+          var image = response.data.results[i].images[0].url;
+          var price = response.data.results[i].price.formattedValue;
+          console.log(productName,category,image,price);
+      }
+  }).catch(function (error) {
+    console.error(error);
+  });
+    </script>
 
     <!-- Optional JavaScript -->
     <!-- Bundled Bootstrap JS -->
