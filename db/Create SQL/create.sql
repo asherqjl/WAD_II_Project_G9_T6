@@ -16,4 +16,4 @@ create table travel_history (
 	location_name varchar(100),
     time_visited datetime,
     category text(16)
-    );
+);
