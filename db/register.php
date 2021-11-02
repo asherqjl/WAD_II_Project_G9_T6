@@ -2,12 +2,12 @@
 require_once 'common.php';
 $status = false;
 $result = [];
-if( isset($_REQUEST['cfmPwd']) && isset($_REQUEST['userEmail']) && isset($_REQUEST['category']) ) {
+if( isset($_REQUEST['cfmPwd']) && isset($_REQUEST['userEmail']) ) {
     $password = $_REQUEST['cfmPwd'];
     $email = $_REQUEST['userEmail'];
 
     $dao = new PostDAO();
-    $status = $dao->add(1, $password, $email);
+    $status = $dao->register($email,$password);
 }
 if ($status)
     $result["status"] = "Registered successfully";
