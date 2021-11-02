@@ -7,7 +7,7 @@ if( isset($_REQUEST['cfmPwd']) && isset($_REQUEST['userEmail']) && isset($_REQUE
     $email = $_REQUEST['userEmail'];
 
     $dao = new PostDAO();
-    $status = $dao->add(1, $location, $time, $category);
+    $status = $dao->add(1, $password, $email);
 }
 if ($status)
     $result["status"] = "Registered successfully";
