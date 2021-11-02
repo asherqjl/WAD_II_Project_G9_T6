@@ -1,11 +1,13 @@
 
-const app = Vue.createApp({
+const app2 = Vue.createApp({
     data(){
         return {
             userEmail:'',
             cfmPwd:'',
             loginPwd:'',
-            loginEmail:''
+            loginEmail:'',
+            showStatus: false,
+            status: 'urmudder'
         };
     },
     methods: {
@@ -13,8 +15,7 @@ const app = Vue.createApp({
             const url = 'http://localhost:8888/WAD_II_Project_G9_T6/db/register.php'
             const data = { userEmail: this.userEmail,
                             cfmPwd: this.cfmPwd,
-                            showStatus: false,
-                            status: ''
+                            
                         }
             // POST request
             /* axios.post(url, data
@@ -44,5 +45,5 @@ const app = Vue.createApp({
             
         }
     }
-}).mount('#signup')
-
+})
+const vm2 = app2.mount("#signup");

@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="css/navbar.css">
     <script src="https://unpkg.com/vue@next"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
     <script type="text/javascript">
     $(document).ready(function() {
         $('#toggle').click(function() {
@@ -51,48 +53,50 @@
                                 <button class="btn btn-primary active" aria-current="page" id="toggle" onClick="javascript:change(1)">
                                     <span id="change1">Login</span>
                                 </button>
-                                <form class="mx-1 mx-md-4 loginsignup" id="signup">
-                                    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+                                <div id="signup">
+                                    <form class="mx-1 mx-md-4 loginsignup" >
+                                        <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+                                            <div class="d-flex flex-row align-items-center mb-4">
+                                        </div>
+                    
                                         <div class="d-flex flex-row align-items-center mb-4">
-                                    </div>
-                
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                                    <div class="form-outline flex-fill mb-0">
-                                        <input v-model='userEmail' type="email" id="userEmail" class="form-control" />
-                                        <label class="form-label" for="userEmail">Your Email</label>
-                                    </div>
-                                    </div>
-                
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                                    <div class="form-outline flex-fill mb-0">
-                                        <input type="password" id="pwd1" class="form-control" />
-                                        <label class="form-label" for="pwd1">Password</label>
-                                    </div>
-                                    </div>
-                
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                    <div class="form-outline flex-fill mb-0">
-                                        <input v-model='cfmPwd' type="password" id="cfmPwd" class="form-control" />
-                                        <label class="form-label" for="cfmPwd">Repeat your password</label>
-                                    </div>
-                                    </div>
-                
-                                    <div class="form-check d-flex justify-content-center mb-5">
-                                    <input
-                                        class="form-check-input me-2"type="checkbox"value=""id="form2Example3c"/>
-                                    <label class="form-check-label" for="form2Example3">
-                                        I agree all statements in <a href="#">Terms of service</a>
-                                    </label>
-                                    </div>
-                
-                                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                    <button type="button" class="btn btn-primary btn-lg" v-on:click="register">Register</button>
-                                    </div>
-                                    <p v-if='showStatus'>{{status.status}}</p>
-                                </form>
+                                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input v-model='userEmail' type="email" id="userEmail" class="form-control" />
+                                            <label class="form-label" for="userEmail">Your Email</label>
+                                        </div>
+                                        </div>
+                    
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="password" id="pwd1" class="form-control" />
+                                            <label class="form-label" for="pwd1">Password</label>
+                                        </div>
+                                        </div>
+                    
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input v-model='cfmPwd' type="password" id="cfmPwd" class="form-control" />
+                                            <label class="form-label" for="cfmPwd">Repeat your password</label>
+                                        </div>
+                                        </div>
+                    
+                                        <div class="form-check d-flex justify-content-center mb-5">
+                                        <input
+                                            class="form-check-input me-2"type="checkbox"value=""id="form2Example3c"/>
+                                        <label class="form-check-label" for="form2Example3">
+                                            I agree all statements in <a href="#">Terms of service</a>
+                                        </label>
+                                        </div>
+                    
+                                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                        <button type="button" class="btn btn-primary btn-lg" v-on:click="register">Register</button>
+                                        </div>
+                                        <p v-if='showStatus'>{{status.status}}</p>
+                                    </form>
+                                </div>
                                 <form class="mx-1 mx-md-4 loginsignup" id="login" style="display: none">
                                     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
                                     <div class="d-flex flex-row align-items-center mb-4">
@@ -131,6 +135,7 @@
     </div>
     
     <script src="js/navbar.js"></script>
+    <script src="js/login-registration.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
