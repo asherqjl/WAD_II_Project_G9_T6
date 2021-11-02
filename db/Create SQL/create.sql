@@ -12,7 +12,12 @@ create table acc (
 create table travel_history (
 	user_id integer,
 	location_name varchar(100),
-    time_visited datetime,
+    time_visited varchar(100),
     category text(16)
     );
     
+    
+insert into travel_history(user_id, location_name, time_visited, category) 
+values (1, "Bugis", "Yesterday", "Tourism");
+
+select * from travel_history
