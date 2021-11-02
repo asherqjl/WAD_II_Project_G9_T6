@@ -1,30 +1,22 @@
 <?php
-
 require_once 'common.php';
-
 $status = false;
-//var_dump($_POST);
-
-if( isset($_POST['subject']) && isset($_POST['entry']) && isset($_POST['mood']) ) {
-    $subject = $_POST['subject'];
-    $entry = $_POST['entry'];
-    $mood = $_POST['mood'];
+$result = [];
+if( isset($_REQUEST['location']) && isset($_REQUEST['time']) && isset($_REQUEST['category']) ) {
+    $location = $_REQUEST['location'];
+    $time = $_REQUEST['time'];
+    $category = $_REQUEST['category'];
 
     $dao = new PostDAO();
-    $status = $dao->add($subject, $entry, $mood);
+    $status = $dao->add(1, $location, $time, $category);
 }
+if ($status)
+    $result["status"] = "Post added successfully";
+else 
+    $result["status"] = "Post was not added";
 
+$postJSON = json_encode($result);
+echo $postJSON;
 ?>
-<html>
-<body>
-    <?php
-        if( $status ) {
-            echo "<h1>Insertion was successful</h1>";
-            echo "Click <a href='display.php'>here</a> to return to Main Page";
-        }
-        else {
-            echo "<h1>Insertion was NOT successful</h1>";
-        }
-    ?>
-</body>
-</html>
+
+
