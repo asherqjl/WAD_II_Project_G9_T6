@@ -10,6 +10,34 @@ function display_api_category() {
     axios.request(options)
     .then(response=>{
     for (i=0; i<response.data.data.length; i++){
+    var category = response.data.data[i];
+
+    document.getElementById('abc123').innerText += category;
+    document.getElementById('abc123').innerHTML += "<br>";
+
+
+    }
+
+    }).catch(function (error) {
+    console.error(error);
+    });
+
+}
+
+
+
+
+function display_category_data() {
+
+    var options = {
+    method: 'GET',
+    url: 'https://tih-api.stb.gov.sg/content/v1/attractions/types?language=en&apikey=MnqCCPlkgGWec8BPY7FeV8s7MkmBxP4h'
+
+    };
+
+    axios.request(options)
+    .then(response=>{
+    for (i=0; i<response.data.data.length; i++){
     var category = response.data.data[i]; 
     console.log(category);
     }
