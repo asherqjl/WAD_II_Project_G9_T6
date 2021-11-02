@@ -1,8 +1,7 @@
 <?php
 
 class Event {
-    const 1
-    private $id
+    private $id;
     private $create_timestamp;
     private $update_timestamp;
     private $acc_email;
@@ -15,7 +14,7 @@ class Event {
 
 
     public function __construct($location_name, $time_visited, $category) {
-        $this->id= 1
+        $this->id= 1;
         $this->location_name = $location_name;
         $this->time_visited = $time_visited;
         $this->category= $category;
