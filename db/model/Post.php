@@ -1,44 +1,41 @@
 <?php
 
-class Post {
-    private $id;
+class Event {
+    const 1
+    private $id
     private $create_timestamp;
     private $update_timestamp;
-    private $subject;
-    private $entry;
-    private $mood;
+    private $acc_email;
+    private $acc_password;
+    private $points;
+    private $user_id;
+    private $location_name;
+    private $time_visited;
+    private $category;
 
-    public function __construct($id, $create_timestamp, $update_timestamp, $subject, $entry, $mood) {
-        $this->id = $id;
-        $this->create_timestamp = $create_timestamp;
-        $this->update_timestamp = $update_timestamp;
-        $this->subject = $subject;
-        $this->entry = $entry;
-        $this->mood = $mood;
+
+    public function __construct($location_name, $time_visited, $category) {
+        $this->id= 1
+        $this->location_name = $location_name;
+        $this->time_visited = $time_visited;
+        $this->category= $category;
+
     }
 
     public function getID() {
         return $this->id;
     }
 
-    public function getCreateTimestamp() {
-        return $this->create_timestamp;
+    public function getLocation() {
+        return $this->location_name;
     }
 
-    public function getUpdateTimestamp() {
-        return $this->update_timestamp;
+    public function getTimeVisited() {
+        return $this->time_visited;
     }
 
-    public function getSubject() {
-        return $this->subject;
-    }
-
-    public function getEntry() {
-        return $this->entry;
-    }
-
-    public function getMood() {
-        return $this->mood;
+    public function getCategory() {
+        return $this->category;
     }
 
 }
