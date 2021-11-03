@@ -113,7 +113,7 @@
     
     console.log(location_list);
 
-    
+    function return_list(){
             var options = {
             method: 'GET',
             url: 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword=attractions&language=en&apikey=UnWhZ0GbjpzxKlcM9GssA3xbSio89mM2'
@@ -128,17 +128,22 @@
                     var lat= response.data.data[i].location.latitude
                     var lng= response.data.data[i].location.longitude
                     // console.log(lat, lng)
-
-
                     // var each_location={lat:location.latitude,lng:location.longitude}
                     locations_list.push({latitude:lat,longitude:lng})
                     
                 }
-                console.log(locations_list[0])
-            
+                console.log(locations_list);
+                return locations_list;
+
             }).catch(function (error) {
             console.error(error);
             });
+            
+    }
+    
+
+           
+       
         
 
         // console.log(locations_list[0])
@@ -170,11 +175,13 @@
                     type: "poly",
                 };
                 
-                for (let i = 0; i < locations_list.length; i++) {
-                    var attraction = locations_list[i];
+                console.log(return_list());
+                console.log(aaa);
+                for (let i = 0; i < return_list().length; i++) {
+                    var attraction_location = return_list()[i];
                     new google.maps.Marker({
                         
-                    position: { lat: attraction.lat, lng: attraction.lng },
+                    position: { lat: attraction_location.latitude, lng: attraction_location.longitude },
                     map,
                     icon: image,
                     shape: shape,
@@ -183,7 +190,7 @@
                     });
                 }
             }
-            function getLoc() {
+        function getLoc() {
             var addr = encodeURI(document.getElementById("addr").value);
             var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=AIzaSyDT6sTbyN3xQA9bTHQYcyFVXsqAXT54zfE";
 
