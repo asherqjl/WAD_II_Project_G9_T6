@@ -75,6 +75,7 @@ const reward = Vue.createApp({
       .then(response=>{
         // console.log(response.data);
         var productdata = response.data;
+        console.log(productdata)
         this.ProductDetails(productdata);
         this.ProductCard();
           
