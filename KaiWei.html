@@ -16,70 +16,20 @@
 
     <!-- Axios -->
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
-    <script src="https://unpkg.com/vue@next"></script>
 
     <!-- Vue -->
     <script src="https://unpkg.com/vue@next"></script>
 
     <title>Attractions</title>
 </head>
-<body onload="display_category_data()">
+<body>
 
     <!-- Navigation -->
     <div id="navdiv">
         <include-navbar></include-navbar>
     </div>
 
-
-    <div class="searchbar">
-        <div class="input-group mb-3 my-3">
-            <input type="search" class="form-control me-2" placeholder="Search Location" aria-label="Search">
-            <button class="btn btn-outline-success btn-sm" type="submit" >Search</button>
-        </div>
-
-
-        <h1> Binding checkbox inputs. </h1>
-        <div id="attraction_cate">
-            <!-- check boxes -->
-            <!-- Single checkbox, boolean value:  -->
-            <input type="checkbox" id="checkbox" v-model="checked">
-            <label for="checkbox">Checked? {{ checked }}</label>
-            <br>
-            <!-- Multiple checkboxes, bound to the same Array: -->
-            <label><input type="checkbox" value="Jack" v-model="checkedValid">Jack Johnson</label>
-            <label><input type="checkbox" value="John" v-model="checkedValid">John Jackson</label>
-            <label><input type="checkbox" value="Mike" v-model="checkedValid">Mike Jackson</label>
-            <br>
-            <span>Checked names: {{ checkedValid }}</span>
-        </div>
-    
-        <script>
-            Vue.createApp({
-                data() {
-                    return {
-                        checked: '',
-                        checkedValid: []
-                    }
-                    
-                }
-            }).mount('#app3')
-        </script>
-
-        <div>
-            <button type="button"  id="abc123" class="btn btn-warning"  onclick="display_api_category()">Category</button>
-        </div>
-
-  
-
-
-        <div class="row g-2 my-2">
-            <div class="col-md-6 col-sm-6">
-              <div class="form-floating">
-                <input type="location" class="form-control" id="floatingInput" placeholder="hell">
-                <label for="floatingInput">Search Location</label>
-              </div>
-            </div>
-
+        <div class="row g-2 my-2" id='attraction'>
             <div class="col-md-5 col-sm-6">
               <div class="form-floating ">
                 <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" >
@@ -98,11 +48,11 @@
             </div>
         </div>
 
-        <span style="padding-top: 15px; font-size: small; color: red;">if invalid:</span>
+        <!-- <span style="padding-top: 15px; font-size: small; color: red;">if invalid:</span>
         <form class="form-floating" style="margin-bottom: 20px;">
             <input type="email" class="form-control is-invalid" id="floatingInputInvalid" placeholder="name@example.com" value="example of invalid input">
             <label for="floatingInputInvalid">Invalid input</label>
-          </form>
+          </form> -->
     </div>
         
     <!-- Cards -->
@@ -123,136 +73,30 @@
         </div>
 
 
-        <div class="col-md-6 col-xl-4">
+
         <!-- Add a card -->
-            <div class="card h-100" style="width: 18rem; margin: auto;">
-            <img src="/WAD2/krazyWomen/hyunbin_bg.jpg" class="card-img-top">
-            <div class="card-body">
-            <h5 class="card-title">Hyunbin house</h5>
-            <p class="card-text">Ut fermentum condimentum semper. Sed pretium feugiat arcu, et fringilla neque.</p>
-            <a href="#" class="btn btn-danger">Read More </a>
+        <div class="row" >
+            <div class="col-sm-12 col-md-6 col-lg-3" v-for="a_obj in attractionDict">
+                <div class="card mb-5">
+                    <img src="images/dummy-post-square-1.jpeg" class="card-img-top mt-4 img-fluid" alt="item1">
+                    <div class="card-body ">
+                        <div> {{a_obj}}</div>
+                        <h5 class="card-title text-dark">{{a_obj.attraction}}</h5>
+                        <p class="card-text text-dark">100 Points</p>
+                        <div class = "text-center">
+                            <a href="#" class="btn btn-danger">Read More</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
 
         </div>
-
-
-        <div class="col-md-6 col-xl-4">
-            <!-- Add a card -->
-            <div class="card h-100" style="width: 18rem; margin: auto;">
-            <img src="/WAD2/krazyWomen/ross.jpg" class="card-img-top">
-            <div class="card-body">
-            <h5 class="card-title">Ross is red</h5>
-            <p class="card-text">Ut fermentum condimentum semper. Sed pretium feugiat arcu, et fringilla neque.</p>
-            <a href="#" class="btn btn-danger">Read More</a>
-            </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-xl-4">
-            <!-- Add a card -->
-            <div class="card h-100" style="width: 18rem; margin: auto;">
-            <img src="/WAD2/Week3/SamplePages/img/naruto1.jpg" class="card-img-top" alt="Ryan Reynolds">
-            <div class="card-body">
-            <h5 class="card-title">SunJun</h5>
-            <p class="card-text">Ut fermentum condimentum semper. Sed pretium feugiat arcu, et fringilla neque.</p>
-            <a href="#" class="btn btn-danger">Read More</a>
-            </div>
-            </div>
-        </div>
-
-
-        <div class="col-md-6 col-xl-4">
-            <!-- Add a card -->
-            <div class="card h-100" style="width: 18rem; margin: auto;">
-            <img src="/WAD2/Week3/SamplePages/img/Autumn-lake-sunset-604132-1024x768.jpg" class="card-img-top">
-            <div class="card-body">
-            <h5 class="card-title">Hell</h5>
-            <p class="card-text">Ut fermentum condimentum semper. Sed pretium feugiat arcu, et fringilla neque.</p>
-            <a href="#" class="btn btn-danger">Read More</a>
-            </div>
-        </div>
-
-        </div>
-
-
-        <div class="col-md-6 col-xl-4">
-            <!-- Add a card -->
-            <div class="card h-100" style="width: 18rem; margin: auto;">
-            <img src="/WAD2/krazyWomen/henry.jpg" class="card-img-top">
-            <div class="card-body">
-            <h5 class="card-title">Idk who</h5>
-            <p class="card-text">Ut fermentum condimentum semper. Sed pretium feugiat arcu, et fringilla neque.</p>
-            <a href="#" class="btn btn-danger">Read More</a>
-            </div>
-        </div>
-        </div>
-        </div>
-    </div>
-
-
-    <script>
-        const app = Vue.createApp({
-            data() {
-                return {
-                    now: null,
-                    message: '',
-                    temperatureList: [],
-                };
-            },
-            created() {
-                this.getAPIcate();
-            }, // created
-            methods: {
-                getAPIcate() {
-
-                    /* Alternate code to do GET using Axios:
-                        let url = "https://api.data.gov.sg/v1/environment/air-temperature?date_time="
-                            + encodeURIComponent(nowStr);
-                        axios.get(url)
-                    */
-                    let url = 'https://tih-api.stb.gov.sg/content/v1/attractions/types?language=en&apikey=MnqCCPlkgGWec8BPY7FeV8s7MkmBxP4h';
-                    axios.get(url)
-                        .then(response => {
-                            let obj = response.data;
-                            let station_map = {};
-                            for (station of obj.metadata.stations) {
-                                station_map[station.id] = station.name;
-                            }
-
-                            this.temperatureList = [];
-                            for (reading of obj.items[0].readings) {
-
-                                this.temperatureList.push({
-                                    'id': reading.station_id,
-                                    'station': station_map[reading.station_id],
-                                    'temperature': reading.value
-                                });
-                            }
-                        })
-                        .catch(error => {
-                            this.message = 'HTTP Error ' + error.message;
-                        });
-                }
-            }, // methods
-        });
-
-    </script>
-
-    <script src="weather-menu.js"></script>
-
-    <script>
-        const vm = app.mount('#app');
-    </script>
-
 
 
 
 
         <!-- REFERENCE TO LOCAL EXTERNAL JAVASCRIPT-->
     <script src="js/attraction.js"></script>
-
-
     <script src="js/navbar.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

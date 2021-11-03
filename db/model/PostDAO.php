@@ -3,6 +3,43 @@
 require_once 'common.php';
 
 class PostDAO {
+    public function getUserInfo($userEmail) {
+        //points, username, 
+        // STEP 1
+        $connMgr = new ConnectionManager();
+        $conn = $connMgr->connect();
+
+        // STEP 2
+        $sql = "SELECT  acc_email
+                        ,points
+                FROM    acc
+                WHERE   acc_email = :userID"; 
+        $stmt = $conn->prepare($sql);
+
+        // STEP 3
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindParam(':userID', $userEmail, PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+        // STEP 4
+        $travel_history = []; // Indexed Array of Post objects
+        while( $row = $stmt->fetch() ) {
+            $travel_history[] =
+                new Event(
+                    $row['location_name'],
+                    $row['time_visited'],
+                    $row['category'],
+                    );
+        }
+
+        // STEP 5
+        $stmt = null;
+        $conn = null;
+
+        // STEP 6
+        return $posts;
+    }
 
     public function getAll() {
         // STEP 1
@@ -165,23 +202,24 @@ class PostDAO {
         $conn = $connMgr->connect();
 
         // STEP 2
-        $sql = "SELECT * FROM users 
-                WHERE acc_email = '$username' AND 
-            `   acc_password = '$password'";
+        $sql = "SELECT * 
+                FROM acc 
+                WHERE acc_email = :acc_email 
+                AND acc_password = :acc_password";
                     
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':acc_email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':acc_email',  $email, PDO::PARAM_STR);
         $stmt->bindParam(':acc_password', $password, PDO::PARAM_STR);
         
         //STEP 3
-        $status = $stmt->execute();
-        if($numrows > 1) { 
-            //send email to sysadmin that my site has been hacked 
-        } else if ($numrows = 0) { 
-            echo "wrong username or password";
-        }
-        else { 
-            echo "welcome dr. Falken" ;
+        // if( $stmt->execute() ) {
+        $status = False;
+        
+        $stmt->execute();
+        // $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+        if ($stmt->rowCount() > 0){
+            $status = True;
         }
         // STEP 4
         $stmt = null;
