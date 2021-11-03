@@ -86,15 +86,16 @@ const attraction_cat = Vue.createApp({
         
         axios.request(options)
         .then(response=>{
-        console.log(response.data);
+        console.log(response.data.data.address);
 
         for (i=0; i<response.data.data.length; i++){
             
             var a_cat = response.data.data[i];
             this.attractionCate.push(a_cat);
+            // console.log(a_cat);
+
 
         }
-        console.log(this.attractionCate);
 
         return this.attractionCate;
 
