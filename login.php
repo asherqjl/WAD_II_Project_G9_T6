@@ -13,11 +13,6 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" href="css/navbar.css">
 
-    <script src="js/navbar.js"></script>
-    <script src="js/login-registration.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
     <script type="text/javascript">
     $(document).ready(function() {
         $('#toggle').click(function() {
@@ -57,11 +52,7 @@
                                 <button class="btn btn-primary active" aria-current="page" id="toggle" onClick="javascript:change(1)">
                                     <span id="change1">Login</span>
                                 </button>
-                                <div>
-                                    <?php
-                                    include("db/test.php");
-                                    ?>
-                                </div>
+
                                     <div id="signup">
                                         <form class="mx-1 mx-md-4 loginsignup">
                                             <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
@@ -148,6 +139,8 @@
     
     
 </body>
-
+<script src="js/navbar.js"></script>
+<script src="js/login-registration.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 </html>

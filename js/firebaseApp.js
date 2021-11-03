@@ -11,6 +11,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const fbApp = initializeApp(firebaseConfig)
 const auth = firebase.auth()
+const db = firebase.database()
 
 function register(){
     //get all inputs

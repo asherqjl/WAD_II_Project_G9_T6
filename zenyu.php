@@ -57,23 +57,23 @@
             </div>
 
             <div id= "app3" ">
-                <p v-html="axiosTest()"><p></p></p>
+                <div v-for="travel in travel_history">
+                    <p>{{travel_history[0]}}</p>
+                </div>
             </div>
         </div>
     </body>
     <script src="js/navbar.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script>console.log({{travel_history}})</script>
     <script>
 const app3 = Vue.createApp({
     data(){
         return {
-            travel_history:'x'
-        };
+            travel_history:''
+        }
     },
-    methods: {
-        get_travel_history() {
+    created() {
             // POST request
             /* axios.post(url, data
             )
@@ -89,9 +89,8 @@ const app3 = Vue.createApp({
             // GET request
             axios.get('http://localhost/WAD_II_Project_G9_T6/db/getTravelHistory.php')
             .then(response => {
-                console.log(response.data)
-                this.travel_history= response.data
                 console.log(this.travel_history)
+                this.travel_history= response.data
                 this.showStatus = true
                 this.status = response.data
             })
@@ -103,9 +102,9 @@ const app3 = Vue.createApp({
         },
         axiosTest() {
             this.travel_history= axios.get('http://localhost/WAD_II_Project_G9_T6/db/getTravelHistory.php').then(response => response.data)
+            console.log(this.travel_history)
             
         }
-    }
 })
 const vm3 = app3.mount("#app3");
 
