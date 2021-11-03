@@ -57,7 +57,7 @@ const reward = Vue.createApp({
   data() {
     return {
         productCat:{},
-        productDict:[],
+        productDict:[]
     };
 }, 
   created(){
@@ -77,13 +77,39 @@ const reward = Vue.createApp({
         // console.log(response.data);
         var productdata = response.data;
         this.ProductDetails(productdata);
-        this.ProductCard();
-          
+        
       }).catch(function (error) {
         console.error(error);
       });
   },
   methods:{
+    redeempoint(productprice){
+      // split dollar sign and number e.g. $ 49.99
+      var splitprice = productprice.split("$ ");
+      var actualprice = Number(splitprice[1]);
+      var points = 0;
+      // if (actualprice<100){
+      //   console.log("hi")
+      //   points = 100
+      // }
+
+      if(Number(actualprice) < 20){
+        points = 200
+      }else if(Number(actualprice)<30){
+        points = 400
+      }else if(Number(actualprice)<40){
+        points = 600
+      }else if(Number(actualprice)< 50){
+        points = 800
+      }else if(Number(actualprice)< 60){
+        points = 1000
+      }else{
+        points = 1500
+      }
+      // console.log(points)
+      return points
+      
+    },
     ProductDetails(productdata) {
       console.log(productdata.results.length)
       for (i=0; i<productdata.results.length; i++){
@@ -93,6 +119,8 @@ const reward = Vue.createApp({
         var productcategory = productdata.results[i].categoryName;
         var productimage = productdata.results[i].images[0].url;
         var productprice = productdata.results[i].price.formattedValue;
+        var points = this.redeempoint(productprice);
+
         // productDetails.push(category);
         // productDetails.push(image);
         // productDetails.push(price);
@@ -101,16 +129,17 @@ const reward = Vue.createApp({
 
         if(!this.productDict[productimage]){
           // this.productDict[productName] = productDetails;
-          this.productDict.push({product:productName,category:productcategory, image:productimage, price:productprice}) ;
-        }else{
-          productName += "_2";
-          // this.productDict[productName] = productDetails;
-          this.productDict.push({product:productName,category:productcategory, image:productimage, price:productprice});
+          this.productDict.push({product:productName,category:productcategory, image:productimage, point:points, price:productprice}) ;
         }
+        // else{
+        //   productName += "_2";
+        //   // this.productDict[productName] = productDetails;
+        //   this.productDict.push({product:productName,category:productcategory, image:productimage, price:productprice});
+        // }
 
         // console.log(productName)
         // console.log(Object.keys(this.productDict).length);
-        console.log(this.productDict[0])
+        // console.log(this.productDict[0])
       
         // retrive category data and put in a dictionary with total number of count [ladies:0, kids:0, men:0]
         if (!this.productCat[productcategory]){
@@ -119,16 +148,9 @@ const reward = Vue.createApp({
           this.productCat[productcategory] +=1;        
         }
       }
-      console.log(Object.keys(this.productDict).length);
+      // console.log(Object.keys(this.productDict).length);
       console.log(this.productDict)
       return this.productDict;
-    },
-    ProductCard(){
-      console.log(Object.keys(this.productDict).length)
-      for (i=0; i<this.productDict.length; i++){
-        
-      }
-      
     }
   }
 })

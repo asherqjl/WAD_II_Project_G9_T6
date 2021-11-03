@@ -109,7 +109,7 @@
                                                 <img :src="product.image" class="card-img-top mt-4 img-fluid" alt="item1">
                                                 <div class="card-body ">
                                                     <h5 class="card-title text-dark">{{product.product}}</h5>
-                                                    <p class="card-text text-dark">100 Points</p>
+                                                    <p class="card-text text-dark">{{product.point}} Points</p>
                                                     <div class = "text-center">
                                                         <button type="button" class="btn btn-outline-primary">Redeem</button>
                                                     </div>
