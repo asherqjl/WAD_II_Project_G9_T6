@@ -113,7 +113,7 @@
     
     console.log(location_list);
 
-    const locations_list=[];
+    
             var options = {
             method: 'GET',
             url: 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword=attractions&language=en&apikey=UnWhZ0GbjpzxKlcM9GssA3xbSio89mM2'
@@ -122,20 +122,28 @@
             axios.request(options)
             .then(response=>{
                 
-                
+                var locations_list=[];
                 for (i=0; i<response.data.data.length; i++){
-                    var location= response.data.data[i].location
-                    var each_location={lat:location.latitude,lng:location.longitude}
-                    locations_list.push(each_location)
+                    // console.log(locations_list)
+                    var lat= response.data.data[i].location.latitude
+                    var lng= response.data.data[i].location.longitude
+                    // console.log(lat, lng)
+
+
+                    // var each_location={lat:location.latitude,lng:location.longitude}
+                    locations_list.push({latitude:lat,longitude:lng})
+                    
                 }
+                console.log(locations_list[0])
             
             }).catch(function (error) {
             console.error(error);
             });
-        console.log(locations_list)
-        console.log(locations_list[0])
-        console.log(typeof location_list[0]);
-        console.log(typeof locations_list[0].lat);
+        
+
+        // console.log(locations_list[0])
+        // console.log(typeof location_list[0]);
+        // console.log(typeof locations_list[0].lat);
         
     
     

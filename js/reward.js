@@ -56,7 +56,7 @@ const reward = Vue.createApp({
   data() {
     return {
         productCat:{},
-        productDict:{},
+        productDict:[],
     };
 }, 
   created(){
@@ -86,37 +86,36 @@ const reward = Vue.createApp({
     ProductDetails(productdata) {
       console.log(productdata.results.length)
       for (i=0; i<productdata.results.length; i++){
-        // put the data into a dictionary {productname:[category, image, price]}
-        var productDetails=[]; 
+        // put the data into a dictionary {{product: productname, category：category, img：image, price：price},}
+        // var productDetails=[]; 
         var productName = productdata.results[i].name;
-        var category = productdata.results[i].categoryName;
-        var image = productdata.results[i].images[0].url;
-        var price = productdata.results[i].price.formattedValue;
-        productDetails.push(category);
-        productDetails.push(image);
-        productDetails.push(price);
+        var productcategory = productdata.results[i].categoryName;
+        var productimage = productdata.results[i].images[0].url;
+        var productprice = productdata.results[i].price.formattedValue;
+        // productDetails.push(category);
+        // productDetails.push(image);
+        // productDetails.push(price);
+      
+        // productDetails = {category:productcategory, image:productimage, price:productprice};
 
         if(!this.productDict[productName]){
-          this.productDict[productName] = productDetails;
+          // this.productDict[productName] = productDetails;
+          this.productDict.push({product:productName,category:productcategory, image:productimage, price:productprice}) ;
         }else{
           productName += "_2";
-          this.productDict[productName] = productDetails;
+          // this.productDict[productName] = productDetails;
+          this.productDict.push({product:productName,category:productcategory, image:productimage, price:productprice});
         }
-
 
         // console.log(productName)
         // console.log(Object.keys(this.productDict).length);
-        
+        console.log(this.productDict[0])
       
         // retrive category data and put in a dictionary with total number of count [ladies:0, kids:0, men:0]
-        if (!this.productCat[category]){
-          // console.log("hi");
-          // this.productCat.push(category);
-          this.productCat[category] = 1;
-          // console.log(this.productCat)
+        if (!this.productCat[productcategory]){
+          this.productCat[productcategory] = 1;
         }else{
-          // console.log("hey")
-          this.productCat[category] +=1;        
+          this.productCat[productcategory] +=1;        
         }
       }
       console.log(Object.keys(this.productDict).length);
