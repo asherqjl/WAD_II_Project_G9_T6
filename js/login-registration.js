@@ -22,7 +22,7 @@ const app2 = Vue.createApp({
                 params: data
             })
             .then(response => {
-                window.location.href="http://localhost:8888/WAD_II_Project_G9_T6/home.html"
+                window.location.href="http://localhost:8888/WAD_II_Project_G9_T6/home.php"
             })
             .catch(error => {
                 this.showStatus = true
@@ -47,8 +47,8 @@ const app3 = Vue.createApp({
             this.submitLogin()
             const stats = this.showStatus
             if (stats) {
-                window.location.href="http://localhost:8888/WAD_II_Project_G9_T6/home.html"
                 alert('Login success!')
+                window.location.href="http://localhost:8888/WAD_II_Project_G9_T6/home.php"
                 
             } 
             if(!stats) {
