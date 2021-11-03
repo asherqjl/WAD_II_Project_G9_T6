@@ -56,10 +56,13 @@
                 </div>
             </div>
 
-            <div id= "app3" ">
-                <div v-for="travel in travel_history">
-                    <p>{{travel_history[0]}}</p>
-                </div>
+            <div id= "app3" class="d-flex justify-content-center">
+                <table class="table bg-white w-75">
+                    <tr v-for="travel in travel_history">
+                        <td><h2>{{travel.location_name}}</h2><br/>{{travel.category}}</td>
+                        <td>{{travel.time_visited}}</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </body>
@@ -100,11 +103,6 @@ const app3 = Vue.createApp({
             }) 
             
         },
-        axiosTest() {
-            this.travel_history= axios.get('http://localhost/WAD_II_Project_G9_T6/db/getTravelHistory.php').then(response => response.data)
-            console.log(this.travel_history)
-            
-        }
 })
 const vm3 = app3.mount("#app3");
 
