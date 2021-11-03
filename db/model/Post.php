@@ -1,6 +1,6 @@
 <?php
 
-class Event {
+class Post {
     private $id;
     private $create_timestamp;
     private $update_timestamp;

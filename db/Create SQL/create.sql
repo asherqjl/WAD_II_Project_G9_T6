@@ -20,4 +20,6 @@ create table travel_history (
 insert into travel_history(user_id, location_name, time_visited, category) 
 values (1, "Bugis", "Yesterday", "Tourism");
 
+insert into travel_history(user_id, location_name, time_visited, category)
+values (1, "Orchard", "Tomorrow", "Shopping");
 select * from travel_history

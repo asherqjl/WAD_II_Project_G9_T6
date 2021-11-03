@@ -23,10 +23,10 @@ class PostDAO {
         $travel_history = []; // Indexed Array of Post objects
         while( $row = $stmt->fetch() ) {
             $travel_history[] =
-                new Event(
+                new Post (
                     $row['location_name'],
                     $row['time_visited'],
-                    $row['category'],
+                    $row['category']
                     );
         }
 
@@ -35,7 +35,7 @@ class PostDAO {
         $conn = null;
 
         // STEP 6
-        return $posts;
+        return $travel_history;
     }
 
     public function update($id, $points) {
