@@ -14,20 +14,31 @@ const attraction = Vue.createApp({
         axios.request(options)
         .then(response=>{
           var attractionData = response.data.data;
-          console.log(attractionData.length)
 
           for (i=0; i<response.data.data.length; i++){
               var desc = attractionData[i].description;
+              console.log(desc)
+
               var name = attractionData[i].name; 
+              // console.log(attractionData)
+
               var type = attractionData[i].type; 
+   
 
-
-              this.attractionDict.push({attraction:name,category:type, desc:desc})
+              if(! attractionData[i].images[0] || !attractionData[i].images[0].url || attractionData[i].images[0].url =="" ){
+                var photo = "images/dummy-post-square-1.jpeg"
+              }else{
+                var photo = attractionData[i].images[0].url
+                
+              }
+ 
+              this.attractionDict.push({attraction:name,category:type, desc:desc, photo:photo})
               // console.log(this.attractionDict)
               }
 
-          console.log(this.attractionDict)
+          // console.log(this.attractionDict)
           return this.attractionDict
+
       }).catch(function (error) {
         console.error(error);
       

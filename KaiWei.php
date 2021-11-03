@@ -29,7 +29,7 @@
         <include-navbar></include-navbar>
     </div>
 
-        <div class="row g-2 my-2" id='attraction'>
+        <div class="row g-2 my-2">
             <div class="col-md-5 col-sm-6">
               <div class="form-floating ">
                 <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" >
@@ -59,10 +59,10 @@
     <div class="PhotoFrame">
 
         <!-- <div class="row align-items-center"> -->
-        <div class="row justify-content-center">
+        <!-- <div class="row justify-content-center">
         <div class="col-md-6 col-xl-4">
-            <!-- Add a card -->
-            <div class="card h-100" style="width: 18rem; margin: auto;">
+            Add a card -->
+            <!-- <div class="card h-100" style="width: 18rem; margin: auto;">
                 <img src="/WAD2/krazyWomen/justin_bg.jpg" class="card-img-top">
                 <div class="card-body">
                 <h5 class="card-title">Justin House</h5>
@@ -70,19 +70,19 @@
                 <a href="#" class="btn btn-danger">Read More</a>
                 </div>
             </div>
-        </div>
+        </div>  -->
+
 
 
 
         <!-- Add a card -->
-        <div class="row" >
-            <div class="col-sm-12 col-md-6 col-lg-3" v-for="a_obj in attractionDict">
-                <div class="card mb-5">
-                    <img src="images/dummy-post-square-1.jpeg" class="card-img-top mt-4 img-fluid" alt="item1">
+        <div class="row"  id='attraction' >
+            <div class="col-sm-12 col-md-6 col-lg-3 display: block" v-for="a_obj in attractionDict">
+                <div class="card mb-5 ">
+                    <img :src="a_obj.photo" class="card-img-top mt-4 img-fluid" alt="item1">
                     <div class="card-body ">
-                        <div> {{a_obj}}</div>
                         <h5 class="card-title text-dark">{{a_obj.attraction}}</h5>
-                        <p class="card-text text-dark">100 Points</p>
+                        <p class="card-text text-dark">{{a_obj.desc}}</p>
                         <div class = "text-center">
                             <a href="#" class="btn btn-danger">Read More</a>
                         </div>
