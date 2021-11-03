@@ -77,11 +77,11 @@
                             <form class="brand">
                                 <div class="form-inline d-flex align-items-center py-1"> <input type="checkbox"> <label class="tick">1-100<span class="check"></span> </label> </div>
                                 <div class="form-inline d-flex align-items-center py-1">  <input type="checkbox" checked> <label class="tick">101-200<span class="check"></span> </label> </div>
-                                <di v class="form-inline d-flex align-items-center py-1"> <input type="checkbox" checked><label class="tick">201-300<span class="check"></span> </label> </div>
-                                <div class="form-inline d-flex align-items-center py-1">  <input type="checkbox"><label class="tick">301-400<span class="check"></span> </label> </div>
-                                <div class="form-inline d-flex align-items-center py-1">  <input type="checkbox"> <label class="tick">Above 401<span class="check"></span> </label> </div>
+                                <di class="form-inline d-flex align-items-center py-1"> <input type="checkbox" checked><label class="tick">201-300<span class="check"></span> </label> </div>
+                                <div class="form-inline d-flex align-items-center py-1"> <input type="checkbox"> <label class="tick">1-100<span class="check"></span> </label> </div>
+                                <div class="form-inline d-flex align-items-center py-1"> <input type="checkbox"> <label class="tick">1-100<span class="check"></span> </label> </div>
                             </form>
-                        </div>
+                        
                     
                 </div>
                 <div class="col-md-6 col-lg-10" id = "items">
@@ -94,7 +94,7 @@
                                     </div>                        
                                     <br>
                                     <div class="d-flex flex-row">
-                                        <div class="text-muted m-2" id="res">Showing 44 results</div>
+                                        <div class="text-muted m-2" id="res">Showing {{productDict.length}} results</div>
                                         <div class="ml-auto mr-lg-3 ms-auto">
                                             <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Sort by</span> <select name="sort" id="sort">
                                                     <option value="popularity"><b>Points</b></option>
@@ -104,11 +104,11 @@
                                     </div>
                                     <!-- 1st row-->
                                     <div class="row" >
-                                        <div class="col-sm-12 col-md-6 col-lg-3" v-for="(value,key) in productDict">
+                                        <div class="col-sm-12 col-md-6 col-lg-3" v-for="product in productDict">
                                             <div class="card mb-5">
-                                                <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item1">
+                                                <img :src="product.image" class="card-img-top mt-4 img-fluid" alt="item1">
                                                 <div class="card-body ">
-                                                    <h5 class="card-title text-dark">{{key}}</h5>
+                                                    <h5 class="card-title text-dark">{{product.product}}</h5>
                                                     <p class="card-text text-dark">100 Points</p>
                                                     <div class = "text-center">
                                                         <button type="button" class="btn btn-outline-primary">Redeem</button>
@@ -219,7 +219,7 @@
                                     <div class = "text-center">
                                         <button onclick = "myFunction()" type="button" id="myBtn" class="btn btn-light btn-outline-secondary">Show More</button>
                                     </div>
-                                </div>
+                                
                             </div>
                         </div>
 
