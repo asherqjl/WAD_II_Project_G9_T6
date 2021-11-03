@@ -16,8 +16,13 @@ const attraction = Vue.createApp({
           var attractionData = response.data.data;
 
           for (i=0; i<response.data.data.length; i++){
+            // console.log(response.data.data)
+
+            var latitude= attractionData[i].location.latitude
+            var longitude =attractionData[i].location.longitude
+
+
               var desc = attractionData[i].description;
-              console.log(desc)
 
               var name = attractionData[i].name; 
               // console.log(attractionData)
@@ -32,8 +37,8 @@ const attraction = Vue.createApp({
                 
               }
  
-              this.attractionDict.push({attraction:name,category:type, desc:desc, photo:photo})
-              // console.log(this.attractionDict)
+              this.attractionDict.push({attraction:name,category:type, desc:desc, photo:photo, latitude:latitude, longitude:longitude})
+              console.log(this.attractionDict)
               }
 
           // console.log(this.attractionDict)
