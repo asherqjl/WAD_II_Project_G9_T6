@@ -1,3 +1,4 @@
+
 function myFunction() {
   var dots = document.getElementById("dots");
   var moreText = document.getElementById("more");
@@ -75,7 +76,6 @@ const reward = Vue.createApp({
       .then(response=>{
         // console.log(response.data);
         var productdata = response.data;
-        console.log(productdata)
         this.ProductDetails(productdata);
         this.ProductCard();
           
@@ -99,7 +99,7 @@ const reward = Vue.createApp({
       
         // productDetails = {category:productcategory, image:productimage, price:productprice};
 
-        if(!this.productDict[productName]){
+        if(!this.productDict[productimage]){
           // this.productDict[productName] = productDetails;
           this.productDict.push({product:productName,category:productcategory, image:productimage, price:productprice}) ;
         }else{
@@ -120,6 +120,7 @@ const reward = Vue.createApp({
         }
       }
       console.log(Object.keys(this.productDict).length);
+      console.log(this.productDict)
       return this.productDict;
     },
     ProductCard(){
