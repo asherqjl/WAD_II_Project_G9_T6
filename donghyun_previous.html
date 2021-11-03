@@ -18,45 +18,13 @@
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
     <script src="js/attractions_donghyun.js"></script>
     <script src="https://kit.fontawesome.com/fbf5c5a506.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@next"></script>
 
 </head>
-<body onload="display_location()">
+<body>
+    <!-- Navigation -->
     <div id="navdiv">
-        <nav class="navbar navbar-expand-md">
-        
-            <div class="container-fluid">
-                <a class="navbar-brand">SmilingAcrossLocal<span style="font-size: 11px;"> SG</span></a> 
-                
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-                
-                <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item active"> 
-                            <a class="nav-link" aria-current="page" href="#"> LOGIN </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="home.html">HOME</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="KaiWei.html">ATTRACTIONS</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="DongHyun.html">MAPS</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="zenyu.html">TRAVEL HISTORY</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="FangTing.html">REWARDS</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <include-navbar></include-navbar>
     </div>
 
     <div class="searchbar">
@@ -91,8 +59,8 @@
 
            
         <div class="input-group mb-3 my-3">
-            <input type="search" class="form-control me-2" placeholder="Search Attraction" aria-label="Search">
-            <button class="btn btn-danger" type="submit" >Search</button>
+            <input type="search" class="form-control me-2" placeholder="Search by Attraction Name!" aria-label="Search">
+            <button class="btn btn-danger" type="button" onclick="getLoc()" >Search</button>
         </div>
 
 
@@ -101,23 +69,7 @@
 
         <div id="map" class="map-responsive">
         </div>
-        <script>
-        // Initialize and add the map
-        function initMap() {
-            // default: The location of SIS, SMU
-            var lat = parseFloat(document.getElementById("lat").value);
-            var lng = parseFloat(document.getElementById("lng").value);
-            // var uluru = {lat: -25.344, lng: 131.036};
-            var loc = { lat: lat, lng: lng };
-
-            // The map, centered at SIS, SMU
-            var map = new google.maps.Map(
-                // play with the zoom value to zoom in or out
-                document.getElementById('map'), { zoom: 14, center: loc });
-            // The marker, positioned at SIS, SMU
-            var marker = new google.maps.Marker({ position: loc, map: map });
-        }
-    </script>
+        
 
     <!--Load the API from the specified URL
     * The async attribute allows the browser to render the page while the API loads
@@ -127,27 +79,119 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT6sTbyN3xQA9bTHQYcyFVXsqAXT54zfE&callback=initMap"
         async defer></script>
 
-    <div>
     
-        <form>
-            <div class="form-group">
-                <label for="addr">Enter An Address</label>
-                <input type="text" class="form-control" name="addr" id="addr"
-                    placeholder="E.g. Singapore Management University">
-                <br><button type="button" onclick="getLoc()" class="btn btn-primary">Get Full Address!</button>
-                <!-- the following set the lat, lng values to put a marker on the map-->
-                <input type="hidden" id="lat" name="lat" value="1.2973784" />
-                <input type="hidden" id="lng" name="lng" value="103.8495219" />
-            </div>
-            <p id="display" class="lead text-center"></p>
-        </form>
-    </div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
+
+            
         
+            
+
+
+    function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 11,
+                center: { lat: 1.3649170000000002, lng: 103.82287200000002 },
+            });
+
+            setMarkers(map);
+            }
+
+            // Data for the markers consisting of a name, a LatLng and a zIndex for the
+            // order in which these markers should display on top of each other.
+    const beaches = [
+        ["Bondi Beach", -33.890542, 151.274856, 4],
+        ["Coogee Beach", -33.923036, 151.259052, 5],
+        ["Cronulla Beach", -34.028249, 151.157507, 3],
+        ["Manly Beach", -33.80010128657071, 151.28747820854187, 2],
+        ["Maroubra Beach", -33.950198, 151.259302, 1],
+    ];
+
+    const location_list=[[1.360261, 103.9892345],[1.360261, 103.9892345]];
+    // [{lantitie:1.3,longitute:103}]
+    
+    console.log(location_list);
+
+    function return_list(){
+            var options = {
+            method: 'GET',
+            url: 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword=attractions&language=en&apikey=UnWhZ0GbjpzxKlcM9GssA3xbSio89mM2'
+            };
+
+            axios.request(options)
+            .then(response=>{
+                
+                var locations_list=[];
+                for (i=0; i<response.data.data.length; i++){
+                    // console.log(locations_list)
+                    var lat= response.data.data[i].location.latitude
+                    var lng= response.data.data[i].location.longitude
+                    // console.log(lat, lng)
+                    // var each_location={lat:location.latitude,lng:location.longitude}
+                    locations_list.push({latitude:lat,longitude:lng})
+                }
+
+                console.log(locations_list);
+                
+                return locations_list;
+                
+            }).catch(function (error) {
+            console.error(error);
+            });
+            
+    }
+    
+
+           
+       
         
-        // Ajax call
+
+        // console.log(locations_list[0])
+        // console.log(typeof location_list[0]);
+        // console.log(typeof locations_list[0].lat);
+        
+    
+    
+    function setMarkers(map) {
+            // Adds markers to the map.
+            // Marker sizes are expressed as a Size of X,Y where the origin of the image
+            // (0,0) is located in the top left of the image.
+            // Origins, anchor positions and coordinates of the marker increase in the X
+            // direction to the right and in the Y direction down.
+               
+            const image = {
+                    url: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(20, 32),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                // Shapes define the clickable region of the icon. The type defines an HTML
+                // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+                // The final coordinate closes the poly by connecting to the first coordinate.
+                const shape = {
+                    coords: [1, 1, 1, 20, 18, 20, 18, 1],
+                    type: "poly",
+                };
+                
+                console.log(return_list());
+                
+                for (let i = 0; i < return_list().length; i++) {
+                    var attraction_location = return_list()[i];
+                    new google.maps.Marker({
+                        
+                    position: { lat: attraction_location.latitude, lng: attraction_location.longitude },
+                    map,
+                    icon: image,
+                    shape: shape,
+                    title: "Hello World"
+                    
+                    });
+                }
+            }
         function getLoc() {
             var addr = encodeURI(document.getElementById("addr").value);
             var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=AIzaSyDT6sTbyN3xQA9bTHQYcyFVXsqAXT54zfE";
@@ -171,43 +215,8 @@
                     document.getElementById("display").innerHTML = "Sorry, invalid address. Please try again!";
                 });
         }
-
-        function getFullAddress(data) {
-            var addr = data["results"][0]["formatted_address"];
-            var loc = getLatLng(data);
-            return addr + "<br> lat: " + loc["lat"] + ", lng: " + loc["lng"];
-        }
-
-        function getLatLng(data) {
-            var location = data["results"][0]["geometry"]["location"];
-            return location;
-        }
-        
-        function display_leisure()  {
-            var options = {
-            method: 'GET',
-            url: 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword=Leisure&language=en&apikey=MnqCCPlkgGWec8BPY7FeV8s7MkmBxP4h'
-            };
-            axios.request(options)
-            .then(response=>{
-                console.log(response.data.data)
-                for (i=0; i<response.data.data.length; i++){
-                    
-                    var location= response.data.data[i].location
-                    new google.maps.Marker({
-                        position: new google.maps.LatLng(location.latitude, location.longitude),
-                        map:map
-                });
-                console.log(location);
-                console.log(location.latitude);
-                console.log(location.longitude);
-                }
+                        
             
-            }).catch(function (error) {
-            console.error(error);
-            });
-            
-}
     </script>
         
             
@@ -215,7 +224,7 @@
 
         <!-- Footer -->
 
-
+    <script src="js/navbar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
         
