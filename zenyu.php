@@ -56,7 +56,7 @@
                 </div>
             </div>
 
-            <div id= "app3" class="d-flex justify-content-center">
+            <div id= "app3" class="d-flex justify-content-center ">
                 <table class="table bg-white w-75">
                     <tr v-for="travel in travel_history">
                         <td><h2>{{travel.location_name}}</h2><br/>{{travel.category}}</td>
