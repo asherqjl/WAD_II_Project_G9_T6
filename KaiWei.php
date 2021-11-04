@@ -25,38 +25,90 @@
 <body>
 
     <!-- Navigation -->
+    
     <div id="navdiv">
         <include-navbar></include-navbar>
     </div>
+    
+    <div class="container-fluid"  id='attraction'>
+        <div class="searchbar">
+            <div class="row g-2 my-2">
+                <!--dropdown list category APIdynamically -->
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-floating ">
+                    <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" >
+                        <option selected></option>
+                        <option value="1">Adventure</option>
+                        <option value="2">Arts</option>
+                        <option value="3">History & Culture</option>
+                        <option value="4">Leisure & Recreation</option>
+                        <option value="5">Nature & Wildlife</option>
+                    </select>
+                    <label for="floatingSelectGrid">Search by category</label>
+                    </div>
+                </div>
 
-        <div class="row g-2 my-2">
-            <div class="col-md-5 col-sm-6">
-              <div class="form-floating ">
-                <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" >
-                  <option selected></option>
-                  <option value="1">North</option>
-                  <option value="2">South</option>
-                  <option value="3">East</option>
-                  <option value="4">West</option>
-                </select>
-                <label for="floatingSelectGrid">Search Area</label>
-              </div>
-            </div>
+                <!--dropdown list location area -hard code -->
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-floating ">
+                        <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" >
+                        <option selected></option>
+                        <option value="N">North</option>
+                        <option value="S">South</option>
+                        <option value="E">East</option>
+                        <option value="W">West</option>
+                        </select>
+                        <label for="floatingSelectGrid">Search by area</label>
+                    </div>
+                </div>
 
-            <div class="col-auto mt-3">
-                <button class="btn btn-success" type="submit" >Search</button>
+            
+            <div class="input-group mb-3 my-3">
+                <input type="search" class="form-control me-2" aria-label="Search" v-model="searchField">
+                <!-- button @click -- display the API keyword search item-->
+                <button class="btn btn-danger" type="button" @click="getAttraction()">Search</button>
             </div>
+            
         </div>
 
-        <!-- <span style="padding-top: 15px; font-size: small; color: red;">if invalid:</span>
-        <form class="form-floating" style="margin-bottom: 20px;">
-            <input type="email" class="form-control is-invalid" id="floatingInputInvalid" placeholder="name@example.com" value="example of invalid input">
+        <!-- if input search keyword and able to find, display API result list-->
+        <div v-if="successfulSearch" :value="displayField">
+            <h1>Successful search! {{displayField}}</h1>
+            <div class="row"  >
+                <div class="col-sm-12 col-md-6 col-lg-3 display: block" v-for="a_obj in attractionDict">
+                    <div class="card mb-5 ">
+                        <img :src="a_obj.photo" class="card-img-top mt-4 img-fluid" alt="item1">
+                        <div class="card-body ">
+                            <h5 class="card-title text-dark">{{a_obj.attraction}}</h5>
+                            <p class="card-text text-dark">{{a_obj.desc}}</p>
+                            <div class = "text-center">
+                                <a href="#" class="btn btn-danger">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+            
+
+        <!-- else, display default API attraction list && warning-->
+
+        <div v-else>
+            <span style="padding-top: 15px; font-size: small; color: red;">No record found!</span>
+            <h1>Failed but display default</h1>
+
+        </div>
+
+
+        <!-- <form class="form-floating" style="margin-bottom: 20px;">
+            <input type="email" class="form-control is-invalid" id="floatingInputInvalid">
             <label for="floatingInputInvalid">Invalid input</label>
           </form> -->
-    </div>
+
         
     <!-- Cards -->
-    <div class="PhotoFrame">
+    <!-- <div class="PhotoFrame"> -->
 
         <!-- <div class="row align-items-center"> -->
         <!-- <div class="row justify-content-center">
@@ -73,24 +125,9 @@
         </div>  -->
 
 
+        <!-- Display attration in card -->
 
-
-        <!-- Add a card -->
-        <div class="row"  id='attraction' >
-            <div class="col-sm-12 col-md-6 col-lg-3 display: block" v-for="a_obj in attractionDict">
-                <div class="card mb-5 ">
-                    <img :src="a_obj.photo" class="card-img-top mt-4 img-fluid" alt="item1">
-                    <div class="card-body ">
-                        <h5 class="card-title text-dark">{{a_obj.attraction}}</h5>
-                        <p class="card-text text-dark">{{a_obj.desc}}</p>
-                        <div class = "text-center">
-                            <a href="#" class="btn btn-danger">Read More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+    </div>
 
 
 
