@@ -16,7 +16,7 @@ app.component('include-navbar',{
                 <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item active"> 
-                            <a class="nav-link" aria-current="page" href="login.php"> LOGIN/SIGNUP </a>
+                            <a class="nav-link" aria-current="page" href="login-signup.html"> LOGIN/SIGNUP </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="home.php">HOME</a>

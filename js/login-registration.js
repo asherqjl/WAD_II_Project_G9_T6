@@ -1,4 +1,4 @@
-
+// Registration
 const app2 = Vue.createApp({
     data(){
         return {
@@ -33,6 +33,7 @@ const app2 = Vue.createApp({
 })
 const vm2 = app2.mount("#signup");
 
+// Login
 const app3 = Vue.createApp({
     data(){
         return {
