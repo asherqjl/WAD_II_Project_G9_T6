@@ -229,5 +229,38 @@ class PostDAO {
         return $status;
     }
 }
+public function getPoints($id) {
+    // STEP 1
+    $connMgr = new ConnectionManager();
+    $conn = $connMgr->connect();
+
+    // STEP 2
+    $sql = "SELECT * 
+            FROM acc 
+            WHERE acc_email = :acc_email 
+            AND acc_password = :acc_password";
+                
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':acc_email',  $email, PDO::PARAM_STR);
+    $stmt->bindParam(':acc_password', $password, PDO::PARAM_STR);
+    
+    //STEP 3
+    // if( $stmt->execute() ) {
+    $status = False;
+    
+    $stmt->execute();
+    // $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+    if ($stmt->rowCount() > 0){
+        $status = True;
+    }
+    // STEP 4
+    $stmt = null;
+    $conn = null;
+
+    // STEP 5
+    return $status;
+}
+}
 
 ?>
