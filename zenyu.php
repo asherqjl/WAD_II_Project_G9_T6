@@ -23,24 +23,18 @@
             <include-navbar></include-navbar>
         </div>
     
-
+        <div id="app3">
         <div class='row'>
-            <div class='col-sm'>
-            </div>
-            <div class='col-sm '>
-                <img src='sad.png' class='img-fluid'></img>
-            </div>
-            <div class='col-sm'>
+            <div class='col-sm d-flex justify-content-center' >
+                <img  v-if="travel_history.length===0" src='./images/sad.png' class='img-fluid d-flex justify-content-center '></img>
+                <img  v-else src='./images/happy.png' class='img-fluid d-flex justify-content-center'></img>
             </div>
         </div>
 
             <div class='row'>
-                <div class='col-sm'>
-                </div>
-                <div class='col-sm text-center'>
-                    <h1>No History</h1>
-                </div>
-                <div class='col-sm'>
+                <div class='col-sm d-flex justify-content-center'>
+                    <h1 v-if="travel_history.length===0">No History</h1>
+                    <h1 v-else> Your Travel History</h1>
                 </div>
             </div>
 
@@ -48,15 +42,15 @@
                 <div class='col'>
                 </div>
                 <div class='col text-center'>
-                    <form action="https://google.com">
-                        <input type="submit" value="New Journey" />
+                    <form action="./DongHyun.html">
+                        <input type="submit" class="btn btn-secondary" value="New Journey" />
                     </form>
                 </div>
                 <div class='col'>
                 </div>
             </div>
 
-            <div id= "app3" class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center ">
                 <table class="table bg-white w-75">
                     <tr v-for="travel in travel_history">
                         <td><h2>{{travel.location_name}}</h2><br/>{{travel.category}}</td>
@@ -64,6 +58,7 @@
                     </tr>
                 </table>
             </div>
+        </div>
         </div>
     </body>
     <script src="js/navbar.js"></script>
@@ -90,15 +85,13 @@ const app3 = Vue.createApp({
                 this.status = 'There was an error: ' + error.message 
             })  */
             // GET request
-            axios.get('http://localhost/WAD_II_Project_G9_T6/db/getTravelHistory.php')
-            .then(response => {
-                console.log(this.travel_history)
-                this.travel_history= response.data
-                this.showStatus = true
+            url="http://localhost/WAD_II_Project_G9_T6/db/getTravelHistory.php"
+            axios.get(url)
+            .then(response => { 
+                this.travel_history= response.data.reverse()
                 this.status = response.data
             })
             .catch(error => {
-                this.showStatus = true
                 this.status = 'There was an error: ' + error.message 
             }) 
             
