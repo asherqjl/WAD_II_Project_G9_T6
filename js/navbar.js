@@ -7,7 +7,7 @@ app.component('include-navbar',{
     template: ` 
         <div><nav class="navbar navbar-expand-md">
             <div class="container-fluid">
-                <a href="home.php" class="navbar-brand">SmilingAcrossLocal<span style="font-size: 11px;"> SG</span></a> 
+                <a href="home.html" class="navbar-brand">SmilingAcrossLocal<span style="font-size: 11px;"> SG</span></a> 
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span></span>
                         <span></span>
@@ -19,7 +19,7 @@ app.component('include-navbar',{
                             <a class="nav-link" aria-current="page" href="login-signup.html"> LOGIN/SIGNUP </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="home.php">HOME</a>
+                            <a class="nav-link" href="home.html">HOME</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="KaiWei.php">ATTRACTIONS</a>

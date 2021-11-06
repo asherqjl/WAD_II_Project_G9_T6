@@ -1,16 +1,17 @@
 // Forms
 const signupForm = document.querySelector('#signupForm'); 
-const loginForm = document.querySelector('#loginForm'); 
+
 // For Sign Up
 const userName = document.querySelector('#userName');
 const userEmail = document.querySelector('#userEmail');
 const pwd1 = document.querySelector('#pwd1');
 const cfmPwd = document.querySelector('#cfmPwd');
-//For Login
 const loginEmail = document.querySelector('#loginEmail');
 const loginPwd = document.querySelector('#loginPwd');
 
-//Database creation
+const loginForm = document.querySelector('#loginForm'); 
+
+// Database creation
 // Create an instance of a db object for us to store the open database in
 let db;
 window.onload = function() {
@@ -22,13 +23,12 @@ window.onload = function() {
         console.log('Database failed to open');
     };
     request.onsuccess = function() {
-        console.log('Database opened successfully');
+        // console.log('Database opened successfully');
         db = request.result;
-        //displayData();
+        // displayData();
     }
 
-    // Setup the database tables if this has not already been done
-    // Usually only need to do this once it's like innit like that
+    // Setup the database tables if this has not already been done Usually only need to do this once it's like innit like that
     request.onupgradeneeded = function(e) {
         // Grab a reference to the opened database
         let db = e.target.result;
@@ -51,11 +51,15 @@ window.onload = function() {
         objectStoreNew.createIndex('time_visited', 'time_visited', { unique: false });
         objectStoreNew.createIndex('category', 'category', { unique: false });
         
-        console.log('Database setup complete');
+        // console.log('Database setup complete');
     };
-    // REGISTRATION \\
-    // Define the register() function
+    // Registration 
     signupForm.onsubmit = register;
+
+    // Login 
+    loginForm.onsubmit = login;
+
+    // Define the register() function 
     function register(e) {
         // prevent default - we don't want the form to submit in the conventional way
         e.preventDefault();
@@ -85,10 +89,12 @@ window.onload = function() {
             };
             // Report on the success of the transaction completing, when everything is done
             transaction.oncomplete = function() {
-                alert('Registration Successful!');
+                var usernamee = userName.value;
+                alert('Registration Successful '+usernamee+' !');
                 // Session
-                
-                window.location.href="http://localhost:8888/WAD_II_Project_G9_T6/home.php";                userName.value = '';
+                localStorage.setItem('user_name', userName.value);
+                window.location.href="http://localhost:8888/WAD_II_Project_G9_T6/home.html";                
+                userName.value = '';
                 // update the display of data to show the newly added item, by running displayData() again.
                 displayData();
             };
@@ -98,64 +104,60 @@ window.onload = function() {
         } else {
             alert("Come on ley!")
         }
-    }
-    // to console.log data that's been added into the database
-    // see what is inside the database
+    };
+  
+    // Login Function 
+    function login(e){
+        e.preventDefault();
+        let transaction = db.transaction(['user_acc'], 'readwrite');
+        
+        // call an object store that's already been added to the database
+        let objectStore = transaction.objectStore('user_acc');
+
+        objectStore.openCursor().onsuccess = function(e) {
+            // Get a reference to the cursor
+            let cursor = e.target.result;
+
+            // If there is still another data item to iterate through, keep running this code
+            if(cursor) {
+                if( loginEmail.value == cursor.value.email && loginPwd.value == cursor.value.password){
+                    var currentUserName = cursor.value.user_name;
+                    alert(currentUserName + ' Login Successful!');
+                    
+                    // Session
+                    localStorage.setItem('user_name', currentUserName);
+                    window.location.href="http://localhost:8888/WAD_II_Project_G9_T6/home.html";                
+                    userName.value = '';
+                } 
+                
+                cursor.continue();
+            } else {
+                
+                // if there are no more cursor items to iterate through, say so
+                console.log('No more accounts are found');
+            }
+        }
+    };
+    // Checking
+    // to console.log data that's been added into the database see what is inside the database
     function displayData() {
         let objectStore = db.transaction('user_acc').objectStore('user_acc');
 
         objectStore.openCursor().onsuccess = function(e) {
             // Get a reference to the cursor
             let cursor = e.target.result;
-            // var msg = 'No more accounts are found';
-            // if(e.target.result == null){
-            //     msg = 'No accounts are found';
-            // }
+
             // If there is still another data item to iterate through, keep running this code
             if(cursor) {
                 console.log(cursor.value)
-                // console.log(cursor.value.id);
-                // console.log(cursor.value.user_name);
-                // console.log(cursor.value.email);
-                // console.log(cursor.value.password);
-                // console.log(cursor.value.points);
+
                 
                 cursor.continue();
             } else {
                 // if there are no more cursor items to iterate through, say so
-                // console.log(msg);
                 console.log('Cursor is empty / Table is empty')
             }
         };
     }
-    loginForm.onsubmit = login;
-    function login(e){
-        let objectStore = db.transaction('user_acc').objectStore('user_acc');
-
-        objectStore.openCursor().onsuccess = function(e) {
-            // Get a reference to the cursor
-            let cursor = e.target.result;
-
-            // If there is still another data item to iterate through, keep running this code
-            if(cursor) {
-                console.log(cursor.value);
-                if( loginEmail === cursor.value.email && loginPwd === cursor.value.password){
-                    alert(cursor.value.userName);
-                    return
-                }
-                // console.log(cursor.value.id);
-                // console.log(cursor.value.user_name);
-                // console.log(cursor.value.email);
-                // console.log(cursor.value.password);
-                // console.log(cursor.value.points);
-                
-                cursor.continue();
-            } else {
-                
-                // if there are no more cursor items to iterate through, say so
-                console.log('No accounts are found');
-            }
-        }
-    }
-
 }
+// }
