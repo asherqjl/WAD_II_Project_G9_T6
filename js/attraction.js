@@ -2,26 +2,33 @@
 const attraction = Vue.createApp({
   data() {
     return {
-      searchField:"Attractions",
-      displayField:"",
-      attractionDict: [],
-      attractionCat:[],
-      errorMsg: ''
+      searchField:"adventure",   //input search textbox
+      displayField:"",          //display which API cate is being called 
+      displayText:"Enter attraction here!",   //placeholder
+      attractionDict: [],  //main data dict
+      attractionCat:[],         //dropdown category option
+      FilteredAttByCat:[],      //the filtered data
+      errorMsg: '',             //display err msg if any
+      selected_cat :"All" 
     };
   },
   created(){
     this.getAttraction()
-
   }
   ,
   methods :{
     getAttraction(){
+      if(this.searchField.trim()==""){
+        this.searchField ="adventure"
+      }
+      console.log(this.searchField)
+      this.selected_cat = "All"
+
       var options = {
         method: 'GET',
         url: 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword='+ 
         this.searchField+ "&language=en&apikey=MnqCCPlkgGWec8BPY7FeV8s7MkmBxP4h"
       };
-      // console.log(this.searchField)
       
       axios.request(options)
       .then(response=>{
@@ -29,12 +36,10 @@ const attraction = Vue.createApp({
           this.attractionDict=[]
           this.attractionCat=[]
           this.errorMsg =""
-          console.log(attractionData)
         
           for (i=0; i<attractionData.length; i++){
-            // var latitude= attractionData[i].location.latitude
-            // var longitude =attractionData[i].location.longitude
-            var desc = attractionData[i].description;   //to do: trim the text (by bootstrap display or java extract certain till certain index)
+
+            var desc = attractionData[i].description;
             var name = attractionData[i].name;           
             var type = attractionData[i].type; 
 
@@ -47,50 +52,75 @@ const attraction = Vue.createApp({
                 var photo = attractionData[i].images[0].url
               }
               else if(attractionData[i].images[0].uuid.length >2){
-                var temp_photo = attractionData[i].images[0].uuid
+                let temp_photo = attractionData[i].images[0].uuid
                 var photo = "https://tih-api.stb.gov.sg/media/v1/download/uuid/" + temp_photo +"?apikey=MnqCCPlkgGWec8BPY7FeV8s7MkmBxP4h"
-              }
-            }
-            // console.log(photo)
+            }}
   
             //extract all the type available in this dataset
             if(! this.attractionCat.includes(type)){
               this.attractionCat.push(type)}
             
-            //store in a our main dict
+            //store in a main dict
             this.attractionDict.push({attraction:name,category:type, desc:desc, photo:photo})
-            // console.log(this.attractionDict)
-        }
-        
+          }
+     
+        this.FilteredAttByCat = this.attractionDict
+        // console.log(this.attractionResult )
+
         //alphabatically sort category type
         this.attractionCat.sort()
-        // console.log(this.attractionCat)
-
         this.displayField=this.searchField
         this.searchField=""
-        return this.attractionDict
+        this.displayText="Enter attraction here!"
         
       }).catch(error=> {
+        this.searchField=""
+        this.displayText = "Cannot find! Please enter again!"
         this.errorMsg="<span style='padding-top: 15px; font-size: small; color: red;'>No record found! Here are the recommended attractions!</span>"
-        // console.log(error);
       }
-      )}
-    },
-    // getImage(){
-    //   var imgoptions = {
-    //     method: 'GET',
-    //     url: 'https://app.zenserp.com/api/v2/search',
-    //     params: {q: this.searchField , tbm:'isch', location: 'Singapore', hl: 'en', num: '1', start: '1', ijn: '1'},
-    //     headers: {
-    //       'apikey': "c9fbd920-3d57-11ec-a2ca-ab4629a79280"}
-    //   };
+      )
 
-    //   axios.request(imgoptions).then(function (response) {
-    //     console.log(response.data);
-    //   }).catch(function (error) {
-    //     console.error(error);
-    //   });
+  }},
+  computed :{
+    displaySelected(){
+      if(this.selected_cat == "All"){
+        this.FilteredAttByCat = this.attractionDict
+        return
+      }
+      
+      let tempResult = [];
+      this.FilteredAttByCat =[];
 
-    // }
+      for (i=0; i<this.attractionDict.length; i++){
+        if(this.attractionDict[i].category == this.selected_cat){
+          tempResult.push(this.attractionDict[i])
+          
+        }
+      }
+      this.FilteredAttByCat = tempResult
+      console.log(this.FilteredAttByCat)
+    }
+
+  }
 })
-  const attraction_vm = attraction.mount('#attraction');
+const attraction_vm = attraction.mount('#attraction');
+
+
+function display_image(){
+    var temp_photo ="101489f1ec856e34735a436a4e819576c2e"
+    var url= "https://tih-api.stb.gov.sg/media/v1/download/uuid/"+ temp_photo  +"?apikey=MnqCCPlkgGWec8BPY7FeV8s7MkmBxP4h"
+
+    console.log("entered")
+
+    axios.get(url)
+    .then(response => {
+        console.log("yes")
+        console.log(response)
+        console.log( response.data )
+
+
+    })
+    .catch(error => {
+        console.log( error.message )
+    })
+  }

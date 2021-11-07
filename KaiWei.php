@@ -25,6 +25,7 @@
     <div id="navdiv">
         <include-navbar></include-navbar>
     </div>
+
     
     <div class="container-fluid"  id='attraction'>
         <div class="searchbar">
@@ -32,54 +33,56 @@
                 <!--dropdown list category APIdynamically -->
                 <div class="col-md-6 col-sm-6" >
                     <div class="form-floating" >
-                    <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example"  >
-                        <option selected>All</option>
-                        <option v-for="cat_obj in attractionCat" :value="cat_obj">{{cat_obj}}</option>
-  
-                    </select>
-                    <label for="floatingSelectGrid">Search by category</label>
+                        <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" v-model="selected_cat" @change="displaySelected" >
+                            <option >All</option>
+                            <option v-for="cat_obj in attractionCat">{{cat_obj}}</option>
+                            
+                        </select>
+                        <label for="floatingSelectGrid">Search by category</label>
                     </div>
                 </div>
-
+                
                 <!--dropdown list location area -hard code -->
                 <div class="col-md-6 col-sm-6">
                     <div class="form-floating ">
                         <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" >
-                        <option selected></option>
-                        <option value="N">North</option>
-                        <option value="S">South</option>
-                        <option value="E">East</option>
-                        <option value="W">West</option>
+                            <option selected></option>
+                            <option value="N">North</option>
+                            <option value="S">South</option>
+                            <option value="E">East</option>
+                            <option value="W">West</option>
                         </select>
                         <label for="floatingSelectGrid">Search by area</label>
                     </div>
                 </div>
-
-            
-            <div class="input-group mb-3 my-3">
-                <input type="search" class="form-control me-2" aria-label="Search" placeholder="Enter attraction here!" v-model="searchField">
-                <!-- button @click -- display the API keyword search item-->
-                <button class="btn btn-danger" type="button" @click="getAttraction()">Search</button>
-            </div>
-
-            <!-- not v accurate yet, when user enter invalid input, the list will not update to default hais-->
-            <div v-html ="errorMsg">
+                
+                
+                <div class="input-group mb-3 my-3">
+                    <!-- input @keyup--display the API keyword search item-->
+                    <input type="search" id="attractionSearch" class="form-control me-2" aria-label="Search" :placeholder=[[displayText]] v-model="searchField"  @keyup.enter ="getAttraction()">
+                    <!-- button @click -- display the API keyword search item-->
+                    <button class="btn btn-danger" type="button" @click="getAttraction()">Search</button>
+                </div>
+                
+                <!-- not v accurate yet, when user enter invalid input, the list will not update to default hais-->
+                <div v-html ="errorMsg">
                     {{errorMsg}}</div>
-            </div>
-
-        <!-- if input search keyword and able to find, display API result list-->
-        <div :value="displayField">
-        <!-- <button class="btn btn-danger" type="button" @click="getImage()">image</button> -->
-            <h6 style="color:brown">Displaying lists of: {{displayField}}</h6>
-            <div class="row"  >
-                <div class="col-sm-12 col-md-6 col-lg-3 display: block" v-for="a_obj in attractionDict">
-                    <div class="card mb-5 ">
+                </div>
+                
+                <div :value="displayField">
+                    <!-- <button class="btn btn-danger" type="button" @click="getImage()">image</button> -->
+                    <h6 style="color:brown">Displaying lists of: {{displayField}}</h6>
+ 
+                    
+                    <div class="row"  >
+                        <div class="col-sm-12 col-md-6 col-lg-3 display: block" v-for="a_obj in FilteredAttByCat">
+                            <div class="card mb-5 ">
                         <img :src="a_obj.photo" class="card-img-top mt-4 img-fluid" alt="item1">
                         <div class="card-body ">
                             <h5 class="card-title text-dark">{{a_obj.attraction}}</h5>
                             <p class="card-text text-dark">{{a_obj.desc}}</p>
                             <div class = "text-center">
-                                <a href="#" class="btn btn-danger">Read More</a>
+                                <a href="./indAttractionPage.php" class="btn btn-danger">Read More</a>
                             </div>
                         </div>
                     </div>
