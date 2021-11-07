@@ -57,11 +57,15 @@ const reward = Vue.createApp({
   data() {
     return {
         productCat:{},
-        productDict:[]
+        productDict:[],
+        catfilter:[],
+        isactive:false,
+        productfilter:[]
     };
 }, 
   created(){
     // var productDict ={};
+    
     var options = {
         method: 'GET',
         url: 'https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list',
@@ -77,10 +81,16 @@ const reward = Vue.createApp({
         // console.log(response.data);
         var productdata = response.data;
         this.ProductDetails(productdata);
+        this.filterbycategories(this.productDict);
+        this.productfilter = this.productDict;
+        console.log(this.productfilter)
         
       }).catch(function (error) {
         console.error(error);
       });
+      
+    
+    
   },
   methods:{
     redeempoint(productprice){
@@ -88,10 +98,6 @@ const reward = Vue.createApp({
       var splitprice = productprice.split("$ ");
       var actualprice = Number(splitprice[1]);
       var points = 0;
-      // if (actualprice<100){
-      //   console.log("hi")
-      //   points = 100
-      // }
 
       if(Number(actualprice) < 20){
         points = 200
@@ -149,8 +155,33 @@ const reward = Vue.createApp({
         }
       }
       // console.log(Object.keys(this.productDict).length);
-      console.log(this.productDict)
+      // console.log(this.productDict)
+      
       return this.productDict;
+    },
+    filterbycategories(data){
+      // console.log(this.catfilter.length)
+      if (this.catfilter.length==0){
+        this.productfilter = data
+      }else{
+        var filterdata = [];
+        for (var i=0; i<this.catfilter.length; i++){
+          for (var j=0; j<Object.keys(data).length; j++){
+            if (this.catfilter[i]==data[j].category){
+              filterdata.push(data[j])
+            }
+          }
+        }
+        console.log(filterdata);
+        this.productfilter = filterdata;
+      }
+      return this.productfilter;
+
+      // console.log(this.catfilter);
+      // return this.productDict;
+    },
+    validateActive(){
+      this.isactive= true;
     }
   }
 })
