@@ -10,7 +10,8 @@ const attraction = Vue.createApp({
       FilteredAttByCat:[],      //the filtered data
       errorMsg: '',             //display err msg if any
       selected_cat :"All" ,   //dropdown selected option
-      selected_mrt:[],
+      MRTlist:[],            //checkbox mrt
+      selectedMRT:[],
       buttonCount:0,         //when click button the count ++ 
       displaySeeMore: "<button type='button' class='btn btn-primary' >See More</button>"
     };
@@ -35,17 +36,83 @@ const attraction = Vue.createApp({
       axios.request(options)
       .then(response=>{
           var attractionData = response.data.data;
-
+          // console.log(attractionData)
           this.errorMsg =""
         
           for (i=0; i<attractionData.length; i++){
             var desc = attractionData[i].description;
-            var name = attractionData[i].name;           
+            var name = attractionData[i].name;
             var type = attractionData[i].type; 
 
-            //mrt station --> replace location
-            var mrt = attractionData[i].nearestMrtStation;
-            // console.log(mrt)
+            //clean mrt data
+            var mrt = attractionData[i].nearestMrtStation.trim().toLowerCase()
+            console.log(mrt)
+
+            if(mrt.length>0){
+              if(mrt.includes("/")){
+                var tempMrt = mrt.split("/")
+                var tempLen = tempMrt.length
+
+                for (j=0; j<tempLen; j++){
+                  console.log(tempMrt[j])
+
+                }
+
+                
+
+              }
+
+              // if (mrt.includes("/")){
+              //   let temp_mrt = mrt.split("/")
+              //   for(i=0; i<temp_mrt.length; i++){
+              //     console.log(temp_mrt[i])
+              //     // if (temp_mrt[i].includes("station")){
+              //     //   temp_mrt[i] = temp_mrt[i].split("station")[0]
+              //     //   console.log("Inneralter1 " + temp_mrt[i])
+              //     // }
+
+              //     // if (temp_mrt[i].includes("mrt")){
+              //     //   temp_mrt[i] = temp_mrt[i].split("mrt")[0]
+              //     //   console.log("Inneralter2 " + newMrt)
+              //     // }
+
+                  
+              //     // if(! this.MRTlist.includes(temp_mrt[i])){
+              //     //   this.MRTlist.push(temp_mrt[i])
+                  
+                
+              
+
+              if (mrt.includes("station")){
+                mrt = mrt.split("station")[0]
+                // console.log("Inneralter1 " + mrt)
+              }
+
+              if (mrt.includes("mrt")){
+                mrt = mrt.split("mrt")[0]
+                // console.log("Inneralter2 " + mrt)
+              }
+
+              
+              if(! this.MRTlist.includes(mrt)){
+                this.MRTlist.push(mrt)
+              }
+              // console.log(MRTlist)
+            }
+ 
+            
+            // if(mrt && ! mrtList.includes(mrt)){
+            //   if(
+            //     mrt.includes("/"){
+            //       const myArray = text.split(" ")
+              // var mrt = mrt.replace(/\//g,'')
+              // var mrt = mrt.replace(/station/g,'') 
+            // dummyString = dummyString.replace(/-/g,'') 
+            // if (tempMRT.length >0){
+            //   console.log(tempMRT)
+            // }
+            // const mrtStr = mrt.charAt(0).toUpperCase() + mrt.slice(1);    
+            // console.log(mrtStr)
 
             //image data
             if(!attractionData[i].images[0]){
@@ -58,7 +125,8 @@ const attraction = Vue.createApp({
               else if(attractionData[i].images[0].uuid.length >2){
                 let temp_photo = attractionData[i].images[0].uuid
                 var photo = "https://tih-api.stb.gov.sg/media/v1/download/uuid/" + temp_photo +"?apikey=MnqCCPlkgGWec8BPY7FeV8s7MkmBxP4h"
-            }}
+              }
+            }
   
             //extract all the type available in this dataset
             if(! this.attractionCat.includes(type)){
@@ -73,7 +141,7 @@ const attraction = Vue.createApp({
 
         //push to the dict that will be iterated in the main html
         this.FilteredAttByCat = this.attractionDict
-        console.log(this.attractionDict)
+        // console.log(this.MRTlist)
 
         //format the "Displaying list of.." to make it sounds legit
         if(keyword == "adventure" ||keyword == "arts" || keyword == "history&culture" || keyword =="nature&wildlife" || keyword =="Leisure&Recreation" ){
@@ -88,6 +156,7 @@ const attraction = Vue.createApp({
         
       }).catch(error=> {
         this.searchField=""
+        this.displayField =keyword
         this.displaySeeMore =""
         this.displayPlaceholder = "Cannot find! Please enter another Attraction Name!"
         this.errorMsg="<span style='padding-top: 15px; font-size: small; color: red;'>No record found! Take a look at our recommended attractions? <button type='button' class='btn btn-primary btn-sm ml-50'>Yes!</button></span>"
@@ -108,9 +177,9 @@ const attraction = Vue.createApp({
       this.displaySeeMore= ""
     }
   },
-  searchAttraction(){      //if use search text need clear initial data in dict
+  searchAttraction(){      //if use search function, clear the initial data in dict
     //clear the initial data
-    this.buttonCount=0;
+    this.buttonCount= -1;  //initialize buttonCount for later displaying part
     this.attractionDict=[]
     this.attractionCat=[]
     this.displaySeeMore =""
@@ -141,23 +210,3 @@ const attraction = Vue.createApp({
   }
 })
 const attraction_vm = attraction.mount('#attraction');
-
-
-function display_image(){
-    var temp_photo ="101489f1ec856e34735a436a4e819576c2e"
-    var url= "https://tih-api.stb.gov.sg/media/v1/download/uuid/"+ temp_photo  +"?apikey=MnqCCPlkgGWec8BPY7FeV8s7MkmBxP4h"
-
-    console.log("entered")
-
-    axios.get(url)
-    .then(response => {
-        console.log("yes")
-        console.log(response)
-        console.log( response.data )
-
-
-    })
-    .catch(error => {
-        console.log( error.message )
-    })
-  }
