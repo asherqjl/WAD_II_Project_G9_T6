@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body onload="getLocation()">
+
+
+
+<script>
+
+
+function getLocation(){
+  if (navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(showPosition);
+  }
+}
+function showPosition(position){
+  var latitude=position.coords.latitude
+  var longitude=position.coords.longitude;
+  return {lat:latitude,lng:longitude}
+  //console.log(lat);
+  //console.log(lng);
+}
+
+function matchPosition(attraction_latitude,attraction_longitude,current_location){
+  if (attraction_latitude==current_location.lat && attraction_longitude==current_location.lng){
+
+  }
+}
+button onclick=matchPosition(attraction_location.latitude,attraction_location.longitude,getLocation())
+</script>
+
+</body>
+</html>

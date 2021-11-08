@@ -22,7 +22,8 @@
 
 </head>
 <body>
-    <!-- Navigation -->
+
+  <!-- Navigation -->
     <div id="navdiv">
         <include-navbar></include-navbar>
     </div>
@@ -72,6 +73,7 @@
         <div id="map" class="map-responsive">
         </div>
         
+        
 
     <!--Load the API from the specified URL
     * The async attribute allows the browser to render the page while the API loads
@@ -85,36 +87,15 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
-
+   function showLocation(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
             
-var myStyle = [
-       {
-         featureType: "administrative",
-         elementType: "labels",
-         stylers: [
-           { visibility: "off" }
-         ]
-       },{
-         featureType: "poi",
-         elementType: "labels",
-         stylers: [
-           { visibility: "off" }
-         ]
-       },{
-         featureType: "water",
-         elementType: "labels",
-         stylers: [
-           { visibility: "off" }
-         ]
-       },{
-         featureType: "road",
-         elementType: "labels",
-         stylers: [
-           { visibility: "off" }
-         ]
-       }
-     ]; 
-   
+         }
+
+console.log(navigator.geolocation.getCurrentPosition(showLocation));
+            
+
 
 
 
@@ -275,7 +256,7 @@ function initMap() {
                     
         
                     });
-                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>' + attraction_location.desc+'<br></br>' +'</div>' +'<div><button type="button" style="color:black">I arrived here now!</button></div>'
+                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>' + attraction_location.desc+'<br></br>' +'</div>' +'<div><button type="button" style="color:black" onclick="()">I arrived here now!</button></div>'
 
                     var infowindow=new google.maps.InfoWindow()
                     google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 

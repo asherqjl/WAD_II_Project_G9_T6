@@ -16,7 +16,7 @@
     <!-- Custom JavaScript -->
     
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
-    <script src="js/attractions_donghyun.js"></script>
+    <script src="js/attraction.js"></script>
     <script src="https://kit.fontawesome.com/fbf5c5a506.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@next"></script>
 
@@ -36,7 +36,7 @@
                     <option value="1">Adventure</option>
                     <option value="2">Arts</option>
                     <option value="3">History & Culture</option>
-                    <option value="4" onclick="display_leisure()">Leisure & Recreation</option>
+                    <option value="4">Leisure & Recreation</option>
                     <option value="5">Nature & Wildlife</option>
                     <option value="6">Others</option>
                   </select>
@@ -59,8 +59,10 @@
 
            
         <div class="input-group mb-3 my-3">
-            <input type="search" class="form-control me-2" placeholder="Search by Attraction Name!" aria-label="Search">
-            <button class="btn btn-danger" type="button" onclick="getLoc()" >Search</button>
+            
+                <input id="keyword" type="form" class="form-control me-2" placeholder="Search attraction by any keword!" aria-label="Search">
+                <button onclick="initMap()" class="btn btn-danger" type="submit">Search</button>
+            
         </div>
 
 
@@ -85,14 +87,49 @@
     <script>
 
             
-        
-            
-    
+var myStyle = [
+       {
+         featureType: "administrative",
+         elementType: "labels",
+         stylers: [
+           { visibility: "off" }
+         ]
+       },{
+         featureType: "poi",
+         elementType: "labels",
+         stylers: [
+           { visibility: "off" }
+         ]
+       },{
+         featureType: "water",
+         elementType: "labels",
+         stylers: [
+           { visibility: "off" }
+         ]
+       },{
+         featureType: "road",
+         elementType: "labels",
+         stylers: [
+           { visibility: "off" }
+         ]
+       }
+     ]; 
+   
 
-    function initMap() {
+
+
+function initMap() {
         const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 11,
+        
+                zoom: 11.7,
                 center: { lat: 1.3649170000000002, lng: 103.82287200000002 },
+                styles: [    
+        {
+            featureType: "poi",
+            elementType: "labels",
+            stylers: [{ visibility: "off" }]
+        }
+    ]
             });
 
             setMarkers(map);
@@ -100,70 +137,102 @@
 
             // Data for the markers consisting of a name, a LatLng and a zIndex for the
             // order in which these markers should display on top of each other.
-    const beaches = [
-        ["Bondi Beach", -33.890542, 151.274856, 4],
-        ["Coogee Beach", -33.923036, 151.259052, 5],
-        ["Cronulla Beach", -34.028249, 151.157507, 3],
-        ["Manly Beach", -33.80010128657071, 151.28747820854187, 2],
-        ["Maroubra Beach", -33.950198, 151.259302, 1],
-    ];
+    
 
-    const location_list=[[1.360261, 103.9892345],[1.360261, 103.9892345]];
+    //const location_list=[[1.360261, 103.9892345],[1.360261, 103.9892345]];
     // [{lantitie:1.3,longitute:103}]
     
-    console.log(location_list);
+    //console.log(location_list);
     
-    const hardcode_locations=[[1.2890235,]]
 
-    function return_list(){
+  //  const hardcode_locations=[{latitude:1.360261,longitude:103.9892345},[1.2890235,103.8484538],[1.3016419,103.838816],[1.395499,103.924187],[1.256148,103.821552]
+//,[1.2540421,103.8238084],[1.3600727,103.9897102],[1.360208,103.989759],[1.255179,103.8218107],[1.28218,103.84415],[1.2711456,103.8195228]];
+
+    
+    var keyword = document.getElementById("keyword");
+
+    function setMarkers(map){
             var options = {
             method: 'GET',
-            url: 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword=attractions&language=en&apikey=UnWhZ0GbjpzxKlcM9GssA3xbSio89mM2'
+            url: 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword='+document.getElementById('keyword').value+'&language=en&apikey=UnWhZ0GbjpzxKlcM9GssA3xbSio89mM2'
             };
-
+            var locations_list=[];
             axios.request(options)
             .then(response=>{
+                var attractionData=response.data.data;
                 
-                var locations_list=[];
+            
                 for (i=0; i<response.data.data.length; i++){
                     // console.log(locations_list)
-                    var lat= response.data.data[i].location.latitude
-                    var lng= response.data.data[i].location.longitude
+                    var lat=attractionData[i].location.latitude
+                    var lng=attractionData[i].location.longitude
+                    var desc = attractionData[i].description;
+
+                    var name = attractionData[i].name; 
+              // console.log(attractionData)
+
+                    var type = attractionData[i].type; 
                     // console.log(lat, lng)
                     // var each_location={lat:location.latitude,lng:location.longitude}
-                    locations_list.push({latitude:lat,longitude:lng})
+                    locations_list.push({attractionName:name,category:type, desc:desc,latitude:lat,longitude:lng})
                     
                 }
-                console.log(locations_list);
-                return locations_list;
-
-            }).catch(function (error) {
-            console.error(error);
-            });
-            
-    }
-    
-
-           
-       
-        
-
-        // console.log(locations_list[0])
-        // console.log(typeof location_list[0]);
-        // console.log(typeof locations_list[0].lat);
-        
-    
-    
-    function setMarkers(map) {
-            // Adds markers to the map.
-            // Marker sizes are expressed as a Size of X,Y where the origin of the image
-            // (0,0) is located in the top left of the image.
-            // Origins, anchor positions and coordinates of the marker increase in the X
-            // direction to the right and in the Y direction down.
-                const image = {
+                const image_adventure = {
+                    url: "https://img.icons8.com/fluency/48/000000/adventure.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_arts = {
+                    url:"https://img.icons8.com/external-konkapp-outline-color-konkapp/64/000000/external-art-back-to-school-konkapp-outline-color-konkapp.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_history_culture = {
+                    url: "https://img.icons8.com/external-becris-lineal-color-becris/64/000000/external-history-literary-genres-becris-lineal-color-becris.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_nature_wildlife = {
+                    url: "https://img.icons8.com/fluency/48/000000/wildlife.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_leisure_recreation = {
+                    url: "https://img.icons8.com/fluency/48/000000/nintendo-switch-pro-controller.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                
+                const image_others = {
                     url: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
                     // This marker is 20 pixels wide by 32 pixels high.
-                    size: new google.maps.Size(20, 32),
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
                     // The origin for this image is (0, 0).
                     origin: new google.maps.Point(0, 0),
                     // The anchor for this image is the base of the flagpole at (0, 32).
@@ -176,45 +245,69 @@
                     coords: [1, 1, 1, 20, 18, 20, 18, 1],
                     type: "poly",
                 };
+                console.log(locations_list)
                 
-                console.log(return_list());
-                console.log(aaa);
-                for (let i = 0; i < return_list().length; i++) {
-                    var attraction_location = return_list()[i];
-                    new google.maps.Marker({
+                for (let i = 0; i < locations_list.length; i++) {
+                    var image;
+                    
+                    
+                    var attraction_location = locations_list[i];
+                    if (attraction_location.category=="Adventure"){
+                        image=image_adventure;
+                    } else if (attraction_location.category=="Arts"){
+                        image=image_arts;
+                    } else if (attraction_location.category=="Leisure & Recreation"){
+                        image=image_leisure_recreation;
+                    } else if (attraction_location.category=="History & Culture"){
+                        image=image_history_culture;
+                    } else if (attraction_location.category=="Nature & Wildlife"){
+                        image=image_nature_wildlife;
+                    } else if (attraction_location.category=="Others"){
+                        image=image_others;
+                    }
+                    var marker=new google.maps.Marker({
                         
                     position: { lat: attraction_location.latitude, lng: attraction_location.longitude },
                     map,
                     icon: image,
                     shape: shape,
-                    title: "Hello World"
+                    title: attraction_location.attractionName
                     
+        
                     });
+                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>' + attraction_location.desc+'<br></br>' +'</div>' +'<div><button type="button" style="color:black">I arrived here now!</button></div>'
+
+                    var infowindow=new google.maps.InfoWindow()
+                    google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+                    return function() {
+                        infowindow.setContent(content);
+                        infowindow.open(map,marker);
+                        };
+                    })(marker,content,infowindow)); 
+
+                    
                 }
-            }
-        function getLoc() {
-            var addr = encodeURI(document.getElementById("addr").value);
-            var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=AIzaSyDT6sTbyN3xQA9bTHQYcyFVXsqAXT54zfE";
 
-            axios.get(url)
-                .then(response => {
-                    //console.log(url);
-                    //console.log(response.data);    
-                    var info = getFullAddress(response.data);
+            }).catch(function (error) {
+            console.error(error);
+            });
+            
+            
+    }
 
-                    document.getElementById("display").innerHTML = info;
-                    // refresh the hidden input values with new lat lng coordinates
-                    var coordinate = getLatLng(response.data);
-                    document.getElementById("lat").value = coordinate["lat"];
-                    document.getElementById("lng").value = coordinate["lng"];
-                    // now refresh the map
-                    initMap();
-                })
-                .catch(error => {
-                    console.log(error);
-                    document.getElementById("display").innerHTML = "Sorry, invalid address. Please try again!";
-                });
-        }
+   
+           
+       
+        
+
+        // console.log(locations_list[0])
+        // console.log(typeof location_list[0]);
+        // console.log(typeof locations_list[0].lat);
+        
+    
+    
+   
+        
                         
             
     </script>
@@ -223,7 +316,8 @@
         
 
         <!-- Footer -->
-
+    <!-- <script src="js/attraction.js"></script> -->
+    <script src="js/attractions_donghyun.js"></script>
     <script src="js/navbar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
