@@ -59,33 +59,44 @@
                 
                 <div class="input-group mb-3 my-3">
                     <!-- input @keyup--display the API keyword search item-->
-                    <input type="search" id="attractionSearch" class="form-control me-2" aria-label="Search" :placeholder=[[displayText]] v-model="searchField"  @keyup.enter ="getAttraction()">
+                    <input type="search" id="attractionSearch" class="form-control me-2" aria-label="Search" :placeholder=[[displayPlaceholder]] v-model="searchField"  @keyup.enter ="searchAttraction()">
                     <!-- button @click -- display the API keyword search item-->
-                    <button class="btn btn-danger" type="button" @click="getAttraction()">Search</button>
+                    <button class="btn btn-danger" type="button" @click="searchAttraction()">Search</button>
                 </div>
                 
+                
                 <!-- not v accurate yet, when user enter invalid input, the list will not update to default hais-->
-                <div v-html ="errorMsg">
+                <div v-html ="errorMsg" @click='buttonDisplay()'>
                     {{errorMsg}}</div>
                 </div>
                 
                 <div :value="displayField">
                     <!-- <button class="btn btn-danger" type="button" @click="getImage()">image</button> -->
-                    <h6 style="color:brown">Displaying lists of: {{displayField}}</h6>
+                    <p style="color:brown">Displaying lists of: {{displayField}}   ({{FilteredAttByCat.length}} results)</p>
+                </div>
  
                     
-                    <div class="row"  >
-                        <div class="col-sm-12 col-md-6 col-lg-3 display: block" v-for="a_obj in FilteredAttByCat">
-                            <div class="card mb-5 ">
+                <div class="row"  >
+                    <div class="col-sm-12 col-md-6 col-lg-3 display: block" v-for="a_obj in FilteredAttByCat">
+                        <div class="card mb-5 ">
                         <img :src="a_obj.photo" class="card-img-top mt-4 img-fluid" alt="item1">
                         <div class="card-body ">
-                            <h5 class="card-title text-dark">{{a_obj.attraction}}</h5>
+                            <h6 class="card-title text-dark fw-bolder text-center">{{a_obj.attraction}}</h6><br>
+
+                            <p><strong>{{a_obj.mrt}}</strong></p>
+
+                            
+
                             <p class="card-text text-dark">{{a_obj.desc}}</p>
                             <div class = "text-center">
                                 <a href="./indAttractionPage.php" class="btn btn-danger">Read More</a>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="text-center mb-5" v-html ="displaySeeMore" v-model='buttonCount'  @click='buttonDisplay()' >
+                    {{displaySeeMore}}</div>
                 </div>
                 
             </div>
