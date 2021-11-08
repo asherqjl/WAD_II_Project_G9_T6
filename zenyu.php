@@ -88,6 +88,7 @@ const app3 = Vue.createApp({
             url="http://localhost/WAD_II_Project_G9_T6/db/getTravelHistory.php"
             axios.get(url)
             .then(response => { 
+                console.log(response.data)
                 this.travel_history= response.data.reverse()
                 this.status = response.data
             })

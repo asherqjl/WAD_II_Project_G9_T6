@@ -14,14 +14,14 @@ class Post {
 
 
     public function __construct($location_name, $time_visited, $category) {
-        $this->id= 1;
+        $this->id= 1;   
         $this->location_name = $location_name;
         $this->time_visited = $time_visited;
         $this->category= $category;
 
     }
 
-    public function getID() {
+    public function getUserID() {
         return $this->id;
     }
 

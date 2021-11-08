@@ -1,7 +1,7 @@
 <?php
 require_once 'common.php';
 $dao = new PostDAO();
-$travel_history = $dao->getAll(); // Get an Indexed Array of Post objects
+$account= $dao->getUserInfo(1); // Get an Indexed Array of Post objects
 
 $items = [];
 foreach( $travel_history as $place ) {
@@ -12,6 +12,15 @@ foreach( $travel_history as $place ) {
     $item["mood"] = $post_object->getMood();
     $items[] = $item;
 }
+
+$item=[];
+$item['id']= $account->getUserID();
+$item['email']= $account->getEmail();
+$item['password']= $account->getPassword();
+$item['points']= $account->getPoints();
+
+$items[] = $item;
+
 // make posts into json and return json data
 $postJSON = json_encode($items);
 echo $postJSON;
