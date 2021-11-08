@@ -67,14 +67,15 @@ const reward = Vue.createApp({
     // var productDict ={};
     
     var options = {
-        method: 'GET',
-        url: 'https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list',
-        params: {country: 'singapore', lang: 'en_sg', currentpage: '0', pagesize: '30'},
-        headers: {
-          'x-rapidapi-host': 'apidojo-hm-hennes-mauritz-v1.p.rapidapi.com',
-          'x-rapidapi-key': '9061375655msh14a8e669554639cp108b6bjsn1f084a105610'
-        }
-      };
+      method: 'GET',
+      url: 'https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list',
+      params: {country: 'singapore', lang: 'en_sg', currentpage: '0', pagesize: '30'},
+      headers: {
+        'x-rapidapi-host': 'apidojo-hm-hennes-mauritz-v1.p.rapidapi.com',
+        'x-rapidapi-key': '1e670fe13emshd57432c4f489abap194516jsn2be446bb51dc'
+      }
+    };
+    
       
       axios.request(options)
       .then(response=>{

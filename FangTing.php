@@ -98,7 +98,7 @@
                                     </div>                        
                                     <br>
                                     <div class="d-flex flex-row">
-                                        <div class="text-muted m-2" id="res">Showing {{productDict.length}} results</div>
+                                        <div class="text-muted m-2" id="res">Showing {{productfilter.length}} results</div>
                                         <div class="ml-auto mr-lg-3 ms-auto">
                                             <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Sort by</span> <select name="sort" id="sort">
                                                     <option value="popularity"><b>Points</b></option>
