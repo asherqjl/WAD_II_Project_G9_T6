@@ -57,30 +57,41 @@ const reward = Vue.createApp({
   data() {
     return {
         productCat:{},
-        productDict:[]
+        productDict:[],
+        catfilter:[],
+        isactive:false,
+        productfilter:[]
     };
 }, 
   created(){
     // var productDict ={};
+    
     var options = {
-        method: 'GET',
-        url: 'https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list',
-        params: {country: 'singapore', lang: 'en_sg', currentpage: '0', pagesize: '30'},
-        headers: {
-          'x-rapidapi-host': 'apidojo-hm-hennes-mauritz-v1.p.rapidapi.com',
-          'x-rapidapi-key': '9061375655msh14a8e669554639cp108b6bjsn1f084a105610'
-        }
-      };
+      method: 'GET',
+      url: 'https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list',
+      params: {country: 'singapore', lang: 'en_sg', currentpage: '0', pagesize: '30'},
+      headers: {
+        'x-rapidapi-host': 'apidojo-hm-hennes-mauritz-v1.p.rapidapi.com',
+        'x-rapidapi-key': '1e670fe13emshd57432c4f489abap194516jsn2be446bb51dc'
+      }
+    };
+    
       
       axios.request(options)
       .then(response=>{
         // console.log(response.data);
         var productdata = response.data;
         this.ProductDetails(productdata);
+        this.filterbycategories(this.productDict);
+        this.productfilter = this.productDict;
+        console.log(this.productfilter)
         
       }).catch(function (error) {
         console.error(error);
       });
+      
+    
+    
   },
   methods:{
     redeempoint(productprice){
@@ -88,10 +99,6 @@ const reward = Vue.createApp({
       var splitprice = productprice.split("$ ");
       var actualprice = Number(splitprice[1]);
       var points = 0;
-      // if (actualprice<100){
-      //   console.log("hi")
-      //   points = 100
-      // }
 
       if(Number(actualprice) < 20){
         points = 200
@@ -149,8 +156,33 @@ const reward = Vue.createApp({
         }
       }
       // console.log(Object.keys(this.productDict).length);
-      console.log(this.productDict)
+      // console.log(this.productDict)
+      
       return this.productDict;
+    },
+    filterbycategories(data){
+      // console.log(this.catfilter.length)
+      if (this.catfilter.length==0){
+        this.productfilter = data
+      }else{
+        var filterdata = [];
+        for (var i=0; i<this.catfilter.length; i++){
+          for (var j=0; j<Object.keys(data).length; j++){
+            if (this.catfilter[i]==data[j].category){
+              filterdata.push(data[j])
+            }
+          }
+        }
+        console.log(filterdata);
+        this.productfilter = filterdata;
+      }
+      return this.productfilter;
+
+      // console.log(this.catfilter);
+      // return this.productDict;
+    },
+    validateActive(){
+      this.isactive= true;
     }
   }
 })

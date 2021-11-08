@@ -56,6 +56,7 @@
             illo pariatur qui, quod, consequuntur, perferendis iure explicabo et tenetur quae non
             inventore veritatis repellat eius laborum unde eaa
         </p>
+        
         <div class="container-fluid">
             <div class="row">
                 <div class="col" id = "sidebar">
@@ -65,23 +66,26 @@
                             <div class="brand-label font-weight-bold p-0 px-1 mx-sm-1 mx-0 my-sm-0 my-2">Example 2<span class=" px-1 close">&times;</span> </div>
                             <div class="brand-label font-weight-bold p-0 px-1 mx-sm-1 mx-0">Example 3<span class=" px-1 close">&times;</span> </div>
                         </div>
-                        <div class="py-3">
-                            <h5 class="font-weight-bold">Categories</h5>
-                            <ul class="list-group" v-for="(value,key) in productCat">
-                                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center category">
-                                    {{key}}<span class="badge badge-primary badge-pill">{{value}}</span> </li>
-                            </ul>
+                        <h5 class="font-weight-bold">Categories</h5>
+                        <div class="py-3 form-check list-inline list-group btn-group" role="group" data-toggle="buttons" >
+                        
+                            <!-- <ul class="list-group" v-for="(value,key) in productCat" > -->
+                                <label class="btn btn-light"  v-for="(value,key) in productCat" ><input type="checkbox" :id="key" :value="key" v-model="catfilter" @change="filterbycategories(productDict)">{{key}}<span class="badge badge-primary badge-pill">{{value}}</span></label>
+                                {{catfilter}}
+                                    <!-- <li class=" list-group-item list-group-item-action d-flex justify-content-between align-items-center category"  @click="filterbycategories()">
+                                        {{key}}<span class="badge badge-primary badge-pill">{{value}}</span> </li> -->
+                            <!-- </ul> -->
                         </div>
                         <div class="py-3">
                             <h5 class="font-weight-bold">Points</h5>
                             <form class="brand">
                                 <div class="form-inline d-flex align-items-center py-1"> <input type="checkbox"> <label class="tick">1-100<span class="check"></span> </label> </div>
                                 <div class="form-inline d-flex align-items-center py-1">  <input type="checkbox" checked> <label class="tick">101-200<span class="check"></span> </label> </div>
-                                <di class="form-inline d-flex align-items-center py-1"> <input type="checkbox" checked><label class="tick">201-300<span class="check"></span> </label> </div>
+                                <div class="form-inline d-flex align-items-center py-1"> <input type="checkbox" checked><label class="tick">201-300<span class="check"></span> </label> </div>
                                 <div class="form-inline d-flex align-items-center py-1"> <input type="checkbox"> <label class="tick">1-100<span class="check"></span> </label> </div>
                                 <div class="form-inline d-flex align-items-center py-1"> <input type="checkbox"> <label class="tick">1-100<span class="check"></span> </label> </div>
                             </form>
-                        
+                        </div>
                     
                 </div>
                 <div class="col-md-6 col-lg-10" id = "items">
@@ -89,12 +93,12 @@
                             <div class = "row">  
                                 <div class = "col">
                                     <div class="row g-3 mt-2 justify-content-center">
-                                        <div class="col-md-6"> <input type="text" class="form-control" placeholder="Search for products"> </div>
+                                        <div class="col-md-6"> <input type="text" class="form-control" placeholder="Search by Product Name"> </div>
                                         <div class="col-md-2"> <button class="btn btn-secondary btn-block"><i class="fas fa-search"></i></button> </div>
                                     </div>                        
                                     <br>
                                     <div class="d-flex flex-row">
-                                        <div class="text-muted m-2" id="res">Showing {{productDict.length}} results</div>
+                                        <div class="text-muted m-2" id="res">Showing {{productfilter.length}} results</div>
                                         <div class="ml-auto mr-lg-3 ms-auto">
                                             <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Sort by</span> <select name="sort" id="sort">
                                                     <option value="popularity"><b>Points</b></option>
@@ -103,13 +107,13 @@
                                         </div>
                                     </div>
                                     <!-- 1st row-->
-                                    <div class="row" >
-                                        <div class="col-sm-12 col-md-6 col-lg-3" v-for="product in productDict">
+                                    <div class="row"  >
+                                        <div class="col-sm-12 col-md-6 col-lg-3" @change="productfilter" v-for="product in productfilter">
                                             <div class="card mb-5">
                                                 <img :src="product.image" class="card-img-top mt-4 img-fluid" alt="item1">
                                                 <div class="card-body ">
                                                     <h5 class="card-title text-dark">{{product.product}}</h5>
-                                                    <p class="card-text text-dark">{{product.point}} Points</p>
+                                                    <p class="card-text text-dark">({{product.category}}) {{product.point}} Points</p>
                                                     <div class = "text-center">
                                                         <button type="button" class="btn btn-outline-primary">Redeem</button>
                                                     </div>
