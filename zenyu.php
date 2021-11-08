@@ -27,7 +27,7 @@
         <div class='row'>
             <div class='col-sm d-flex justify-content-center' >
                 <img  v-if="travel_history.length===0" src='./images/sad.png' class='img-fluid d-flex justify-content-center '></img>
-                <img  v-else src='./images/happy.png' class='img-fluid d-flex justify-content-center'></img>
+                <img  v-else src='./images/happy.jpg' class='img-fluid d-flex justify-content-center'></img>
             </div>
         </div>
 
