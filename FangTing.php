@@ -70,8 +70,8 @@
                         <div class="py-3 form-check list-inline list-group btn-group" role="group" data-toggle="buttons" >
                         
                             <!-- <ul class="list-group" v-for="(value,key) in productCat" > -->
-                                <label class="btn btn-light"  v-for="(value,key) in productCat" ><input type="checkbox" :id="key" :value="key" v-model="catfilter" @change="filterbycategories(productDict)">{{key}}<span class="badge badge-primary badge-pill">{{value}}</span></label>
-                                {{catfilter}}
+                                <label class="btn btn-light"  v-for="(value,key) in productCat" ><input type="checkbox" :id="key" :value="key" v-model="filtertype" @change="filterbycategories(productDict)">{{key}}<span class="badge badge-primary badge-pill">{{value}}</span></label>
+                                {{filtertype}}
                                     <!-- <li class=" list-group-item list-group-item-action d-flex justify-content-between align-items-center category"  @click="filterbycategories()">
                                         {{key}}<span class="badge badge-primary badge-pill">{{value}}</span> </li> -->
                             <!-- </ul> -->
@@ -79,11 +79,9 @@
                         <div class="py-3">
                             <h5 class="font-weight-bold">Points</h5>
                             <form class="brand">
-                                <div class="form-inline d-flex align-items-center py-1"> <input type="checkbox"> <label class="tick">1-100<span class="check"></span> </label> </div>
-                                <div class="form-inline d-flex align-items-center py-1">  <input type="checkbox" checked> <label class="tick">101-200<span class="check"></span> </label> </div>
-                                <div class="form-inline d-flex align-items-center py-1"> <input type="checkbox" checked><label class="tick">201-300<span class="check"></span> </label> </div>
-                                <div class="form-inline d-flex align-items-center py-1"> <input type="checkbox"> <label class="tick">1-100<span class="check"></span> </label> </div>
-                                <div class="form-inline d-flex align-items-center py-1"> <input type="checkbox"> <label class="tick">1-100<span class="check"></span> </label> </div>
+                                <div class="form-inline d-flex align-items-center py-1" v-for="(value,key) in pointCat"> <label class="tick"><input type="checkbox" :id="key" :value="key" v-model="filterpoint" @change="filterbycategories(productDict)"> {{value}}<span class="check"></span> </label> </div>{{filterpoint}}
+                                <!-- <div class="form-inline d-flex align-items-center py-1">  <input type="checkbox"> <label class="tick">501-1000<span class="check"></span> </label> </div>
+                                <div class="form-inline d-flex align-items-center py-1"> <input type="checkbox"> <label class="tick">1000 & ABOVE<span class="check"></span> </label> </div> -->
                             </form>
                         </div>
                     

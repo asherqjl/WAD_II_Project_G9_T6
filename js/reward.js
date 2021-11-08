@@ -57,9 +57,10 @@ const reward = Vue.createApp({
   data() {
     return {
         productCat:{},
+        pointCat:{"0_500":"UNDER 500","501_1000":"501-1000","1001_2000":"1001 & ABOVE"},
         productDict:[],
-        catfilter:[],
-        isactive:false,
+        filtertype:[],
+        filterpoint:[],
         productfilter:[]
     };
 }, 
@@ -83,8 +84,8 @@ const reward = Vue.createApp({
         var productdata = response.data;
         this.ProductDetails(productdata);
         this.filterbycategories(this.productDict);
-        this.productfilter = this.productDict;
-        console.log(this.productfilter)
+        // this.productfilter = this.productDict;
+        // console.log(this.productfilter)
         
       }).catch(function (error) {
         console.error(error);
@@ -148,7 +149,7 @@ const reward = Vue.createApp({
         // console.log(Object.keys(this.productDict).length);
         // console.log(this.productDict[0])
       
-        // retrive category data and put in a dictionary with total number of count [ladies:0, kids:0, men:0]
+        // retrive category data and put in a dictionary with total number of count {ladies:0, kids:0, men:0}
         if (!this.productCat[productcategory]){
           this.productCat[productcategory] = 1;
         }else{
@@ -161,28 +162,59 @@ const reward = Vue.createApp({
       return this.productDict;
     },
     filterbycategories(data){
-      // console.log(this.catfilter.length)
-      if (this.catfilter.length==0){
-        this.productfilter = data
-      }else{
-        var filterdata = [];
-        for (var i=0; i<this.catfilter.length; i++){
+      var filterdata = [];
+      if(this.filterpoint.length !=0 && this.filtertype.length !=0){
+        var firstdata = [];
+        
+        for (var i=0; i<this.filtertype.length; i++){
           for (var j=0; j<Object.keys(data).length; j++){
-            if (this.catfilter[i]==data[j].category){
+            if (this.filtertype[i]==data[j].category){
+              firstdata.push(data[j])
+            }
+          }
+        }
+        for (var i=0; i<this.filterpoint.length; i++){
+          var minNu= this.filterpoint[i].split("_")[0];
+          var maxNu = this.filterpoint[i].split("_")[1];
+          
+          for (var j=0; j<Object.keys(firstdata).length; j++){
+            console.log(firstdata[j].point, maxNu)
+            if (firstdata[j].point>=minNu && firstdata[j].point<=maxNu){
+              filterdata.push(firstdata[j])
+            }
+          }
+        }
+      }
+      else if (this.filterpoint.length !=0 && this.filtertype.length==0){
+        
+        for (var i=0; i<this.filterpoint.length; i++){
+          var minNu= this.filterpoint[i].split("_")[0];
+          var maxNu = this.filterpoint[i].split("_")[1];
+          for (var j=0; j<Object.keys(data).length; j++){
+            if (data[j].point>=minNu &&data[j].point<=maxNu){
               filterdata.push(data[j])
             }
           }
         }
+      }else if(this.filterpoint.length ==0 && this.filtertype.length !=0){       
+        for (var i=0; i<this.filtertype.length; i++){
+          for (var j=0; j<Object.keys(data).length; j++){
+            if (this.filtertype[i]==data[j].category){
+              filterdata.push(data[j])
+            }
+          }
+        }
+      }else{
+        filterdata= data;
         console.log(filterdata);
-        this.productfilter = filterdata;
+        
       }
+      console.log(filterdata);
+      this.productfilter = filterdata;
       return this.productfilter;
 
-      // console.log(this.catfilter);
+      // console.log(this.filtertype);
       // return this.productDict;
-    },
-    validateActive(){
-      this.isactive= true;
     }
   }
 })
