@@ -1,15 +1,26 @@
 // Forms
 const signupForm = document.querySelector('#signupForm'); 
+const updateForm = document.querySelector("#updateForm");
+const loginForm = document.querySelector('#loginForm'); 
 
 // For Sign Up
 const userName = document.querySelector('#userName');
 const userEmail = document.querySelector('#userEmail');
 const pwd1 = document.querySelector('#pwd1');
 const cfmPwd = document.querySelector('#cfmPwd');
+
+// For Log In
 const loginEmail = document.querySelector('#loginEmail');
 const loginPwd = document.querySelector('#loginPwd');
 
-const loginForm = document.querySelector('#loginForm'); 
+// For Update
+const userNameLoggedIn = document.querySelector('#UserName');
+const newUserName = document.querySelector('#updateUserName');
+const newUserEmail = document.querySelector('#updateUserEmail');
+const newUserPassword = document.querySelector('#newPassword');
+const cfmNewPassword = document.querySelector('#cfmNewPassword');
+
+
 
 // Database creation
 // Create an instance of a db object for us to store the open database in
@@ -53,11 +64,16 @@ window.onload = function() {
         
         // console.log('Database setup complete');
     };
+
     // Registration 
-    signupForm.onsubmit = register;
+    if(signupForm!== null){
+        signupForm.onsubmit = register;
+    }
 
     // Login 
-    loginForm.onsubmit = login;
+    if(loginForm!== null){
+        loginForm.onsubmit = login;
+    }
 
     // Define the register() function 
     function register(e) {
@@ -138,6 +154,7 @@ window.onload = function() {
             }
         }
     };
+    
     // Checking
     // to console.log data that's been added into the database see what is inside the database
     function displayData() {
