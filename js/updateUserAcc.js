@@ -15,6 +15,7 @@ const cfmNewPassword = document.querySelector('#cfmNewPassword');
 // Create an instance of a db object for us to store the open database in
 let db;
 window.onload = function() {
+    nameDisplayCheck();
     // Open our database; it is created if it doesn't already exist
     // (see onupgradeneeded below)
     let request = window.indexedDB.open('smilingAcrossLocal', 2);
@@ -25,13 +26,10 @@ window.onload = function() {
     request.onsuccess = function() {
         console.log('Database opened successfully');
         db = request.result;
-        // displayData();
     };
     
-    nameDisplayCheck();
     // Update
     updateForm.onsubmit = update;
-
     
     function update(e){
         e.preventDefault();
@@ -73,7 +71,7 @@ window.onload = function() {
                             alert("Update Failed")
                         }
 
-                    };  
+                    }  
                     cursor.continue();
 
                 } 

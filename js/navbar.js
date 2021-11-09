@@ -21,7 +21,7 @@ app.component('include-navbar',{
                             <a id="UserName" class="nav-link" aria-current="page" href="profileSettings.html"></a>
                         </li>
                         <li id="signout" class="nav-item active"> 
-                            <a class="nav-link" aria-current="page" href="signout.html">Sign Out</a>
+                            <a class="nav-link" data-toggle="modal" aria-current="page" onclick="signout();" style="cursor: pointer;">Sign Out</a>
                         </li>
                         <li id="LoginSignUp" class="nav-item active"> 
                             <a class="nav-link" aria-current="page" href="login-signup.html">LOGIN/SIGNUP</a>
@@ -32,13 +32,13 @@ app.component('include-navbar',{
                         <li class="nav-item">
                             <a class="nav-link" href="KaiWei.html">ATTRACTIONS</a>
                         </li>
-                        <li class="nav-item">
+                        <li id="mapTab" class="nav-item">
                             <a class="nav-link" href="DongHyun.html">MAPS</a>
                         </li>
-                        <li class="nav-item">
+                        <li id="thTab" class="nav-item">
                             <a class="nav-link" href="zenyu.php">TRAVEL HISTORY</a>
                         </li>
-                        <li class="nav-item">
+                        <li id="rewardTab" class="nav-item">
                             <a class="nav-link" href="FangTing.html">REWARDS</a>
                         </li>
                     </ul>
@@ -49,3 +49,8 @@ app.component('include-navbar',{
 });
 
 const vm = app.mount("#navdiv");
+
+
+const app5 = Vue.createApp({
+    
+});

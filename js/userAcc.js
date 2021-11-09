@@ -26,6 +26,7 @@ const cfmNewPassword = document.querySelector('#cfmNewPassword');
 // Create an instance of a db object for us to store the open database in
 let db;
 window.onload = function() {
+    nameDisplayCheck();
     // Open our database; it is created if it doesn't already exist
     // (see onupgradeneeded below)
     let request = window.indexedDB.open('smilingAcrossLocal', 2);
