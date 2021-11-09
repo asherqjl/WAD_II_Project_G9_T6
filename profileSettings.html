@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- jQuery -->
+    <!----------------------------------- js & jQuery ----------------------------------->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-    <!-- Bootstrap CSS -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <!----------------------------------- Bootstrap CSS ----------------------------------->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <!-- Main Css -->
+    <!----------------------------------- Main Css ----------------------------------->
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" href="css/navbar.css">
-    <script src="https://unpkg.com/vue@next"></script>
+    <!----------------------------------- End of top references ----------------------------------->
     
-    <script src="js/updateUserAcc.js" defer></script>
-
     <title>Update Profile</title>
 </head>
-<body>
+<body> 
     
     <!-- Navigation -->
     <div id="navdiv">
@@ -32,43 +31,9 @@
                             <div class="row justify-content-center">
                             <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-2">
                             <!-- Setting page Content -->
-                            <form class="mx-1 mx-md-4 loginsignup" id="updateForm">
-                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Profile</p>
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                </div>
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                                    <div class="form-outline flex-fill mb-0">
-                                        <input type="text" id="updateUserName" class="form-control" required/>
-                                        <label class="form-label" for="updateUserName">Name</label>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                                    <div class="form-outline flex-fill mb-0">
-                                        <input type="email" id="updateUserEmail" class="form-control" required/>
-                                        <label class="form-label" for="updateUserEmail">Email</label>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                                    <div class="form-outline flex-fill mb-0">
-                                        <input type="password" id="newPassword" class="form-control" required/>
-                                        <label class="form-label" for="newPassword" >New Password</label>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-row align-items-center mb-4">
-                                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                    <div class="form-outline flex-fill mb-0">
-                                        <input type="password" id="cfmNewPassword" class="form-control" required/>
-                                        <label class="form-label" for="cfmNewPassword">Repeat your new password</label>
-                                    </div>
-                                </div>
-                        
-                                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                    <button type="submit" class="btn btn-primary btn-lg">Update</button>
-                                </div>
-                            </form>
+                            <div id="update">
+                                <update-form></update-form>
+                            </div>
                             <!-- \Setting page Content -->
                             </div>
                             <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-1">
@@ -82,10 +47,15 @@
             </div>
         </section>
     </div>
+    <!-- <script type="text/javascript" src="js/sessions.js"></script> -->
     
+    <script src="js/updateForm.js"></script>
+    <script src="js/navbar.js"></script>
+
+    <script src="js/sessions.js"></script>
+    <script src="js/updateUserAcc.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 </body>
-<script src="js/navbar.js"></script>
-<script src="js/sessions.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 </html>

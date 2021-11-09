@@ -26,10 +26,11 @@ window.onload = function() {
         console.log('Database opened successfully');
         db = request.result;
         // displayData();
-    }
+    };
     
+    nameDisplayCheck();
     // Update
-        updateForm.onsubmit = update;
+    updateForm.onsubmit = update;
 
     
     function update(e){
