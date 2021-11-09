@@ -96,13 +96,25 @@
                                     </div>                        
                                     <br>
                                     <div class="d-flex flex-row">
-                                        <div class="text-muted m-2" id="res">Showing {{productfilter.length}} results</div>
-                                        <div class="ml-auto mr-lg-3 ms-auto">
-                                            <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Sort by</span> <select name="sort" id="sort">
-                                                    <option value="popularity"><b>Points</b></option>
-                                                    <option value="prcie"><b>Name</b></option>               
-                                                </select> </div>
+                                        <div class ="mb-3" :value="sorttype" @click="sortbytype">&nbsp;&nbsp;&nbsp;
+                                            <button class="btn btn-secondary btn-block"><i class="fas fa-sort-amount-down-alt"></i></button>&nbsp;&nbsp;&nbsp;
+                                            <button class="btn btn-secondary btn-block"><i class="fas fa-sort-amount-up"></i></button>
                                         </div>
+                                        <div class="text-muted m-2" id="res">Showing {{productfilter.length}} results</div>
+                                        <!-- <div class ="mb-3">&nbsp;&nbsp;&nbsp;<button class="btn btn-secondary btn-block"><i class="fas fa-sort-amount-down-alt"></i></button>&nbsp;&nbsp;&nbsp;<button class="btn btn-secondary btn-block"><i class="fas fa-sort-amount-up"></i></button>
+                                        </div> -->
+                                        <div class="ml-auto mr-lg-3 ms-auto">
+                                        
+                                            <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Sort by</span> 
+                                            <select name="sort" id="sort" v-model="sorttype">
+                                                    <option ><b>Points</b></option>
+                                                    <option ><b>Name</b></option>               
+                                                </select>  
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                        
                                     </div>
                                     <!-- 1st row-->
                                     <div class="row"  >

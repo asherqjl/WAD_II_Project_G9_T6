@@ -72,6 +72,7 @@
 
         <div id="map" class="map-responsive">
         </div>
+        <div id="legend"><h6>Legend</h6></div>
         
         
 
@@ -112,8 +113,57 @@ function initMap() {
         }
     ]
             });
+            
+            
 
             setMarkers(map);
+
+            const icons = {
+    Adventure: {
+      name: "Adventure",
+      icon: "https://img.icons8.com/fluency/48/000000/adventure.png",
+    },
+    Arts: {
+      name: "Arts",
+      icon: "https://img.icons8.com/external-konkapp-outline-color-konkapp/64/000000/external-art-back-to-school-konkapp-outline-color-konkapp.png",
+    },
+    LeisureRecreation: {
+      name: "Leisure & Recreation",
+      icon: "https://img.icons8.com/fluency/48/000000/nintendo-switch-pro-controller.png",
+    },
+    HistoryCulture: {
+      name: "History & Culture",
+      icon: "https://img.icons8.com/external-becris-lineal-color-becris/64/000000/external-history-literary-genres-becris-lineal-color-becris.png",
+
+    },
+    NatureWildlife: {
+      name: "Nature & Wildlife",
+      icon: "https://img.icons8.com/fluency/48/000000/wildlife.png",
+
+    },
+    Others: {
+      name: "Others",
+      icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+    }
+  };
+
+var legend = document.getElementById("legend");
+
+   for (var key in icons) {
+      const type = icons[key];
+      const name = type.name;
+      const icon = type.icon;
+      const div = document.createElement("div");
+
+    div.innerHTML = '<img src="' + icon + '" width=23" height="23"> ' + name;
+    legend.appendChild(div);
+  }
+
+  map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById('legend')); 
+
+
+
+
             }
 
             // Data for the markers consisting of a name, a LatLng and a zIndex for the
@@ -256,11 +306,12 @@ function initMap() {
                     
         
                     });
-                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>' + attraction_location.desc+'<br></br>' +'</div>' +'<div><button type="button" style="color:black" onclick="()">I arrived here now!</button></div>'
+                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>' + attraction_location.desc+'<br></br>' +'</div>' +'<div><button type="button" style="color:black" onclick="()">I arrived here now!</button></div><div id="boolarrived"></div>'
 
                     var infowindow=new google.maps.InfoWindow()
                     google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
                     return function() {
+                        
                         infowindow.setContent(content);
                         infowindow.open(map,marker);
                         };
@@ -276,10 +327,12 @@ function initMap() {
             
     }
 
+    
+
    
            
        
-        
+      
 
         // console.log(locations_list[0])
         // console.log(typeof location_list[0]);

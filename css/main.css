@@ -148,3 +148,12 @@ body {
   width:100%;
   position:absolute;
 }
+
+
+#legend {
+  font-family: Arial, sans-serif;
+  background: #fff;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #000;
+}

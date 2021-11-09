@@ -15,44 +15,6 @@ function myFunction() {
   }
 }
 
-// function callingapi(){
-//   var productDict ={};
-//   var options = {
-//     method: 'GET',
-//     url: 'https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list',
-//     params: {country: 'singapore', lang: 'en_sg', currentpage: '0', pagesize: '30'},
-//     headers: {
-//       'x-rapidapi-host': 'apidojo-hm-hennes-mauritz-v1.p.rapidapi.com',
-//       'x-rapidapi-key': '9061375655msh14a8e669554639cp108b6bjsn1f084a105610'
-//     }
-//   };
-  
-//   axios.request(options)
-//   .then(response=>{
-//     // console.log(response.data);
-
-//       for (i=0; i<response.data.results.length; i++){
-//         var productDetails=[]; 
-//         var productName = response.data.results[i].name;
-//         var category = response.data.results[i].categoryName;
-//         var image = response.data.results[i].images[0].url;
-//         var price = response.data.results[i].price.formattedValue;
-//         productDetails.push(category);
-//         productDetails.push(image);
-//         productDetails.push(price);
-//         // console.log(productName);
-//         productDict[productName] = productDetails;
-//         // productDict={productName: productDetails}
-//       }
-//       return productDict;
-//   }).catch(function (error) {
-//     console.error(error);
-//   });
-// }
-
-// function productCard(){
-
-// }
 const reward = Vue.createApp({
   data() {
     return {
@@ -61,12 +23,13 @@ const reward = Vue.createApp({
         productDict:[],
         filtertype:[],
         filterpoint:[],
-        productfilter:[]
+        productfilter:[],
+        sorttype:"Points"
     };
 }, 
   created(){
     // var productDict ={};
-    
+    console.log(this.sorttype)
     var options = {
       method: 'GET',
       url: 'https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list',
@@ -178,7 +141,7 @@ const reward = Vue.createApp({
           var maxNu = this.filterpoint[i].split("_")[1];
           
           for (var j=0; j<Object.keys(firstdata).length; j++){
-            console.log(firstdata[j].point, maxNu)
+            //console.log(firstdata[j].point, maxNu)
             if (firstdata[j].point>=minNu && firstdata[j].point<=maxNu){
               filterdata.push(firstdata[j])
             }
@@ -205,9 +168,7 @@ const reward = Vue.createApp({
           }
         }
       }else{
-        filterdata= data;
-        console.log(filterdata);
-        
+        filterdata= data;        
       }
       console.log(filterdata);
       this.productfilter = filterdata;
@@ -215,8 +176,23 @@ const reward = Vue.createApp({
 
       // console.log(this.filtertype);
       // return this.productDict;
+    },
+    sortbytype(){
+      // console.log(this.productfilter.length)
+      if(this.sorttype=="Points"){
+        var result = Object.keys(this.productfilter).map(key => { return {key, val: this.productfilter[key]}}) // output: unsorted array
+        .sort((a, b) => a.val.point > b.val.point); 
+
+        console.log(result)
+      }
+    }
+  },
+  computed:{
+    retrievesorttype(){
+      console.log(this.sorttype)
     }
   }
 })
 const rw = reward.mount('#reward');
+
 
