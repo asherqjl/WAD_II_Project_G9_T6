@@ -38,7 +38,7 @@ window.onload = function() {
     request.onsuccess = function() {
         console.log('Database opened successfully');
         db = request.result;
-        // displayData();
+        displayData();
     }
 
     // Setup the database tables if this has not already been done Usually only need to do this once it's like innit like that

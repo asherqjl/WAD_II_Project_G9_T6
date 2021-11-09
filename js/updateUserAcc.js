@@ -3,7 +3,8 @@
 const updateForm = document.querySelector("#updateForm");
 
 // For Update
-const userNameLoggedIn = document.querySelector('#UserName');
+const userNameLoggedIn = localStorage.getItem('user_name');
+
 const newUserName = document.querySelector('#updateUserName');
 const newUserEmail = document.querySelector('#updateUserEmail');
 const newUserPassword = document.querySelector('#newPassword');
@@ -32,8 +33,9 @@ window.onload = function() {
     updateForm.onsubmit = update;
     
     function update(e){
+        console.log(localStorage.getItem('user_name'));
         e.preventDefault();
-        if((newUserPassword.value!=='' || cfmNewPassword.value!=='') && newUserPassword.value === cfmNewPassword.value){
+        if(newUserPassword.value!=='' && cfmNewPassword.value!=='' && newUserPassword.value == cfmNewPassword.value){
             let transaction = db.transaction(['user_acc'], 'readwrite');
         
             // call an object store that's already been added to the database
@@ -42,43 +44,33 @@ window.onload = function() {
             objectStore.openCursor().onsuccess = function(e){
                 let cursor = e.target.result;
                 if (cursor) {
-                    if (cursor.value.user_name === userNameLoggedIn) {
+                    if (cursor.value.user_name == userNameLoggedIn) {
                         const updateData = cursor.value;
                         console.log(updateData);
-                        updateData.user_name = newUserName;
+                        updateData.user_name = newUserName.value;
                         const request1 = cursor.update(updateData);
 
-                        updateData.email = newUserEmail;
+                        updateData.email = newUserEmail.value;
                         const request2 = cursor.update(updateData);
                         
-                        updateData.password = cfmNewPassword;
+                        updateData.password = cfmNewPassword.value;
                         const request3 = cursor.update(updateData);
                         
-                        request1.onsuccess = function() {
-                            successCounter++;
+                        request3.onerror = function() {
+                            alert("Update Failed");
                         };
-                        request2.onsuccess = function() {
-                            successCounter++;
-                        };
+
                         request3.onsuccess = function() {
-                            successCounter++;
-                        };
-                        if (successCounter === 3){
                             alert("Update Successful");
-                            localStorage.setItem('user_name', newUserName);
+                            localStorage.setItem('user_name', newUserName.value);
                             window.location.href="http://localhost:8888/WAD_II_Project_G9_T6/home.html"; 
-                        } else{
-                            alert("Update Failed")
-                        }
+                        };
 
                     }  
                     cursor.continue();
 
                 } 
             }
-            // else {
-            // console.log('Entries displayed.');
-            // }
         }
     };
     // Checking
