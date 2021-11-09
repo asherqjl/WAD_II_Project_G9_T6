@@ -35,7 +35,7 @@ window.onload = function() {
         console.log('Database failed to open');
     };
     request.onsuccess = function() {
-        // console.log('Database opened successfully');
+        console.log('Database opened successfully');
         db = request.result;
         // displayData();
     }
@@ -110,7 +110,7 @@ window.onload = function() {
                 alert('Registration Successful '+usernamee+' !');
                 // Session
                 localStorage.setItem('user_name', userName.value);
-                window.location.href="http://localhost:8888/WAD_II_Project_G9_T6/home.html";                
+                window.location.href="http://localhost/WAD_II_Project_G9_T6/home.html";                
                 userName.value = '';
                 // update the display of data to show the newly added item, by running displayData() again.
                 displayData();

@@ -24,7 +24,8 @@ const reward = Vue.createApp({
         filtertype:[],
         filterpoint:[],
         productfilter:[],
-        sorttype:"Points"
+        sorttype:"Points",
+        iconButton:"<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>"
     };
 }, 
   created(){
@@ -180,11 +181,48 @@ const reward = Vue.createApp({
     sortbytype(){
       // console.log(this.productfilter.length)
       if(this.sorttype=="Points"){
-        var result = Object.keys(this.productfilter).map(key => { return {key, val: this.productfilter[key]}}) // output: unsorted array
-        .sort((a, b) => a.val.point > b.val.point); 
-
-        console.log(result)
+        if(this.iconButton =="<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>"){
+          var result = this.productfilter.sort( function ( a, b ) { return a.point - b.point; } )
+        }else{
+          var result = this.productfilter.sort( function ( a, b ) { return b.point - a.point; } )
+        }
+        console.log(result)     
+      }else{
+        if(this.iconButton =="<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>"){
+          var result = this.productfilter.sort(function (a,b){if (a[product]<b[product]){return-1}else if(a[product]>b[product]){return 1}else{return 0}})
+        //   function sortOn (arr, prop) {
+        //     arr.sort (
+        //         function (a, b) {
+        //             if (a[prop] < b[prop]){
+        //                 return -1;
+        //             } else if (a[prop] > b[prop]){
+        //                 return 1;
+        //             } else {
+        //                 return 0;   
+        //             }
+        //         }
+        //     );
+        // }
+        }
       }
+    },
+    clickIcon(){
+      if(this.iconButton == "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>" ){
+        this.iconButton = "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-up'></i></button>"
+      }else{
+        this.iconButton = "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>" 
+
+      }
+    },
+    changebutton(){
+      console.log("hi")
+      console.log(this.sorttype)
+      if(this.sorttype=="Name"){
+        this.iconButton = "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-alpha-down'></i></button>"
+      }else{
+        this.iconButton == "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>" 
+      }
+
     }
   },
   computed:{

@@ -96,9 +96,9 @@
                                     </div>                        
                                     <br>
                                     <div class="d-flex flex-row">
-                                        <div class ="mb-3" :value="sorttype" @click="sortbytype">&nbsp;&nbsp;&nbsp;
-                                            <button class="btn btn-secondary btn-block"><i class="fas fa-sort-amount-down-alt"></i></button>&nbsp;&nbsp;&nbsp;
-                                            <button class="btn btn-secondary btn-block"><i class="fas fa-sort-amount-up"></i></button>
+                                        <div class ="mb-3" :value="sorttype" @change="changebutton()" @click="sortbytype()" >&nbsp;&nbsp;&nbsp;
+                                            <span v-html="iconButton" @click="clickIcon()" ></span>
+                                            
                                         </div>
                                         <div class="text-muted m-2" id="res">Showing {{productfilter.length}} results</div>
                                         <!-- <div class ="mb-3">&nbsp;&nbsp;&nbsp;<button class="btn btn-secondary btn-block"><i class="fas fa-sort-amount-down-alt"></i></button>&nbsp;&nbsp;&nbsp;<button class="btn btn-secondary btn-block"><i class="fas fa-sort-amount-up"></i></button>
