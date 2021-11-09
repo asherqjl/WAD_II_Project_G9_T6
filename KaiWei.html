@@ -55,10 +55,10 @@
                     </div> -->
                     <div class="form-check list-inline list-group btn-group">
                         <label class="form-check-label" v-for="mrtObj in MRTlist">
-                            <input type="checkbox" v-model="selectedMRT" :value="mrtObj">{{mrtObj}}
+                            <input type="checkbox" v-model="selectedMRT" :value="mrtObj" @change="displaySelected">{{mrtObj}}
                             <span class="badge badge-primary badge-pill">2</span>
                         </label>
-                        {{selectedMRT}}
+                        Selected = {{selectedMRT}}
                     </div>
 
 

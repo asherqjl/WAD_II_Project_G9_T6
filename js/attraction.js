@@ -32,11 +32,11 @@ const attraction = Vue.createApp({
         url: 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword='+ 
         keyword + "&language=en&apikey=MnqCCPlkgGWec8BPY7FeV8s7MkmBxP4h"
       };
-      
       axios.request(options)
       .then(response=>{
           var attractionData = response.data.data;
-          // console.log(attractionData)
+          console.log(attractionData)
+
           this.errorMsg =""
         
           for (i=0; i<attractionData.length; i++){
@@ -44,75 +44,59 @@ const attraction = Vue.createApp({
             var name = attractionData[i].name;
             var type = attractionData[i].type; 
 
-            //clean mrt data
+            //clean the mrt data
             var mrt = attractionData[i].nearestMrtStation.trim().toLowerCase()
-            console.log(mrt)
-
+            // console.log(mrt)
             if(mrt.length>0){
+              //settle the outlier data w random syntax
               if(mrt.includes("/")){
-                var tempMrt = mrt.split("/")
-                var tempLen = tempMrt.length
+                let mrtManyMany =[]
+                let tempMrt = mrt.split("/")
 
-                for (j=0; j<tempLen; j++){
-                  console.log(tempMrt[j])
+                for (j=0; j<tempMrt.length; j++){
+                  tempMrt[j] = this.validateMRT(tempMrt[j])
 
+                  if(! mrtManyMany.includes(tempMrt[j])){
+                    mrtManyMany.push(tempMrt[j])}
+                  if(! this.MRTlist.includes(tempMrt[j])){
+                    this.MRTlist.push(tempMrt[j])}
                 }
-
-                
-
+                mrt = mrtManyMany.join()
               }
+              else if(mrt.includes(",")){
+                let mrtManyMany =[]
+                let tempMrt = mrt.split(",")
 
-              // if (mrt.includes("/")){
-              //   let temp_mrt = mrt.split("/")
-              //   for(i=0; i<temp_mrt.length; i++){
-              //     console.log(temp_mrt[i])
-              //     // if (temp_mrt[i].includes("station")){
-              //     //   temp_mrt[i] = temp_mrt[i].split("station")[0]
-              //     //   console.log("Inneralter1 " + temp_mrt[i])
-              //     // }
+                for (k=0; k<tempMrt.length; k++){
+                  tempMrt[k] = this.validateMRT(tempMrt[k])
 
-              //     // if (temp_mrt[i].includes("mrt")){
-              //     //   temp_mrt[i] = temp_mrt[i].split("mrt")[0]
-              //     //   console.log("Inneralter2 " + newMrt)
-              //     // }
-
-                  
-              //     // if(! this.MRTlist.includes(temp_mrt[i])){
-              //     //   this.MRTlist.push(temp_mrt[i])
-                  
-                
-              
-
-              if (mrt.includes("station")){
-                mrt = mrt.split("station")[0]
-                // console.log("Inneralter1 " + mrt)
+                  if(! mrtManyMany.includes(tempMrt[k])){
+                    mrtManyMany.push(tempMrt[k])}
+                  if(! this.MRTlist.includes(tempMrt[k])){
+                    this.MRTlist.push(tempMrt[k])}
+                }
+                mrt = mrtManyMany.join()
               }
-
-              if (mrt.includes("mrt")){
-                mrt = mrt.split("mrt")[0]
-                // console.log("Inneralter2 " + mrt)
+              else{
+                if(/\d/.test(mrt)){   //if got random noise
+                  let newMRT =""
+                  let tempMrt = mrt.split(" ")
+                  for (l=0; l<tempMrt.length; l++){
+                    if (/^[a-z]+$/i.test(tempMrt[l])){
+                      tempMrt[l] = this.capitalizeLetter(tempMrt[l].trim())
+                      newMRT +=tempMrt[l]}
+                  }
+                  mrt =newMRT
+                  if(! this.MRTlist.includes(newMRT)){
+                    this.MRTlist.push(newMRT)}
+                }else{
+                  mrt = this.validateMRT(mrt)
+                  if(! this.MRTlist.includes(mrt)){
+                    this.MRTlist.push(mrt)
+                  }
+                }
               }
-
-              
-              if(! this.MRTlist.includes(mrt)){
-                this.MRTlist.push(mrt)
-              }
-              // console.log(MRTlist)
             }
- 
-            
-            // if(mrt && ! mrtList.includes(mrt)){
-            //   if(
-            //     mrt.includes("/"){
-            //       const myArray = text.split(" ")
-              // var mrt = mrt.replace(/\//g,'')
-              // var mrt = mrt.replace(/station/g,'') 
-            // dummyString = dummyString.replace(/-/g,'') 
-            // if (tempMRT.length >0){
-            //   console.log(tempMRT)
-            // }
-            // const mrtStr = mrt.charAt(0).toUpperCase() + mrt.slice(1);    
-            // console.log(mrtStr)
 
             //image data
             if(!attractionData[i].images[0]){
@@ -136,12 +120,10 @@ const attraction = Vue.createApp({
             this.attractionDict.push({attraction:name,category:type, desc:desc, photo:photo , mrt:mrt})
           }
           
-          //sort category type alphabatically
+        //sort alphabatically
         this.attractionCat.sort()
-
-        //push to the dict that will be iterated in the main html
-        this.FilteredAttByCat = this.attractionDict
-        // console.log(this.MRTlist)
+        this.MRTlist.sort()
+        this.FilteredAttByCat = this.attractionDict   //update the display dict
 
         //format the "Displaying list of.." to make it sounds legit
         if(keyword == "adventure" ||keyword == "arts" || keyword == "history&culture" || keyword =="nature&wildlife" || keyword =="Leisure&Recreation" ){
@@ -177,29 +159,55 @@ const attraction = Vue.createApp({
       this.displaySeeMore= ""
     }
   },
-  searchAttraction(){      //if use search function, clear the initial data in dict
-    //clear the initial data
+  searchAttraction(){      //for input search , clear the initial data in dict
     this.buttonCount= -1;  //initialize buttonCount for later displaying part
     this.attractionDict=[]
     this.attractionCat=[]
+    this.MRTlist =[]
     this.displaySeeMore =""
 
     this.getAttraction(this.searchField)
+  },
+  validateMRT(train){
+    train = train.trim()
+    if (train.includes("station")){
+      train = train.split("station")[0].trim()
+    }
+    if (train.includes("mrt")){
+      train = train.split("mrt")[0].trim()
+    }
+    train = this.capitalizeLetter(train)
+    return train
+  },
+  capitalizeLetter(text){  //capitalize first char to make looks visually pleasing..
+    const words = text.split(" ");
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+    }
+    return words.join(" ");
   }
-
   },
   computed :{
     displaySelected(){
-      if(this.selected_cat == "All"){
+
+      
+      if(this.selected_cat == "All" && this.selectedMRT.length ==0 ){
         this.FilteredAttByCat = this.attractionDict
         return
       }
       
       let tempResult = [];
       this.FilteredAttByCat =[];
+      // console.log(this.attractionDict)
+      // console.log(this.selectedMRT)
+
 
       for (i=0; i<this.attractionDict.length; i++){
-        if(this.attractionDict[i].category == this.selected_cat){
+        if(this.attractionDict[i].mrt.includes(",")){
+          
+          // console.log(this.attractionDict[i].mrt)
+        }
+        if(this.attractionDict[i].category == this.selected_cat ){
           tempResult.push(this.attractionDict[i])
         }
       }
