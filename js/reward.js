@@ -15,57 +15,22 @@ function myFunction() {
   }
 }
 
-// function callingapi(){
-//   var productDict ={};
-//   var options = {
-//     method: 'GET',
-//     url: 'https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list',
-//     params: {country: 'singapore', lang: 'en_sg', currentpage: '0', pagesize: '30'},
-//     headers: {
-//       'x-rapidapi-host': 'apidojo-hm-hennes-mauritz-v1.p.rapidapi.com',
-//       'x-rapidapi-key': '9061375655msh14a8e669554639cp108b6bjsn1f084a105610'
-//     }
-//   };
-  
-//   axios.request(options)
-//   .then(response=>{
-//     // console.log(response.data);
-
-//       for (i=0; i<response.data.results.length; i++){
-//         var productDetails=[]; 
-//         var productName = response.data.results[i].name;
-//         var category = response.data.results[i].categoryName;
-//         var image = response.data.results[i].images[0].url;
-//         var price = response.data.results[i].price.formattedValue;
-//         productDetails.push(category);
-//         productDetails.push(image);
-//         productDetails.push(price);
-//         // console.log(productName);
-//         productDict[productName] = productDetails;
-//         // productDict={productName: productDetails}
-//       }
-//       return productDict;
-//   }).catch(function (error) {
-//     console.error(error);
-//   });
-// }
-
-// function productCard(){
-
-// }
 const reward = Vue.createApp({
   data() {
     return {
         productCat:{},
+        pointCat:{"0_500":"UNDER 500","501_1000":"501-1000","1001_2000":"1001 & ABOVE"},
         productDict:[],
-        catfilter:[],
-        isactive:false,
-        productfilter:[]
+        filtertype:[],
+        filterpoint:[],
+        productfilter:[],
+        sorttype:"Points",
+        iconButton:"<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>"
     };
 }, 
   created(){
     // var productDict ={};
-    
+    console.log(this.sorttype)
     var options = {
       method: 'GET',
       url: 'https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list',
@@ -83,8 +48,8 @@ const reward = Vue.createApp({
         var productdata = response.data;
         this.ProductDetails(productdata);
         this.filterbycategories(this.productDict);
-        this.productfilter = this.productDict;
-        console.log(this.productfilter)
+        // this.productfilter = this.productDict;
+        // console.log(this.productfilter)
         
       }).catch(function (error) {
         console.error(error);
@@ -148,7 +113,7 @@ const reward = Vue.createApp({
         // console.log(Object.keys(this.productDict).length);
         // console.log(this.productDict[0])
       
-        // retrive category data and put in a dictionary with total number of count [ladies:0, kids:0, men:0]
+        // retrive category data and put in a dictionary with total number of count {ladies:0, kids:0, men:0}
         if (!this.productCat[productcategory]){
           this.productCat[productcategory] = 1;
         }else{
@@ -161,30 +126,111 @@ const reward = Vue.createApp({
       return this.productDict;
     },
     filterbycategories(data){
-      // console.log(this.catfilter.length)
-      if (this.catfilter.length==0){
-        this.productfilter = data
-      }else{
-        var filterdata = [];
-        for (var i=0; i<this.catfilter.length; i++){
+      var filterdata = [];
+      if(this.filterpoint.length !=0 && this.filtertype.length !=0){
+        var firstdata = [];
+        
+        for (var i=0; i<this.filtertype.length; i++){
           for (var j=0; j<Object.keys(data).length; j++){
-            if (this.catfilter[i]==data[j].category){
+            if (this.filtertype[i]==data[j].category){
+              firstdata.push(data[j])
+            }
+          }
+        }
+        for (var i=0; i<this.filterpoint.length; i++){
+          var minNu= this.filterpoint[i].split("_")[0];
+          var maxNu = this.filterpoint[i].split("_")[1];
+          
+          for (var j=0; j<Object.keys(firstdata).length; j++){
+            //console.log(firstdata[j].point, maxNu)
+            if (firstdata[j].point>=minNu && firstdata[j].point<=maxNu){
+              filterdata.push(firstdata[j])
+            }
+          }
+        }
+      }
+      else if (this.filterpoint.length !=0 && this.filtertype.length==0){
+        
+        for (var i=0; i<this.filterpoint.length; i++){
+          var minNu= this.filterpoint[i].split("_")[0];
+          var maxNu = this.filterpoint[i].split("_")[1];
+          for (var j=0; j<Object.keys(data).length; j++){
+            if (data[j].point>=minNu &&data[j].point<=maxNu){
               filterdata.push(data[j])
             }
           }
         }
-        console.log(filterdata);
-        this.productfilter = filterdata;
+      }else if(this.filterpoint.length ==0 && this.filtertype.length !=0){       
+        for (var i=0; i<this.filtertype.length; i++){
+          for (var j=0; j<Object.keys(data).length; j++){
+            if (this.filtertype[i]==data[j].category){
+              filterdata.push(data[j])
+            }
+          }
+        }
+      }else{
+        filterdata= data;        
       }
+      console.log(filterdata);
+      this.productfilter = filterdata;
       return this.productfilter;
 
-      // console.log(this.catfilter);
+      // console.log(this.filtertype);
       // return this.productDict;
     },
-    validateActive(){
-      this.isactive= true;
+    sortbytype(){
+      // console.log(this.productfilter.length)
+      if(this.sorttype=="Points"){
+        if(this.iconButton =="<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>"){
+          var result = this.productfilter.sort( function ( a, b ) { return a.point - b.point; } )
+        }else{
+          var result = this.productfilter.sort( function ( a, b ) { return b.point - a.point; } )
+        }
+        console.log(result)     
+      }else{
+        if(this.iconButton =="<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>"){
+          var result = this.productfilter.sort(function (a,b){if (a[product]<b[product]){return-1}else if(a[product]>b[product]){return 1}else{return 0}})
+        //   function sortOn (arr, prop) {
+        //     arr.sort (
+        //         function (a, b) {
+        //             if (a[prop] < b[prop]){
+        //                 return -1;
+        //             } else if (a[prop] > b[prop]){
+        //                 return 1;
+        //             } else {
+        //                 return 0;   
+        //             }
+        //         }
+        //     );
+        // }
+        }
+      }
+    },
+    clickIcon(){
+      if(this.iconButton == "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>" ){
+        this.iconButton = "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-up'></i></button>"
+      }else{
+        this.iconButton = "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>" 
+
+      }
+    },
+    changebutton(){
+      console.log("hi")
+      console.log(this.sorttype)
+      if(this.sorttype=="Name"){
+        this.iconButton = "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-alpha-down'></i></button>"
+      }else{
+        this.iconButton == "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>" 
+      }
+
+    }
+  },
+  computed:{
+    retrievesorttype(){
+      console.log(this.sorttype)
     }
   }
 })
 const rw = reward.mount('#reward');
+
 
