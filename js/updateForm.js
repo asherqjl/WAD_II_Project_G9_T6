@@ -37,10 +37,10 @@ updateApp.component('update-form',{
                 <label class="form-label" for="cfmNewPassword">Repeat your new password</label>
             </div>
         </div>
-
         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
             <button type="submit" class="btn btn-primary btn-lg">Update</button>
         </div>
+
     </form>
     `    
 });
