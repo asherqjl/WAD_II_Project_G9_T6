@@ -39,26 +39,20 @@
                         </select>
                         <label for="floatingSelectGrid">Search by category</label>
                     </div>
+                    <br>
+                    <small style="color: orangered;"> I know is ugly for now but at least it's functional pls dont judge</small> 
                 </div>
                 
-                <!--dropdown list location area (mrt stations)-->
+                
+                <!--checkbox list location area (mrt stations)-->
                 <div class="col-md-6 col-sm-6">
-                    <!-- <div class="form-floating ">
-                        <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" >
-                            <option selected></option>
-                            <option value="N">North</option>
-                            <option value="S">South</option>
-                            <option value="E">East</option>
-                            <option value="W">West</option>
-                        </select>
-                        <label for="floatingSelectGrid">Search by area</label>
-                    </div> -->
+                    
                     <div class="form-check list-inline list-group btn-group">
-                        <label class="form-check-label" v-for="mrtObj in MRTlist">
-                            <input type="checkbox" v-model="selectedMRT" :value="mrtObj" @change="displaySelected">{{mrtObj}}
-                            <span class="badge badge-primary badge-pill">2</span>
+                        <label class="form-check-label" v-for="(count,mrt) in displayMRTlist">
+                            <input type="checkbox" v-model="selectedMRT" :value="mrt" @change="displaySelected">{{mrt}}
+                            <span class="badge badge-primary badge-pill ml-5">{{count}}</span>
                         </label>
-                        Selected = {{selectedMRT}}
+                        <small style="color: red;">(Will hide this ltr) Checked = {{selectedMRT}} </small>
                     </div>
 
 
@@ -89,7 +83,7 @@
                         <div class="card-body ">
                             <h6 class="card-title text-dark fw-bolder text-center">{{a_obj.attraction}}</h6><br>
 
-                            <p><strong>{{a_obj.mrt}}</strong></p>
+                            <p><strong >{{a_obj.mrt}}</strong></p>
 
                             
 
