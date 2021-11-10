@@ -24,12 +24,12 @@
         </div>
     
         <div id="app3">
-        <div class='row'>
-            <div class='col-sm d-flex justify-content-center' >
-                <img  v-if="travel_history.length===0" src='./images/sad.png' class='img-fluid d-flex justify-content-center '></img>
-                <img  v-else src='./images/happy.jpg' class='img-fluid d-flex justify-content-center'></img>
+            <div class='row'>
+                <div class='col-sm d-flex justify-content-center' >
+                    <img  v-if="travel_history.length===0" src='./images/sad.png' class='img-fluid d-flex justify-content-center '></img>
+                    <img  v-else src='./images/happy.png' class='img-fluid d-flex justify-content-center'></img>
+                </div>
             </div>
-        </div>
 
             <div class='row'>
                 <div class='col-sm d-flex justify-content-center'>
@@ -50,28 +50,43 @@
                 </div>
             </div>
 
-            <div class="d-flex justify-content-center ">
-                <table class="table bg-white w-75">
-                    <tr v-for="travel in travel_history">
-                        <td><h2>{{travel.location_name}}</h2><br/>{{travel.category}}</td>
-                        <td>{{travel.time_visited}}</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+            <!-- <div class="d-flex justify-content-center "> -->
+                <!-- <table class="table bg-white w-75"> -->
+                    <!-- <tr v-for="travel in travel_history"> -->
+                        <!-- <td><h2>{{travel.location_name}}</h2><br/>{{travel.category}}</td> -->
+                        <!-- <td>{{travel.time_visited}}</td> -->
+                    <!-- </tr> -->
+                <!-- </table> -->
+            <!-- </div> -->
+
+            <div class="row">
+                <div class="d-flex justify-content-center">
+                    <table class="table bg-white w-75" id="listingTable">
+                    </table> 
+                <div>
+             
+                <button v-on:click="prevPage" id="btn_prev">Prev</button>
+                <button v-on:click="nextPage" id="btn_next">Next</button>
+                page: <span id="page"></span>  
+            </div>   
         </div>
     </body>
     <script src="js/navbar.js"></script>
-    
+    <script type="text/javascript" src="js/sessions.js"></script>
+    <script src="js/signOutPopUp.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script>
 const app3 = Vue.createApp({
     data(){
         return {
-            travel_history:''
+            travel_history:'',
+            current_page: 1,
+            records_per_page: 1,
+
         }
     },
-    created() {
+    mounted:function()  {
             // POST request
             /* axios.post(url, data
             )
@@ -90,15 +105,67 @@ const app3 = Vue.createApp({
             .then(response => { 
                 console.log(response.data)
                 this.travel_history= response.data.reverse()
+                console.log(this.travel_history)
                 this.status = response.data
+                this.changePage(1)
             })
             .catch(error => {
                 this.status = 'There was an error: ' + error.message 
             }) 
             
         },
+        methods:{
+            prevPage(){
+                if (this.current_page > 1) {
+                    this.current_page--
+                    this.changePage(this.current_page)
+                }
+            },
+            nextPage(){
+                if(this.current_page < this.numPages()){ 
+                    console.log(this.numPages())
+                    this.current_page++
+                    this.changePage(this.current_page)
+                }
+            },
+            changePage(page){
+                var btn_next = document.getElementById("btn_next")
+                var btn_prev = document.getElementById("btn_prev")
+                var listing_table = document.getElementById("listingTable")
+                var page_span = document.getElementById("page")
+
+                // Validate page
+                if (page < 1) page = 1
+                if (page > this.numPages()) page = this.numPages()  
+
+                listing_table.innerHTML = ""
+                for (var i = (page-1) * this.records_per_page; i < (page * this.records_per_page); i++) {
+                    console.log(this.travel_history[i])
+                    listing_table.innerHTML+= `<tr><td><h2>${this.travel_history[i].location_name}</h2><br/>${this.travel_history[i].category}</td>
+                        <td>${this.travel_history[i].time_visited}</td></tr>`
+                }
+
+                page_span.innerHTML = page
+
+                if (page == 1) {
+                    btn_prev.style.visibility = "hidden"
+                } else {
+                    btn_prev.style.visibility = "visible"
+                }
+
+                if (page == this.numPages()) {
+                    btn_next.style.visibility = "hidden"
+                } else {
+                    btn_next.style.visibility = "visible"
+                }
+            },
+            numPages(){
+                return Math.ceil(this.travel_history.length / this.records_per_page )
+            }
+        },
 })
 const vm3 = app3.mount("#app3");
-
+console.log(vm3.$data.travel_history)
+console.log(vm3.travel_history)
     </script>
 </html>

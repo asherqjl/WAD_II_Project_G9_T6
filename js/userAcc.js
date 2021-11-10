@@ -25,7 +25,9 @@ const cfmNewPassword = document.querySelector('#cfmNewPassword');
 // Database creation
 // Create an instance of a db object for us to store the open database in
 let db;
+
 window.onload = function() {
+    nameDisplayCheck();
     // Open our database; it is created if it doesn't already exist
     // (see onupgradeneeded below)
     let request = window.indexedDB.open('smilingAcrossLocal', 2);
@@ -34,9 +36,9 @@ window.onload = function() {
         console.log('Database failed to open');
     };
     request.onsuccess = function() {
-        // console.log('Database opened successfully');
+        console.log('Database opened successfully');
         db = request.result;
-        // displayData();
+        displayData();
     }
 
     // Setup the database tables if this has not already been done Usually only need to do this once it's like innit like that
@@ -109,7 +111,7 @@ window.onload = function() {
                 alert('Registration Successful '+usernamee+' !');
                 // Session
                 localStorage.setItem('user_name', userName.value);
-                window.location.href="http://localhost:8888/WAD_II_Project_G9_T6/home.html";                
+                window.location.href="http://localhost/WAD_II_Project_G9_T6/home.html";                
                 userName.value = '';
                 // update the display of data to show the newly added item, by running displayData() again.
                 displayData();

@@ -1,0 +1,145 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" 
+        rel="stylesheet" 
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" 
+        crossorigin="anonymous">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/navbar.css">
+        <script src="https://unpkg.com/vue@next"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <body >
+        <div id="app">
+            <table id="listingTable" class="table bg-white w-75">
+
+            </table>
+                <button v-on:click="prevPage" id="btn_prev">Prev</button>
+                <button v-on:click="nextPage" id="btn_next">Next</button>
+                page: <span id="page"></span>  
+             
+
+            <table>
+                <tr>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        2
+                    </td>
+                <tr>
+                    <td>
+                        3
+                    </td>
+                    <td>
+                        4
+                    </td>
+                </tr>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
+
+<script>
+
+    Vue.createApp({
+        data(){
+            return{
+                current_page: 1,
+                records_per_page: 3,
+                objJson : [
+                            { adName: "AdName 1"},
+                            { adName: "AdName 2"},
+                            { adName: "AdName 3"},
+                            { adName: "AdName 4"},
+                            { adName: "AdName 5"},
+                            { adName: "AdName 6"},
+                            { adName: "AdName 7"},
+                            { adName: "AdName 8"},
+                            { adName: "AdName 9"},
+                            { adName: "AdName 10"}
+                        ],
+                
+            }
+        },      
+        mounted:function(){
+            this.changePage(1)
+        },
+        methods:{
+            prevPage(){
+                if (this.current_page > 1) {
+                    this.current_page--
+                    this.changePage(this.current_page)
+                }
+            },
+            nextPage(){
+                if(this.current_page < this.numPages()){ 
+                    this.current_page++
+                    this.changePage(this.current_page)
+                }
+            },
+            changePage(page){
+                var btn_next = document.getElementById("btn_next")
+                var btn_prev = document.getElementById("btn_prev")
+                var listing_table = document.getElementById("listingTable")
+                var page_span = document.getElementById("page")
+
+                // Validate page
+                if (page < 1) page = 1
+                if (page > this.numPages()) page = this.numPages()
+
+                listing_table.innerHTML = ""
+                var x= 0
+                for (var i = (page-1) * this.records_per_page; i < (page * this.records_per_page); i++) {
+                    listing_table.innerHTML += `<tr> <td>  ${this.objJson[i].adName} </td> </tr>` 
+
+                }
+                page_span.innerHTML = page
+
+                if (page == 1) {
+                    btn_prev.style.visibility = "hidden"
+                } else {
+                    btn_prev.style.visibility = "visible"
+                }
+
+                if (page == this.numPages()) {
+                    btn_next.style.visibility = "hidden"
+                } else {
+                    btn_next.style.visibility = "visible"
+                }
+            },
+            numPages(){
+                return Math.ceil(this.objJson.length / this.records_per_page)
+            }
+        },
+    }).mount('#app')
+        
+
+ // Can be obtained from another source, such as your objJson variable
+
+
+
+
+
+    </script>
