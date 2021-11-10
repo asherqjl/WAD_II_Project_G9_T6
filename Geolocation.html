@@ -3,34 +3,36 @@
 <head>
 
 </head>
-<body onload="getLocation()">
+<body onload="matchPosition(1.2975,103.8494,locationCode())">
 
 
-
+  <button onclick=matchPosition(attraction_location.latitude,attraction_location.longitude,locationCode())
 <script>
+// 
+var array = [];
+navigator.geolocation.getCurrentPosition(function(position) {
+   var lat = position.coords.latitude;
+   var lon = position.coords.longitude;
+   array.push(lat, lon); 
+   locationCode()  
+});
 
+function locationCode() {
+   return array; 
+  
+}
 
-function getLocation(){
-  if (navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(showPosition);
-  }
-}
-function showPosition(position){
-  var latitude=position.coords.latitude
-  var longitude=position.coords.longitude;
-  return {lat:latitude,lng:longitude}
-  //console.log(lat);
-  //console.log(lng);
-}
 
 function matchPosition(attraction_latitude,attraction_longitude,current_location){
   
-  if (attraction_latitude==current_location.lat && attraction_longitude==current_location.lng){
-    document.getElementById("boolarrived").innerHTML=""  
+  if (Math.round(attraction_latitude)==Math.round(current_location[0]) && Math.round(attraction_longitude)==Math.round(current_location[1])){
+    alert("point redeemed!")  
 
+  }else{
+    alert("you are not even here yet")
   }
 }
-button onclick=matchPosition(attraction_location.latitude,attraction_location.longitude,getLocation())
+//button onclick=matchPosition(attraction_location.latitude,attraction_location.longitude,locationCode())
 </script>
 
 </body>

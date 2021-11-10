@@ -73,7 +73,7 @@
         <div id="map" class="map-responsive">
         </div>
         <div id="legend"><h6>Legend</h6></div>
-        
+        <div id="boolredeem"></div>
         
 
     <!--Load the API from the specified URL
@@ -98,7 +98,7 @@ console.log(navigator.geolocation.getCurrentPosition(showLocation));
             
 
 
-
+var infoWindow;
 
 function initMap() {
         const map = new google.maps.Map(document.getElementById("map"), {
@@ -178,6 +178,28 @@ var legend = document.getElementById("legend");
 
   //  const hardcode_locations=[{latitude:1.360261,longitude:103.9892345},[1.2890235,103.8484538],[1.3016419,103.838816],[1.395499,103.924187],[1.256148,103.821552]
 //,[1.2540421,103.8238084],[1.3600727,103.9897102],[1.360208,103.989759],[1.255179,103.8218107],[1.28218,103.84415],[1.2711456,103.8195228]];
+var array = [];
+navigator.geolocation.getCurrentPosition(function(position) {
+   var lat = position.coords.latitude;
+   var lon = position.coords.longitude;
+   array.push(lat, lon); 
+   locationCode()  
+});
+
+function locationCode() {
+   return array; 
+  
+}
+function matchPosition(attraction_latitude,attraction_longitude,current_location){
+  
+  if (attraction_latitude.toFixed(2)==current_location[0].toFixed(2) && attraction_longitude.toFixed(2)==current_location[1].toFixed(2)){
+    alert("YAY you have arrived succesfully!point redeemd!")
+
+  }else{
+    alert("you are not here yet! Go Nearer to the Attraction!");
+  }
+}   
+
 
     
     var keyword = document.getElementById("keyword");
@@ -306,9 +328,15 @@ var legend = document.getElementById("legend");
                     
         
                     });
-                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>' + attraction_location.desc+'<br></br>' +'</div>' +'<div><button type="button" style="color:black" onclick="()">I arrived here now!</button></div><div id="boolarrived"></div>'
+                    var lat=attraction_location.latitude
+                    var lng=attraction_location.longitude
+                    
+                    
+                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>' + attraction_location.desc+'<br></br>' +'</div>' +'<div><button onclick=matchPosition('+lat+','+lng+','+'locationCode()) id="redeempoint" type="button" style="color:black">I arrived here now!</button></div>'
+                    
 
-                    var infowindow=new google.maps.InfoWindow()
+
+                    infowindow=new google.maps.InfoWindow()
                     google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
                     return function() {
                         
@@ -318,6 +346,8 @@ var legend = document.getElementById("legend");
                     })(marker,content,infowindow)); 
 
                     
+                    
+                    
                 }
 
             }).catch(function (error) {
@@ -326,17 +356,13 @@ var legend = document.getElementById("legend");
             
             
     }
+    
+
+ 
 
     
 
    
-           
-       
-      
-
-        // console.log(locations_list[0])
-        // console.log(typeof location_list[0]);
-        // console.log(typeof locations_list[0].lat);
         
     
     
