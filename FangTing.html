@@ -96,8 +96,10 @@
                                     </div>                        
                                     <br>
                                     <div class="d-flex flex-row">
-                                        <div class ="mb-3" :value="sorttype" @change="changebutton()" @click="sortbytype()" >&nbsp;&nbsp;&nbsp;
-                                            <span v-html="iconButton" @click="clickIcon()" ></span>
+                                        <div class ="mb-3" :value="sorttype" @click="sortbytype()" >&nbsp;&nbsp;&nbsp;
+                                            <span  v-html="iconButton" @change ="sortbytype()" @click="clickIcon()" ></span>
+                                            <!-- <span  v-if="sorttype==='Points'" v-html="iconButton1" @click="clickIcon()" ></span> -->
+                                            <!-- <span v-else v-html="iconButton2" :value="sorttype" @click="clickIcon()" ></span> -->
                                             
                                         </div>
                                         <div class="text-muted m-2" id="res">Showing {{productfilter.length}} results</div>
