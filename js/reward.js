@@ -25,7 +25,8 @@ const reward = Vue.createApp({
         filterpoint:[],
         productfilter:[],
         sorttype:"Points",
-        iconButton:"<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>"
+        iconButton:"<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>",
+        iconButton2: "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-alpha-down'></i></button>"
     };
 }, 
   created(){
@@ -48,6 +49,7 @@ const reward = Vue.createApp({
         var productdata = response.data;
         this.ProductDetails(productdata);
         this.filterbycategories(this.productDict);
+        this.sortbytype();
         // this.productfilter = this.productDict;
         // console.log(this.productfilter)
         
@@ -182,27 +184,15 @@ const reward = Vue.createApp({
       // console.log(this.productfilter.length)
       if(this.sorttype=="Points"){
         if(this.iconButton =="<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>"){
-          var result = this.productfilter.sort( function ( a, b ) { return a.point - b.point; } )
+          this.productfilter.sort( function ( a, b ) { return a.point - b.point; } )
         }else{
-          var result = this.productfilter.sort( function ( a, b ) { return b.point - a.point; } )
-        }
-        console.log(result)     
+          this.productfilter.sort( function ( a, b ) { return b.point - a.point; } )
+        }    
       }else{
         if(this.iconButton =="<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>"){
-          var result = this.productfilter.sort(function (a,b){if (a[product]<b[product]){return-1}else if(a[product]>b[product]){return 1}else{return 0}})
-        //   function sortOn (arr, prop) {
-        //     arr.sort (
-        //         function (a, b) {
-        //             if (a[prop] < b[prop]){
-        //                 return -1;
-        //             } else if (a[prop] > b[prop]){
-        //                 return 1;
-        //             } else {
-        //                 return 0;   
-        //             }
-        //         }
-        //     );
-        // }
+          this.productfilter.sort(function (a,b){if (a.product<b.product){return-1}else if(a.product>b.product){return 1}else{return 0}})
+        }else{
+          this.productfilter.sort(function (a,b){if (a.product<b.product){return 1}else if(a.product>b.product){return -1}else{return 0}})
         }
       }
     },
@@ -220,7 +210,7 @@ const reward = Vue.createApp({
       if(this.sorttype=="Name"){
         this.iconButton = "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-alpha-down'></i></button>"
       }else{
-        this.iconButton == "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>" 
+        this.iconButton == "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-alpha-down-alt'></i></button>" 
       }
 
     }
