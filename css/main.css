@@ -155,3 +155,31 @@ body {
   margin: 10px;
   border: 1px solid #000;
 }
+
+/* from here kw*/
+#mrtCheckList { 
+  border:2px solid whitesmoke; 
+  width: auto; 
+  padding: 5px;
+  height: 200px; 
+  overflow-y: scroll;
+  color: brown;
+}
+
+.form-floating{  
+  color:black;
+}
+
+.sidenav {
+  height: 100%;
+  width: auto;
+  position: fixed;
+  top: 20;
+  left: 0;
+  overflow-x: hidden;
+}
+
+.attractionCard{
+  margin-left: 200px
+}
+/*to here kw*/
