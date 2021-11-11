@@ -144,9 +144,6 @@ const attraction = Vue.createApp({
 
         this.FilteredAttByCat = this.attractionDict   //update the display dict
         this.displayMRTlist = this.MRTlist
-        // console.log(this.displayMRTlist)
-        console.log(this.FilteredAttByCat)
-
 
         //format the "Displaying list of.." to make it sounds legit
         if(keyword == "adventure" ||keyword == "arts" || keyword == "history&culture" || keyword =="nature&wildlife" || keyword =="Leisure&Recreation" ){
@@ -221,7 +218,6 @@ const attraction = Vue.createApp({
       }
   },
   sweetAlert(name,rating,contact, website,bizTime,address, photo){
-    console.log(website)
     Swal.fire({
       
       title: '<span style="color: #1abc9c">'+name + '</span>',
@@ -243,7 +239,6 @@ const attraction = Vue.createApp({
       cancelButtonAriaLabel: 'Thumbs down'
     })
   }
-
   },
   computed :{
     displaySelected(){
@@ -321,7 +316,6 @@ const attraction = Vue.createApp({
     }  
 
     }
-
   }
 })
 const attraction_vm = attraction.mount('#attraction');
