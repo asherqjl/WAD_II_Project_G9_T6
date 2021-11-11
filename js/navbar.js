@@ -41,6 +41,9 @@ app.component('include-navbar',{
                         <li id="rewardTab" class="nav-item">
                             <a class="nav-link" href="FangTing.html">REWARDS</a>
                         </li>
+                        <li id="rhTab" class="nav-item">
+                        <a class="nav-link" href="zenyu-2.html">REWARD HISTORY</a>
+                    </li>
                     </ul>
                 </div>
             </div>
