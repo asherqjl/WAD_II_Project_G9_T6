@@ -51,11 +51,11 @@
         
         <hr class="my-4">
         <h2>Products:</h2>
-        <p>
+        <!-- <p>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores perspiciatis labore
             illo pariatur qui, quod, consequuntur, perferendis iure explicabo et tenetur quae non
             inventore veritatis repellat eius laborum unde eaa
-        </p>
+        </p> -->
         
         <div class="container-fluid">
             <div class="row">
@@ -91,13 +91,13 @@
                             <div class = "row">  
                                 <div class = "col">
                                     <div class="row g-3 mt-2 justify-content-center">
-                                        <div class="col-md-6"> <input type="text" class="form-control" placeholder="Search by Product Name"> </div>
-                                        <div class="col-md-2"> <button class="btn btn-secondary btn-block"><i class="fas fa-search"></i></button> </div>
+                                        <div class="col-md-6"> <input type="text" class="form-control" placeholder="Search by Product Name" v-model="searchfield" @change="filterbycategories(productDict)" @keyup.enter ="searchproduct()"> </div>
+                                        <div class="col-md-2"> <button class="btn btn-secondary btn-block"><i class="fas fa-search" @click="searchproduct()"></i></button> </div>
                                     </div>                        
                                     <br>
                                     <div class="d-flex flex-row">
                                         <div class ="mb-3" :value="sorttype" @click="sortbytype()" >&nbsp;&nbsp;&nbsp;
-                                            <span  v-html="iconButton" @change ="sortbytype()" @click="clickIcon()" ></span>
+                                            <span  v-html="iconButton"  @click="clickIcon()" ></span>
                                             <!-- <span  v-if="sorttype==='Points'" v-html="iconButton1" @click="clickIcon()" ></span> -->
                                             <!-- <span v-else v-html="iconButton2" :value="sorttype" @click="clickIcon()" ></span> -->
                                             
@@ -108,7 +108,7 @@
                                         <div class="ml-auto mr-lg-3 ms-auto">
                                         
                                             <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Sort by</span> 
-                                            <select name="sort" id="sort" v-model="sorttype">
+                                            <select name="sort" id="sort" v-model="sorttype" @change ="sortbytype()">
                                                     <option ><b>Points</b></option>
                                                     <option ><b>Name</b></option>               
                                                 </select>  
@@ -232,9 +232,9 @@
                                         </div> -->
                                     </span>
                 
-                                    <div class = "text-center">
+                                    <!-- <div class = "text-center">
                                         <button onclick = "myFunction()" type="button" id="myBtn" class="btn btn-light btn-outline-secondary">Show More</button>
-                                    </div>
+                                    </div> -->
                                 
                             </div>
                         </div>

@@ -24,6 +24,7 @@ const reward = Vue.createApp({
         filtertype:[],
         filterpoint:[],
         productfilter:[],
+        searchfield:"",
         sorttype:"Points",
         iconButton:"<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>",
         iconButton2: "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-alpha-down'></i></button>"
@@ -128,7 +129,14 @@ const reward = Vue.createApp({
       return this.productDict;
     },
     filterbycategories(data){
+      console.log(data) 
       var filterdata = [];
+      if(this.searchfield !=""){
+        data=this.searchproduct()
+      }
+      console.log(this.searchfield)
+      // console.log(t)
+      
       if(this.filterpoint.length !=0 && this.filtertype.length !=0){
         var firstdata = [];
         
@@ -171,9 +179,13 @@ const reward = Vue.createApp({
           }
         }
       }else{
-        filterdata= data;        
+        if(this.searchfield !=""){
+          filterdata=this.searchproduct()
+        }else{
+          filterdata= data;        
+        }
       }
-      console.log(filterdata);
+      // console.log(filterdata);
       this.productfilter = filterdata;
       return this.productfilter;
 
@@ -195,13 +207,13 @@ const reward = Vue.createApp({
           this.productfilter.sort(function (a,b){if (a.product<b.product){return 1}else if(a.product>b.product){return -1}else{return 0}})
         }
       }
+      return this.productfilter
     },
     clickIcon(){
       if(this.iconButton == "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>" ){
         this.iconButton = "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-up'></i></button>"
       }else{
         this.iconButton = "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>" 
-
       }
     },
     changebutton(){
@@ -212,12 +224,23 @@ const reward = Vue.createApp({
       }else{
         this.iconButton == "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-alpha-down-alt'></i></button>" 
       }
+    },
+    searchproduct(){
+      var usersearch = this.searchfield.trim();
+      if(this.filtertype !=0 || this.filterpoint !=0){
+        var ALLproduct = this.productfilter;
+      }else{
+        var ALLproduct = this.productDict;
+      }
+      var filter = [];
 
-    }
-  },
-  computed:{
-    retrievesorttype(){
-      console.log(this.sorttype)
+      for (var i = 0; i < ALLproduct.length; i++){
+        if(ALLproduct[i].product.toLowerCase().includes(usersearch)){
+          filter.push(ALLproduct[i])
+        }
+      }
+      this.productfilter=filter;
+      return this.productfilter;
     }
   }
 })
