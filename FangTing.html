@@ -16,6 +16,7 @@
     <title>Smiling Across Local</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/reward.css">
     <!-- <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css" rel="stylesheet">
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script> -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -37,9 +38,13 @@
     <div id="navdiv">
         <include-navbar></include-navbar>
     </div>
-
-
-    <button onclick= "AutoCloseTimer()"></button>
+    <header>
+        <div class="title">
+          <h1>REWARDS</h1>
+          <p>Scroll for more!</p>
+        </div>
+      </header>
+   
 
     <div class="p-3 text-white main" id='reward'>
         
@@ -69,11 +74,11 @@
             <div class="row">
                 <div class="col" id = "sidebar">
                     
-                        <div class=" pt-2 clear">
+                        <!-- <div class=" pt-2 clear">
                             <div class="text-muted filter-label">Applied Filters:</div>
                             <div class="brand-label font-weight-bold p-0 px-1 mx-sm-1 mx-0 my-sm-0 my-2">Example 2<span class=" px-1 close">&times;</span> </div>
                             <div class="brand-label font-weight-bold p-0 px-1 mx-sm-1 mx-0">Example 3<span class=" px-1 close">&times;</span> </div>
-                        </div>
+                        </div> -->
                         <h5 class="font-weight-bold">Categories</h5>
                         <div class="py-3 form-check list-inline list-group btn-group" role="group" data-toggle="buttons" >
                         
@@ -135,7 +140,7 @@
                                     <div class="row"  >
                                         <div v-if="productfilter.length==0" v-html="msg"></div>
                                         <div class="col-sm-12 col-md-6 col-lg-3" @change="productfilter" v-for="product in productfilter">
-                                            <div class="card mb-5">
+                                            <div class="card mb-5 img-rounded" style="border-radius: 20px;">
                                                 <img :src="product.image" class="card-img-top mt-4 img-fluid" alt="item1">
                                                 <div class="card-body ">
                                                     <h5 class="card-title text-dark">{{product.product}}</h5>
