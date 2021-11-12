@@ -38,7 +38,7 @@ body {
 }
 .main {
   /* padding: 16px; */
-  margin-top: 30px;
+  margin-top: 30px;   /*fix every page content height*/
   height: 1500px; /* Used in this example to enable scrolling */
 }
 
@@ -129,7 +129,7 @@ body {
 } */
 #map {
   position: relative;
-  padding-bottom: 75%; // This is the aspect ratio
+  padding-bottom: 75%; 
   height: 0;
   overflow: hidden;
 }
@@ -189,12 +189,12 @@ body {
 
 .carousel-inner img {
   width: 100%;
-  height: 700px;
+  height: 100% ;
 }
 
-#carousel .carousel-container {
+/* #carousel .carousel-container {
   padding: 0;
-}
+} */
 
 .header-box{
   margin: 0px;
