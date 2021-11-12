@@ -13,7 +13,7 @@ app1.component('signup-form',{
             <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
                 <input type="text" id="userName" class="form-control" required/>
-                <label class="form-label" for="userName">Name</label>
+                <label class="form-label" for="userName">Username</label>
             </div>
         </div>
         <div class="d-flex flex-row align-items-center mb-4">
@@ -26,15 +26,15 @@ app1.component('signup-form',{
         <div class="d-flex flex-row align-items-center mb-4">
             <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
-                <input type="password" id="pwd1" class="form-control" required/>
-                <label class="form-label" for="pwd1" >Password</label>
+                <input type="password" id="pwd1" class="form-control" minlength="6" required/>
+                <label class="form-label" for="pwd1" >Password(Minimum 6 Characters)</label>
             </div>
         </div>
         <div class="d-flex flex-row align-items-center mb-4">
             <i class="fas fa-key fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
-                <input type="password" id="cfmPwd" class="form-control" required/>
-                <label class="form-label" for="cfmPwd">Repeat your password</label>
+                <input type="password" id="cfmPwd" class="form-control" minlength="6" required/>
+                <label class="form-label" for="cfmPwd">Repeat your password(Minimum 6 Characters)</label>
             </div>
         </div>
 
@@ -65,19 +65,24 @@ app2.component('login-form',{
         <div class="d-flex flex-row align-items-center mb-4">
         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
         <div class="form-outline flex-fill mb-0">
-            <input type="email" id="loginEmail" class="form-control" required/>
-            <label class="form-label" for="loginEmail">Email</label>
+            <input type="text" id="loginEmail" class="form-control" required/>
+            <label class="form-label" for="loginEmail">Username/Email</label>
         </div>
         </div>
 
         <div class="d-flex flex-row align-items-center mb-4">
             <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
-                <input type="password" id="loginPwd" class="form-control" required/>
-                <label class="form-label" for="loginPwd">Password</label>
+                <input type="password" id="loginPwd" class="form-control" minlength="6" required/>
+                <label class="form-label" for="loginPwd">Password(Minimum 6 Characters)</label>
             </div>
         </div>
-
+        <div class="d-flex flex-row align-items-center mb-4">
+            <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+            <div class="form-outline flex-fill mb-0">
+                <a style="cursor: pointer;color:blue;" onclick='forgetPassword();'>Forget password</a>
+            </div>
+        </div>
         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
             <button type="submit" class="btn btn-primary btn-lg">Login</button>
         </div>

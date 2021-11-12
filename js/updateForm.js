@@ -13,28 +13,28 @@ updateApp.component('update-form',{
             <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
                 <input type="text" id="updateUserName" class="form-control" required/>
-                <label class="form-label" for="updateUserName">Name</label>
+                <label class="form-label" for="updateUserName">Username</label>
             </div>
         </div>
         <div class="d-flex flex-row align-items-center mb-4">
             <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
-                <input type="email" id="updateUserEmail" class="form-control" required/>
+                <input type="email" id="updateUserEmail" class="form-control" readonly/>
                 <label class="form-label" for="updateUserEmail">Email</label>
             </div>
         </div>
         <div class="d-flex flex-row align-items-center mb-4">
             <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
-                <input type="password" id="newPassword" class="form-control" required/>
-                <label class="form-label" for="newPassword" >New Password</label>
+                <input type="password" id="newPassword" class="form-control" minlength="6" required/>
+                <label class="form-label" for="newPassword" >New Password(Minimum 6 Characters)</label>
             </div>
         </div>
         <div class="d-flex flex-row align-items-center mb-4">
             <i class="fas fa-key fa-lg me-3 fa-fw"></i>
             <div class="form-outline flex-fill mb-0">
-                <input type="password" id="cfmNewPassword" class="form-control" required/>
-                <label class="form-label" for="cfmNewPassword">Repeat your new password</label>
+                <input type="password" id="cfmNewPassword" class="form-control" minlength="6" required/>
+                <label class="form-label" for="cfmNewPassword">Repeat your new password(Minimum 6 Characters)</label>
             </div>
         </div>
         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
