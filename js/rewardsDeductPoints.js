@@ -1,3 +1,6 @@
+const userPoints = localStorage.getItem('user_points');
+const userName = localStorage.getItem('user_name');
+const userEmail = localStorage.getItem('user_email');
 
 // Database creation
 // Create an instance of a db object for us to store the open database in
@@ -18,9 +21,7 @@ window.onload = function() {
     };
     
     function deductPoints(){
-        var userPoints = localStorage.getItem('user_points');
-        var userName = localStorage.getItem('user_name');
-        var userEmail = localStorage.getItem('user_email');
+        
 
         let transaction = db.transaction(['user_acc'], 'readwrite');
     
@@ -40,9 +41,8 @@ window.onload = function() {
                     };
 
                     request.onsuccess = function() {
-                        alert("Update Successful");
-                        localStorage.setItem('user_name', newUserName.value);
-                        window.location.href="home.html"; 
+                        alert("Redeem Successful");
+                        window.location.href = "fangTing.html"; 
                     };
 
                 }  
@@ -62,10 +62,9 @@ window.onload = function() {
 
             // If there is still another data item to iterate through, keep running this code
             if(cursor) {
-                console.log(cursor.value)
-                if (cursor.value.user_name == userNameLoggedIn) {
-                    newUserName.value = cursor.value.user_name;
-                    newUserEmail.value = cursor.value.email;
+                
+                if (cursor.value.user_name == userName) {
+                    console.log(cursor.value)
                 }
                 
                 cursor.continue();
