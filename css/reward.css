@@ -1,0 +1,46 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900);
+body{
+    font-family: 'Source Sans Pro', sans-serif
+}
+header {
+    background: 
+      linear-gradient(
+        rgba(0, 0, 0, 0.5),
+        rgba(0, 0, 0, 0.5)
+      ),
+      url(../images/reward.jpg);
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    background-position: center center;
+	background-repeat:  no-repeat;
+  }
+  
+  .title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+  }
+  h1 {
+    text-transform: uppercase;
+    margin: 0;
+    font-size: 3rem;
+    white-space: nowrap;
+  }
+  .img-hover-zoom {
+    height: 5%; /* [1.1] Set it as per your need */
+    overflow: hidden; /* [1.2] Hide the overflowing of child elements */
+  }
+  
+  /* [2] Transition property for smooth transformation of images */
+  .img-hover-zoom img {
+    transition: transform .5s ease;
+  }
+  
+  /* [3] Finally, transforming the image when container gets hovered */
+  .img-hover-zoom:hover img {
+    transform: scale(1.5);
+  }
