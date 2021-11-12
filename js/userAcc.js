@@ -152,6 +152,8 @@ window.onload = function() {
                 alert('Registration Successful '+usernamee+' !');
                 // Session
                 localStorage.setItem('user_name', userName.value);
+                localStorage.setItem('user_points', 0);
+                localStorage.setItem('user_email', userEmail.value);
                 window.location.href="home.html";                
                 userName.value = '';
                 // update the display of data to show the newly added item, by running displayData() again.
