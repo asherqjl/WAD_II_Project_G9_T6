@@ -41,7 +41,7 @@ class PostDAO {
         return $account;
     }
 
-    public function getAll() {
+    public function getAllTravel() {
         // STEP 1
         $connMgr = new ConnectionManager();
         $conn = $connMgr->connect();
@@ -75,7 +75,43 @@ class PostDAO {
         return $travel_history;
     }
 
-    public function update($id, $points) {
+    public function getAllRewards() {
+        // STEP 1
+        $connMgr = new ConnectionManager();
+        $conn = $connMgr->connect();
+
+        // STEP 2
+        $sql = "SELECT
+                    item_name, img_url, points_used, time_redeemed
+                FROM reward_history 
+                "; // SELECT * FROM post; // This will also work
+        $stmt = $conn->prepare($sql);
+
+        // STEP 3
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+        // STEP 4
+        $reward_history = []; // Indexed Array of Post objects
+        while( $row = $stmt->fetch() ) {
+            $reward_history[] =
+                new Reward (
+                    $row['item_name'],
+                    $row['img_url'],
+                    $row['points_used'],
+                    $row['time_redeemed']
+                    );
+        }
+
+        // STEP 5
+        $stmt = null;
+        $conn = null;
+
+        // STEP 6
+        return $reward_history;
+    }
+
+    public function update($email, $points) {
 
         // STEP 1
         $connMgr = new ConnectionManager();
@@ -87,9 +123,9 @@ class PostDAO {
                 SET
                     points+= :points
                 WHERE 
-                    id = :id";
+                    acc_email = :email";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':points', $points, PDO::PARAM_INT);
 
 
@@ -104,32 +140,32 @@ class PostDAO {
         return $status;
     }
 
-    public function delete($id) {
-        // STEP 1
-        $connMgr = new ConnectionManager();
-        $conn = $connMgr->connect();
+    // public function delete($id) {
+    //     // STEP 1
+    //     $connMgr = new ConnectionManager();
+    //     $conn = $connMgr->connect();
 
-        // STEP 2
-        $sql = "DELETE FROM
-                    post
-                WHERE 
-                    id = :id";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    //     // STEP 2
+    //     $sql = "DELETE FROM
+    //                 post
+    //             WHERE 
+    //                 id = :id";
+    //     $stmt = $conn->prepare($sql);
+    //     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
-        //STEP 3
-        $status = $stmt->execute();
+    //     //STEP 3
+    //     $status = $stmt->execute();
         
-        // STEP 4
-        $stmt = null;
-        $conn = null;
+    //     // STEP 4
+    //     $stmt = null;
+    //     $conn = null;
 
-        // STEP 5
-        return $status;
-    }
+    //     // STEP 5
+    //     return $status;
+    // }
 
     public function add($id, $location_name, $time_visited, $category) {
-        // STEP 1
+        // STEP 1   
         $connMgr = new ConnectionManager();
         $conn = $connMgr->connect();
 

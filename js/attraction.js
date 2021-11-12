@@ -1,4 +1,3 @@
-
 const attraction = Vue.createApp({
   data() {
     return {
@@ -44,6 +43,29 @@ const attraction = Vue.createApp({
             var name = attractionData[i].name;
             var type = attractionData[i].type; 
             var mrt = attractionData[i].nearestMrtStation.trim().toLowerCase()
+            var rating= attractionData[i].rating
+            var contact = attractionData[i].contact.primaryContactNo
+            if(contact.trim() ==""){
+              contact= "<span style='color:red'><i> undisclosed </i></span>"
+            }
+      
+            var website = attractionData[i].officialWebsite
+            if(website.trim() ==""){
+              website = "KaiWei.html"  //tbc
+            }
+            else if(! website.startsWith("http") ){
+              website = "https://" + website + ' target="_blank"'
+            }else{
+              website = website + ' target="_blank"'
+            }
+
+            if(attractionData[i].businessHour.length >0){
+              var bizTime = attractionData[i].businessHour[0].openTime + " - "+ attractionData[i].businessHour[0].closeTime 
+            }else{
+              var bizTime = "<span style='color:red'><i> undisclosed </i></span>"
+            }
+            var address = (attractionData[i].address.streetName + ", " + attractionData[i].address.postalCode)
+
             if(mrt.length>0){
             //clean the mrt data
               if(mrt.includes("/")){
@@ -113,17 +135,15 @@ const attraction = Vue.createApp({
               this.attractionCat.push(type)}
 
             //store in a main dict
-            this.attractionDict.push({attraction:name,category:type, desc:desc, photo:photo , mrt:mrt})
+            this.attractionDict.push({attraction:name,category:type, desc:desc, photo:photo , mrt:mrt, rating:rating, contact:contact, website:website, bizTime:bizTime , address:address,photo:photo })
           }
         
         //sort alphabatically
         this.attractionCat.sort()
         this.MRTlist = Object.keys(this.MRTlist).sort().reduce((r, k) => (r[k] = this.MRTlist[k], r), {});
 
-        // console.log(this.MRTlist)
         this.FilteredAttByCat = this.attractionDict   //update the display dict
         this.displayMRTlist = this.MRTlist
-        // console.log(this.displayMRTlist)
 
         //format the "Displaying list of.." to make it sounds legit
         if(keyword == "adventure" ||keyword == "arts" || keyword == "history&culture" || keyword =="nature&wildlife" || keyword =="Leisure&Recreation" ){
@@ -196,6 +216,28 @@ const attraction = Vue.createApp({
       }else{
         myDict[myObj] +=1;        
       }
+  },
+  sweetAlert(name,rating,contact, website,bizTime,address, photo){
+    Swal.fire({
+      
+      title: '<span style="color: #1abc9c">'+name + '</span>',
+      html: '<strong> Rating: </strong>' + rating +'<br><strong> Business Hour: </strong>'+ bizTime +'<br><strong>Address: </strong>'+ address + '<br><strong>Contact: </strong>'+ contact ,
+      footer: '<a href=' +website+ '>Visit Official Website</a> ' ,
+      imageUrl: photo,
+      imageWidth: 400,
+      imageHeight: 200,
+      imageAlt: 'Custom image',
+      width: '45rem',
+      showCloseButton: true,
+      showCancelButton: true,
+      focusConfirm: false,
+      confirmButtonText:
+        '<i class="fa fa-thumbs-up"></i> Great!',
+      confirmButtonAriaLabel: 'Thumbs up, great!',
+      cancelButtonText:
+        '<i class="fa fa-thumbs-down"></i>',
+      cancelButtonAriaLabel: 'Thumbs down'
+    })
   }
   },
   computed :{
@@ -209,11 +251,8 @@ const attraction = Vue.createApp({
           if(! this.attractionCat.includes(this.attractionDict[x].category)){
             this.attractionCat.push(this.attractionDict[x].category)}
         }
-        console.log("before if loop:   "+this.displayField)
-
 
         if(this.displayField== "Singapore Key Attractions!"){
-          console.log(this.displayField)
           this.displaySeeMore= "<button type='button' class='btn btn-primary' >See More</button>"
         }
         return
@@ -277,7 +316,6 @@ const attraction = Vue.createApp({
     }  
 
     }
-
   }
 })
 const attraction_vm = attraction.mount('#attraction');

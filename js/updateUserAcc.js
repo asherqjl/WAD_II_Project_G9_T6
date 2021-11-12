@@ -1,5 +1,4 @@
 // Forms
-
 const updateForm = document.querySelector("#updateForm");
 
 // For Update
@@ -9,8 +8,6 @@ const newUserName = document.querySelector('#updateUserName');
 const newUserEmail = document.querySelector('#updateUserEmail');
 const newUserPassword = document.querySelector('#newPassword');
 const cfmNewPassword = document.querySelector('#cfmNewPassword');
-
-
 
 // Database creation
 // Create an instance of a db object for us to store the open database in
@@ -27,6 +24,7 @@ window.onload = function() {
     request.onsuccess = function() {
         console.log('Database opened successfully');
         db = request.result;
+        displayData();
     };
     
     // Update
@@ -63,7 +61,7 @@ window.onload = function() {
                         request3.onsuccess = function() {
                             alert("Update Successful");
                             localStorage.setItem('user_name', newUserName.value);
-                            window.location.href="http://localhost:8888/WAD_II_Project_G9_T6/home.html"; 
+                            window.location.href="home.html"; 
                         };
 
                     }  
@@ -85,7 +83,10 @@ window.onload = function() {
             // If there is still another data item to iterate through, keep running this code
             if(cursor) {
                 console.log(cursor.value)
-
+                if (cursor.value.user_name == userNameLoggedIn) {
+                    newUserName.value = cursor.value.user_name;
+                    newUserEmail.value = cursor.value.email;
+                }
                 
                 cursor.continue();
             } else {

@@ -1,18 +1,43 @@
 
-function myFunction() {
-  var dots = document.getElementById("dots");
-  var moreText = document.getElementById("more");
-  var btnText = document.getElementById("myBtn");
+// function myFunction() {
+//   var dots = document.getElementById("dots");
+//   var moreText = document.getElementById("more");
+//   var btnText = document.getElementById("myBtn");
 
-  if (dots.style.display === "none") {
-    dots.style.display = "inline";
-    btnText.innerHTML = "Show More"; 
-    moreText.style.display = "none";
-  } else {
-    dots.style.display = "none";
-    btnText.innerHTML = "Show Less"; 
-    moreText.style.display = "inline";
-  }
+//   if (dots.style.display === "none") {
+//     dots.style.display = "inline";
+//     btnText.innerHTML = "Show More"; 
+//     moreText.style.display = "none";
+//   } else {
+//     dots.style.display = "none";
+//     btnText.innerHTML = "Show Less"; 
+//     moreText.style.display = "inline";
+//   }
+// }
+
+function AutoCloseTimer(){
+  let timerInterval
+  Swal.fire({
+    title: 'Auto close alert!',
+    html: 'I will close in <b></b> milliseconds.',
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: () => {
+      Swal.showLoading()
+      const b = Swal.getHtmlContainer().querySelector('b')
+      timerInterval = setInterval(() => {
+        b.textContent = Swal.getTimerLeft()
+      }, 100)
+    },
+    willClose: () => {
+      clearInterval(timerInterval)
+    }
+  }).then((result) => {
+    /* Read more about handling dismissals below */
+    if (result.dismiss === Swal.DismissReason.timer) {
+      console.log('I was closed by the timer')
+    }
+  })
 }
 
 const reward = Vue.createApp({
@@ -24,13 +49,17 @@ const reward = Vue.createApp({
         filtertype:[],
         filterpoint:[],
         productfilter:[],
+        searchfield:"",
         sorttype:"Points",
-        iconButton:"<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>"
+        iconButton:"<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>",
+        iconButton2: "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-alpha-down'></i></button>",
+        userpoints: localStorage.getItem('user_points')
     };
 }, 
   created(){
     // var productDict ={};
-    console.log(this.sorttype)
+    // console.log(this.sorttype)
+    this.AutoCloseTimer();
     var options = {
       method: 'GET',
       url: 'https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list',
@@ -48,6 +77,7 @@ const reward = Vue.createApp({
         var productdata = response.data;
         this.ProductDetails(productdata);
         this.filterbycategories(this.productDict);
+        this.sortbytype();
         // this.productfilter = this.productDict;
         // console.log(this.productfilter)
         
@@ -59,6 +89,30 @@ const reward = Vue.createApp({
     
   },
   methods:{
+    AutoCloseTimer(){
+      let timerInterval
+      Swal.fire({
+        title: 'Auto close alert!',
+        html: 'I will close in <b></b> milliseconds.',
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading()
+          const b = Swal.getHtmlContainer().querySelector('b')
+          timerInterval = setInterval(() => {
+            b.textContent = Swal.getTimerLeft()
+          }, 100)
+        },
+        willClose: () => {
+          clearInterval(timerInterval)
+        }
+      }).then((result) => {
+        /* Read more about handling dismissals below */
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log('I was closed by the timer')
+        }
+      })
+    },
     redeempoint(productprice){
       // split dollar sign and number e.g. $ 49.99
       var splitprice = productprice.split("$ ");
@@ -126,7 +180,14 @@ const reward = Vue.createApp({
       return this.productDict;
     },
     filterbycategories(data){
+      console.log(data) 
       var filterdata = [];
+      if(this.searchfield !=""){
+        data=this.searchproduct()
+      }
+      console.log(this.searchfield)
+      // console.log(t)
+      
       if(this.filterpoint.length !=0 && this.filtertype.length !=0){
         var firstdata = [];
         
@@ -169,10 +230,16 @@ const reward = Vue.createApp({
           }
         }
       }else{
-        filterdata= data;        
+        if(this.searchfield !=""){
+          filterdata=this.searchproduct()
+        }else{
+          filterdata= data;        
+        }
       }
-      console.log(filterdata);
+      // console.log(filterdata);
+      
       this.productfilter = filterdata;
+      this.sortbytype();
       return this.productfilter;
 
       // console.log(this.filtertype);
@@ -182,36 +249,24 @@ const reward = Vue.createApp({
       // console.log(this.productfilter.length)
       if(this.sorttype=="Points"){
         if(this.iconButton =="<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>"){
-          var result = this.productfilter.sort( function ( a, b ) { return a.point - b.point; } )
+          this.productfilter.sort( function ( a, b ) { return a.point - b.point; } )
         }else{
-          var result = this.productfilter.sort( function ( a, b ) { return b.point - a.point; } )
-        }
-        console.log(result)     
+          this.productfilter.sort( function ( a, b ) { return b.point - a.point; } )
+        }    
       }else{
         if(this.iconButton =="<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>"){
-          var result = this.productfilter.sort(function (a,b){if (a[product]<b[product]){return-1}else if(a[product]>b[product]){return 1}else{return 0}})
-        //   function sortOn (arr, prop) {
-        //     arr.sort (
-        //         function (a, b) {
-        //             if (a[prop] < b[prop]){
-        //                 return -1;
-        //             } else if (a[prop] > b[prop]){
-        //                 return 1;
-        //             } else {
-        //                 return 0;   
-        //             }
-        //         }
-        //     );
-        // }
+          this.productfilter.sort(function (a,b){if (a.product<b.product){return-1}else if(a.product>b.product){return 1}else{return 0}})
+        }else{
+          this.productfilter.sort(function (a,b){if (a.product<b.product){return 1}else if(a.product>b.product){return -1}else{return 0}})
         }
       }
+      return this.productfilter
     },
     clickIcon(){
       if(this.iconButton == "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>" ){
         this.iconButton = "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-up'></i></button>"
       }else{
         this.iconButton = "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>" 
-
       }
     },
     changebutton(){
@@ -220,14 +275,62 @@ const reward = Vue.createApp({
       if(this.sorttype=="Name"){
         this.iconButton = "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-alpha-down'></i></button>"
       }else{
-        this.iconButton == "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>" 
+        this.iconButton == "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-alpha-down-alt'></i></button>" 
       }
+    },
+    searchproduct(){
+      var usersearch = this.searchfield.trim();
+      if(this.filtertype !=0 || this.filterpoint !=0){
+        var ALLproduct = this.productfilter;
+      }else{
+        var ALLproduct = this.productDict;
+      }
+      var filter = [];
 
-    }
-  },
-  computed:{
-    retrievesorttype(){
-      console.log(this.sorttype)
+      for (var i = 0; i < ALLproduct.length; i++){
+        if(ALLproduct[i].product.toLowerCase().includes(usersearch)){
+          filter.push(ALLproduct[i])
+        }
+      }
+      this.productfilter=filter;
+      return this.productfilter;
+    },
+    RedeemClick(productpoint,productname,productimg,productcategory){
+      this.confirmation(productpoint,productpoint,productname,productimg,productcategory);
+      
+    },
+    confirmation(productpoint,productname,productimg,productcategory){
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        // icon: 'warning',
+        imageUrl: productimg,
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: 'Custom image',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, redeem it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if(this.userpoints>=productpoint){
+            // alert("YAYAYYAYA")
+            this.userpoints -= productpoint;
+            localStorage.setItem("user_points",this.userpoints);
+            localStorage.setItem("redeemed",true);
+
+          }
+          Swal.fire(
+            'REDEEMED!',
+            'This product has been redeemed.',
+            'success',
+            window.location.href = "fangTing.html"
+            
+
+          )
+        }
+      })
     }
   }
 })

@@ -20,7 +20,22 @@ const newUserEmail = document.querySelector('#updateUserEmail');
 const newUserPassword = document.querySelector('#newPassword');
 const cfmNewPassword = document.querySelector('#cfmNewPassword');
 
+// let resetEmail = '';
+// let passwordReset ='';
 
+// // Reset Password
+// function forgetPassword(){
+
+//     resetEmail = prompt("Enter Email to reset Password:");
+//     if(resetEmail){
+//         var res = (Math.random() + 1).toString(36).substring(6);
+//         passwordReset = res; 
+//         console.log(resetEmail);
+//         console.log(passwordReset);
+        
+        
+//     }
+// }
 
 // Database creation
 // Create an instance of a db object for us to store the open database in
@@ -40,7 +55,7 @@ window.onload = function() {
         db = request.result;
         displayData();
     }
-
+    
     // Setup the database tables if this has not already been done Usually only need to do this once it's like innit like that
     request.onupgradeneeded = function(e) {
         // Grab a reference to the opened database
@@ -66,7 +81,33 @@ window.onload = function() {
         
         // console.log('Database setup complete');
     };
+    // if (resetEmail !== '' && passwordReset !== ''){
+    //     resetPassword();
+    // } else {
+    //     console.log("fucked");
+    // }
+    // function resetPassword(){
+    //         alert("hmm");
+    //         let transaction = db.transaction(['user_acc'], 'readwrite');
+        
+    //         // call an object store that's already been added to the database
+    //         let objectStore = transaction.objectStore('user_acc');        
+    //         let successCounter = 0;
+    //         objectStore.openCursor().onsuccess = function(e){
+    //             let cursor = e.target.result;
+    //             if (cursor) {
+    //                 if (cursor.value.email == resetEmail) {
+    //                     const updateData = cursor.value;
+                        
+    //                     updateData.password = passwordReset;
 
+    //                 }  
+    //                 cursor.continue();
+
+    //             } 
+    //         }
+        
+    // };
     // Registration 
     if(signupForm!== null){
         signupForm.onsubmit = register;
@@ -111,7 +152,10 @@ window.onload = function() {
                 alert('Registration Successful '+usernamee+' !');
                 // Session
                 localStorage.setItem('user_name', userName.value);
-                window.location.href="http://localhost/WAD_II_Project_G9_T6/home.html";                
+                localStorage.setItem('user_points', 0);
+                localStorage.setItem('user_email', userEmail.value);
+                localStorage.setItem("redeemed",false);
+                window.location.href="home.html";                
                 userName.value = '';
                 // update the display of data to show the newly added item, by running displayData() again.
                 displayData();
@@ -120,7 +164,7 @@ window.onload = function() {
             console.log('Transaction not opened due to error');
             };
         } else {
-            alert("Come on ley!")
+            alert("Invalid Password!")
         }
     };
   
@@ -138,14 +182,19 @@ window.onload = function() {
 
             // If there is still another data item to iterate through, keep running this code
             if(cursor) {
-                if( loginEmail.value == cursor.value.email && loginPwd.value == cursor.value.password){
+                if( (loginEmail.value == cursor.value.email||loginEmail.value == cursor.value.user_name) && loginPwd.value == cursor.value.password){
                     var currentUserName = cursor.value.user_name;
+                    var currentEmail = cursor.value.email;
+                    var currentPoints = cursor.value.points;
                     alert(currentUserName + ' Login Successful!');
                     
                     // Session
                     localStorage.setItem('user_name', currentUserName);
-                    window.location.href="http://localhost:8888/WAD_II_Project_G9_T6/home.html";                
-                    userName.value = '';
+                    localStorage.setItem('user_points', currentPoints);
+                    localStorage.setItem('user_email', currentEmail);
+                    
+                    window.location.href="home.html";                
+                    
                 } 
                 
                 cursor.continue();

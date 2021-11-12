@@ -16,14 +16,22 @@
     <title>Smiling Across Local</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/navbar.css">
+    <!-- <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma/bulma.css" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script> -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@next"></script>
+    <!-- <script>
+        function displayPoints(){
+            return ("Points:" + localStorage.getItem('user_points'));
+        }
+    </script> -->
 
     <title>Rewards</title>
 
 </head>
 
-<body >
+<body>
     
     <!-- Navigation -->
     <div id="navdiv">
@@ -31,12 +39,12 @@
     </div>
 
 
-    
+    <button onclick= "AutoCloseTimer()"></button>
 
     <div class="p-3 text-white main" id='reward'>
         
         <div class= "myborder">
-            <h1>Points: XXX</h1>
+            <h1>Points: {{userpoints}} </h1>
             <hr class="my-4">
             <h5>Terms and Conditions</h5>
             <ul style="font-size: 12px;">
@@ -51,11 +59,11 @@
         
         <hr class="my-4">
         <h2>Products:</h2>
-        <p>
+        <!-- <p>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores perspiciatis labore
             illo pariatur qui, quod, consequuntur, perferendis iure explicabo et tenetur quae non
             inventore veritatis repellat eius laborum unde eaa
-        </p>
+        </p> -->
         
         <div class="container-fluid">
             <div class="row">
@@ -91,13 +99,15 @@
                             <div class = "row">  
                                 <div class = "col">
                                     <div class="row g-3 mt-2 justify-content-center">
-                                        <div class="col-md-6"> <input type="text" class="form-control" placeholder="Search by Product Name"> </div>
-                                        <div class="col-md-2"> <button class="btn btn-secondary btn-block"><i class="fas fa-search"></i></button> </div>
+                                        <div class="col-md-6"> <input type="text" class="form-control" placeholder="Search by Product Name" v-model="searchfield" @change="filterbycategories(productDict)" @keyup.enter ="searchproduct()"> </div>
+                                        <div class="col-md-2"> <button class="btn btn-secondary btn-block"><i class="fas fa-search" @click="searchproduct()"></i></button> </div>
                                     </div>                        
                                     <br>
                                     <div class="d-flex flex-row">
-                                        <div class ="mb-3" :value="sorttype" @change="changebutton()" @click="sortbytype()" >&nbsp;&nbsp;&nbsp;
-                                            <span v-html="iconButton" @click="clickIcon()" ></span>
+                                        <div class ="mb-3" :value="sorttype" @click="sortbytype()" >&nbsp;&nbsp;&nbsp;
+                                            <span  v-html="iconButton"  @click="clickIcon()" ></span>
+                                            <!-- <span  v-if="sorttype==='Points'" v-html="iconButton1" @click="clickIcon()" ></span> -->
+                                            <!-- <span v-else v-html="iconButton2" :value="sorttype" @click="clickIcon()" ></span> -->
                                             
                                         </div>
                                         <div class="text-muted m-2" id="res">Showing {{productfilter.length}} results</div>
@@ -106,7 +116,7 @@
                                         <div class="ml-auto mr-lg-3 ms-auto">
                                         
                                             <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Sort by</span> 
-                                            <select name="sort" id="sort" v-model="sorttype">
+                                            <select name="sort" id="sort" v-model="sorttype" @change ="sortbytype()">
                                                     <option ><b>Points</b></option>
                                                     <option ><b>Name</b></option>               
                                                 </select>  
@@ -125,7 +135,7 @@
                                                     <h5 class="card-title text-dark">{{product.product}}</h5>
                                                     <p class="card-text text-dark">({{product.category}}) {{product.point}} Points</p>
                                                     <div class = "text-center">
-                                                        <button type="button" class="btn btn-outline-primary">Redeem</button>
+                                                        <button type="button" class="btn btn-outline-primary" @click="RedeemClick(product.point,product.product,product.image,product.category)">Redeem</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -230,9 +240,9 @@
                                         </div> -->
                                     </span>
                 
-                                    <div class = "text-center">
+                                    <!-- <div class = "text-center">
                                         <button onclick = "myFunction()" type="button" id="myBtn" class="btn btn-light btn-outline-secondary">Show More</button>
-                                    </div>
+                                    </div> -->
                                 
                             </div>
                         </div>
@@ -246,11 +256,8 @@
     <script src="js/navbar.js"></script>
     <script type="text/javascript" src="js/sessions.js"></script>
     <script src="js/signOutPopUp.js"></script>
-
+    <script src="js/rewardsDeductPoints.js"></script>
     <script src="js/reward.js"></script>
-    <script>
-
-    </script>
 
     <!-- Optional JavaScript -->
     <!-- Bundled Bootstrap JS -->
