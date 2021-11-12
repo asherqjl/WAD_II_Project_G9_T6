@@ -14,7 +14,7 @@
 //     moreText.style.display = "inline";
 //   }
 // }
-console.log(localstorage.getItem('points'))
+
 function AutoCloseTimer(){
   let timerInterval
   Swal.fire({
@@ -52,7 +52,8 @@ const reward = Vue.createApp({
         searchfield:"",
         sorttype:"Points",
         iconButton:"<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>",
-        iconButton2: "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-alpha-down'></i></button>"
+        iconButton2: "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-alpha-down'></i></button>",
+        userpoints: localStorage.getItem('user_points')
     };
 }, 
   created(){

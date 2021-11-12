@@ -21,7 +21,11 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@next"></script>
-
+    <!-- <script>
+        function displayPoints(){
+            return ("Points:" + localStorage.getItem('user_points'));
+        }
+    </script> -->
 
     <title>Rewards</title>
 
@@ -40,7 +44,7 @@
     <div class="p-3 text-white main" id='reward'>
         
         <div class= "myborder">
-            <h1>Points: XXX</h1>
+            <h1>Points: {{userpoints}} </h1>
             <hr class="my-4">
             <h5>Terms and Conditions</h5>
             <ul style="font-size: 12px;">
