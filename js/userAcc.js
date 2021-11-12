@@ -154,6 +154,7 @@ window.onload = function() {
                 localStorage.setItem('user_name', userName.value);
                 localStorage.setItem('user_points', 0);
                 localStorage.setItem('user_email', userEmail.value);
+                localStorage.setItem("redeemed",false);
                 window.location.href="home.html";                
                 userName.value = '';
                 // update the display of data to show the newly added item, by running displayData() again.

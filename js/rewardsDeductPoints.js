@@ -5,7 +5,8 @@ const userEmail = localStorage.getItem('user_email');
 // Database creation
 // Create an instance of a db object for us to store the open database in
 let db;
-window.onload = function() {
+// window.onload = function() {
+    
     nameDisplayCheck();
     // Open our database; it is created if it doesn't already exist
     // (see onupgradeneeded below)
@@ -18,11 +19,14 @@ window.onload = function() {
         console.log('Database opened successfully');
         db = request.result;
         displayData();
+        if(localStorage.getItem('redeemed')==='false'){
+            console.log('No redemptions Yet');
+        }else{
+            deductPoints();
+        }
     };
     
     function deductPoints(){
-        
-
         let transaction = db.transaction(['user_acc'], 'readwrite');
     
         // call an object store that's already been added to the database
@@ -43,6 +47,7 @@ window.onload = function() {
                     request.onsuccess = function() {
                         alert("Redeem Successful");
                         window.location.href = "fangTing.html"; 
+                        localStorage.setItem("redeemed",false);
                     };
 
                 }  
@@ -74,4 +79,4 @@ window.onload = function() {
             }
         };
     }
-}
+// }

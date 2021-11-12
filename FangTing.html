@@ -135,7 +135,7 @@
                                                     <h5 class="card-title text-dark">{{product.product}}</h5>
                                                     <p class="card-text text-dark">({{product.category}}) {{product.point}} Points</p>
                                                     <div class = "text-center">
-                                                        <button type="button" class="btn btn-outline-primary" @click="updatePoints(product.point)">Redeem</button>
+                                                        <button type="button" class="btn btn-outline-primary" @click="updatePoints(product.point);deductPoints();">Redeem</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -256,7 +256,7 @@
     <script src="js/navbar.js"></script>
     <script type="text/javascript" src="js/sessions.js"></script>
     <script src="js/signOutPopUp.js"></script>
-    <!-- <script src="js/rewardsDeductPoints.js"></script> -->
+    <script src="js/rewardsDeductPoints.js"></script>
     <script src="js/reward.js"></script>
 
     <!-- Optional JavaScript -->
