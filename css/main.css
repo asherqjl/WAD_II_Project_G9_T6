@@ -1,5 +1,6 @@
 body {
     background-color: rgb(162, 230, 215) !important;
+    background-image: url("/images/")
     font-family:Verdana, Geneva, Tahoma, sans-serif !important;
     color: white !important;
     font-size: 15px !important;
