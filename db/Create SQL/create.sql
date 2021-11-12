@@ -11,9 +11,9 @@ create table acc (
 
 create table travel_history (
 	email varchar(50),
-	location_name varchar(100),
+	location_name varchar(250),
     time_visited datetime,
-    category text(50)
+    category varchar(50)
     );
     
 create table reward_history (
@@ -29,8 +29,9 @@ insert into travel_history(email, location_name, time_visited, category)
 values ("1", "Bugis", CURRENT_TIMESTAMP, "Tourism");
 
 insert into travel_history(email, location_name, time_visited, category)
-values ("1", "Orchard", "Tomorrow", "Shopping");
-
+values ("1", "Orchard", CURRENT_TIMESTAMP, "Shopping");
+insert into travel_history(email, location_name, time_visited, category)
+values ("1", "Orchard", CURRENT_TIMESTAMP, "Shopping");
 insert into reward_history(email, item_name, img_url, points_used, time_redeemed)
 values("1", "Pants", "https://www.helikon-tex.com/media/catalog/product/cache/4/image/9df78eab33525d08d6e5fb8d27136e95/s/p/sp-pgm-dc-11.jpg", 200, CURRENT_TIMESTAMP);
 insert into reward_history(email, item_name, img_url, points_used, time_redeemed)

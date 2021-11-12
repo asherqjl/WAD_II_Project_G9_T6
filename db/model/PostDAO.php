@@ -164,7 +164,7 @@ class PostDAO {
     //     return $status;
     // }
 
-    public function add($id, $location_name, $time_visited, $category) {
+    public function add($email, $location_name, $category) {
         // STEP 1   
         $connMgr = new ConnectionManager();
         $conn = $connMgr->connect();
@@ -172,22 +172,21 @@ class PostDAO {
         // STEP 2
         $sql = "INSERT INTO travel_history
                     (
-                        user_id, 
+                        email, 
                         location_name,
                         time_visited,
                         category
                     )
                 VALUES
                     (
-                        :id,
+                        :email,
                         :location_name,
-                        :time_visited,
+                        CURRENT_TIMESTAMP,
                         :category
                     )";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':location_name', $location_name, PDO::PARAM_STR);
-        $stmt->bindParam(':time_visited', $time_visited, PDO::PARAM_STR);
         $stmt->bindParam(':category', $cagetory, PDO::PARAM_STR);
 
         //STEP 3
