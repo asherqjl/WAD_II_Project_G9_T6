@@ -140,8 +140,10 @@
                                     <div class="row"  >
                                         <div v-if="productfilter.length==0" v-html="msg"></div>
                                         <div class="col-sm-12 col-md-6 col-lg-3" @change="productfilter" v-for="product in productfilter">
-                                            <div class="card mb-5 img-rounded" style="border-radius: 20px;">
-                                                <img :src="product.image" class="card-img-top mt-4 img-fluid" alt="item1">
+                                            <div class="card mb-5 img-rounded " style="border-radius: 20px;">
+                                                <div class="img-hover-zoom">
+                                                    <img :src="product.image" class="card-img-top mt-4 img-fluid " alt="item1">
+                                                </div>
                                                 <div class="card-body ">
                                                     <h5 class="card-title text-dark">{{product.product}}</h5>
                                                     <p class="card-text text-dark">({{product.category}}) {{product.point}} Points</p>
