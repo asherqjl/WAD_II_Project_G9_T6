@@ -103,17 +103,12 @@
                                         <div class="col-md-2"> <button class="btn btn-secondary btn-block"><i class="fas fa-search" @click="searchproduct()"></i></button> </div>
                                     </div>                        
                                     <br>
+                                    <div class="row" :value="displayproduct" v-show="displayproduct.length!=0">
+                                        Displaying product(s) of: {{displayproduct}}
+                                    </div>
+                                    <br>
                                     <div class="d-flex flex-row">
-                                        <div class ="mb-3" :value="sorttype" @click="sortbytype()" >&nbsp;&nbsp;&nbsp;
-                                            <span  v-html="iconButton"  @click="clickIcon()" ></span>
-                                            <!-- <span  v-if="sorttype==='Points'" v-html="iconButton1" @click="clickIcon()" ></span> -->
-                                            <!-- <span v-else v-html="iconButton2" :value="sorttype" @click="clickIcon()" ></span> -->
-                                            
-                                        </div>
-                                        <div class="text-muted m-2" id="res">Showing {{productfilter.length}} results</div>
-                                        <!-- <div class ="mb-3">&nbsp;&nbsp;&nbsp;<button class="btn btn-secondary btn-block"><i class="fas fa-sort-amount-down-alt"></i></button>&nbsp;&nbsp;&nbsp;<button class="btn btn-secondary btn-block"><i class="fas fa-sort-amount-up"></i></button>
-                                        </div> -->
-                                        <div class="ml-auto mr-lg-3 ms-auto">
+                                        <div >
                                         
                                             <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Sort by</span> 
                                             <select name="sort" id="sort" v-model="sorttype" @change ="sortbytype()">
@@ -124,10 +119,21 @@
                                             </div>
                                             
                                         </div>
+                                        <div class ="mb-3" :value="sorttype" @click="sortbytype()" >&nbsp;&nbsp;&nbsp;
+                                            <span  v-html="iconButton"  @click="clickIcon()" ></span>
+                                            <!-- <span  v-if="sorttype==='Points'" v-html="iconButton1" @click="clickIcon()" ></span> -->
+                                            <!-- <span v-else v-html="iconButton2" :value="sorttype" @click="clickIcon()" ></span> -->
+                                            
+                                        </div>
+                                        <div class="text-muted m-2 ml-auto mr-lg-3 ms-auto" id="res">Showing {{productfilter.length}} results</div>
+                                        <!-- <div class ="mb-3">&nbsp;&nbsp;&nbsp;<button class="btn btn-secondary btn-block"><i class="fas fa-sort-amount-down-alt"></i></button>&nbsp;&nbsp;&nbsp;<button class="btn btn-secondary btn-block"><i class="fas fa-sort-amount-up"></i></button>
+                                        </div> -->
+                                        
                                         
                                     </div>
                                     <!-- 1st row-->
                                     <div class="row"  >
+                                        <div v-if="productfilter.length==0" v-html="msg"></div>
                                         <div class="col-sm-12 col-md-6 col-lg-3" @change="productfilter" v-for="product in productfilter">
                                             <div class="card mb-5">
                                                 <img :src="product.image" class="card-img-top mt-4 img-fluid" alt="item1">
@@ -135,7 +141,7 @@
                                                     <h5 class="card-title text-dark">{{product.product}}</h5>
                                                     <p class="card-text text-dark">({{product.category}}) {{product.point}} Points</p>
                                                     <div class = "text-center">
-                                                        <button type="button" class="btn btn-outline-primary" @click="RedeemClick(product.point,product.product,product.image,product.category)">Redeem</button>
+                                                        <button type="button" class="btn btn-outline-primary" @click="RedeemClick(product.point,product.product, product.image,product.category)">Redeem</button>
                                                     </div>
                                                 </div>
                                             </div>
