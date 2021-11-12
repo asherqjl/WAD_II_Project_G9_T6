@@ -45,7 +45,7 @@ let db;
                     };
 
                     request.onsuccess = function() {
-                        alert("Redeem Successful");
+                        console.log("Redeem Successful");
                         window.location.href = "fangTing.html"; 
                         localStorage.setItem("redeemed",false);
                     };

@@ -295,14 +295,42 @@ const reward = Vue.createApp({
       this.productfilter=filter;
       return this.productfilter;
     },
-    updatePoints(productpoint){
-      if(this.userpoints>=productpoint){
-        alert("YAYAYYAYA")
-        this.userpoints -= productpoint;
-        localStorage.setItem("user_points",this.userpoints);
-        localStorage.setItem("redeemed",true);
-      }
+    RedeemClick(productpoint,productname,productimg,productcategory){
+      this.confirmation(productpoint,productpoint,productname,productimg,productcategory);
       
+    },
+    confirmation(productpoint,productname,productimg,productcategory){
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        // icon: 'warning',
+        imageUrl: productimg,
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: 'Custom image',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, redeem it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if(this.userpoints>=productpoint){
+            // alert("YAYAYYAYA")
+            this.userpoints -= productpoint;
+            localStorage.setItem("user_points",this.userpoints);
+            localStorage.setItem("redeemed",true);
+
+          }
+          Swal.fire(
+            'REDEEMED!',
+            'This product has been redeemed.',
+            'success',
+            window.location.href = "fangTing.html"
+            
+
+          )
+        }
+      })
     }
   }
 })

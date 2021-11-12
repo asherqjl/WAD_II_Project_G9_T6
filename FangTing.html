@@ -135,7 +135,7 @@
                                                     <h5 class="card-title text-dark">{{product.product}}</h5>
                                                     <p class="card-text text-dark">({{product.category}}) {{product.point}} Points</p>
                                                     <div class = "text-center">
-                                                        <button type="button" class="btn btn-outline-primary" @click="updatePoints(product.point);deductPoints();">Redeem</button>
+                                                        <button type="button" class="btn btn-outline-primary" @click="RedeemClick(product.point,product.product,product.image,product.category)">Redeem</button>
                                                     </div>
                                                 </div>
                                             </div>
