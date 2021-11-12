@@ -130,7 +130,6 @@ const attraction = Vue.createApp({
               }
             }
   
-            console.log(photo)
             //extract all the type available in this dataset
             if(! this.attractionCat.includes(type)){
               this.attractionCat.push(type)}

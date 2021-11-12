@@ -38,8 +38,8 @@ body {
 }
 .main {
   /* padding: 16px; */
-  margin-top: 30px;   /*fix every page content height*/
-  height: 1500px; /* Used in this example to enable scrolling */
+  margin-top: 40px;   /*fix every page content height*/
+  /*height: 1500px;  Used in this example to enable scrolling */
 }
 
 #sidebar {
@@ -129,7 +129,7 @@ body {
 } */
 #map {
   position: relative;
-  padding-bottom: 75%; 
+  padding-bottom: 75%;
   height: 0;
   overflow: hidden;
 }
@@ -142,8 +142,6 @@ body {
     height: 100% !important;
   
 }
-
-
 
 #legend {
   font-family: Arial, sans-serif;
@@ -167,24 +165,6 @@ body {
   color:black;
 }
 
-.sidenav {
-  height: 100%;
-  width: auto;
-  position: fixed;
-  top: 20;
-  left: 0;
-  overflow-x: hidden;
-}
-
-.attractionCard{
-  margin-left: 200px
-}
-
-@media (max-width: 768px) {
-  .sidenav {
-      display: none;
-  }
-}
 /*to here kw*/
 
 .carousel-inner img {
@@ -192,15 +172,15 @@ body {
   height: 100% ;
 }
 
-/* #carousel .carousel-container {
-  padding: 0;
-} */
-
-.header-box{
-  margin: 0px;
-  padding: 0px;
-  background-image: url("../images/singapore.jpg");
-  height: 100px;
-  width: 100%;
+#cardDesc { 
+  height: 200px; 
+  overflow-y: scroll;
 
 }
+
+#cardDesc::-webkit-scrollbar {
+  display: none;
+}
+
+
+
