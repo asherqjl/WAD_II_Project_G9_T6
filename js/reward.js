@@ -53,13 +53,15 @@ const reward = Vue.createApp({
         sorttype:"Points",
         iconButton:"<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>",
         iconButton2: "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-alpha-down'></i></button>",
-        userpoints: localStorage.getItem('user_points')
+        userpoints: localStorage.getItem('user_points'),
+        msg: "",
+        displayproduct:""
     };
 }, 
   created(){
     // var productDict ={};
     // console.log(this.sorttype)
-    this.AutoCloseTimer();
+    // this.AutoCloseTimer();
     var options = {
       method: 'GET',
       url: 'https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list',
@@ -236,6 +238,10 @@ const reward = Vue.createApp({
           filterdata= data;        
         }
       }
+
+      if(filterdata.length==0){
+        this.msg ="Sorry, no product found!"
+      }
       // console.log(filterdata);
       
       this.productfilter = filterdata;
@@ -288,30 +294,35 @@ const reward = Vue.createApp({
       var filter = [];
 
       for (var i = 0; i < ALLproduct.length; i++){
-        if(ALLproduct[i].product.toLowerCase().includes(usersearch)){
+        if(ALLproduct[i].product.toLowerCase().includes(usersearch.toLowerCase())){
           filter.push(ALLproduct[i])
         }
       }
       this.productfilter=filter;
+      this.displayproduct = usersearch;
       return this.productfilter;
     },
     RedeemClick(productpoint,productname,productimg,productcategory){
-      this.confirmation(productpoint,productpoint,productname,productimg,productcategory);
+      this.confirmation(productpoint,productname,productimg,productcategory);
       
     },
     confirmation(productpoint,productname,productimg,productcategory){
+      console.log(productimg);
       Swal.fire({
+       
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
         // icon: 'warning',
         imageUrl: productimg,
-        imageWidth: 400,
-        imageHeight: 200,
+        imageWidth: 300,
+        imageHeight: 400,
         imageAlt: 'Custom image',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, redeem it!'
+        confirmButtonText: 'Yes, redeem it!',
+        width: 'auto',
+        height: 'auto'
       }).then((result) => {
         if (result.isConfirmed) {
           if(this.userpoints>=productpoint){
