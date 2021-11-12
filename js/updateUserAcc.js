@@ -1,5 +1,4 @@
 // Forms
-
 const updateForm = document.querySelector("#updateForm");
 
 // For Update
@@ -9,8 +8,6 @@ const newUserName = document.querySelector('#updateUserName');
 const newUserEmail = document.querySelector('#updateUserEmail');
 const newUserPassword = document.querySelector('#newPassword');
 const cfmNewPassword = document.querySelector('#cfmNewPassword');
-
-
 
 // Database creation
 // Create an instance of a db object for us to store the open database in
