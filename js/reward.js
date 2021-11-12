@@ -326,7 +326,7 @@ const reward = Vue.createApp({
               db = request.result;
               displayData();
           };
-          
+          deductPoints;
           function deductPoints(){
               
 
