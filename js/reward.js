@@ -1,18 +1,43 @@
 
-function myFunction() {
-  var dots = document.getElementById("dots");
-  var moreText = document.getElementById("more");
-  var btnText = document.getElementById("myBtn");
+// function myFunction() {
+//   var dots = document.getElementById("dots");
+//   var moreText = document.getElementById("more");
+//   var btnText = document.getElementById("myBtn");
 
-  if (dots.style.display === "none") {
-    dots.style.display = "inline";
-    btnText.innerHTML = "Show More"; 
-    moreText.style.display = "none";
-  } else {
-    dots.style.display = "none";
-    btnText.innerHTML = "Show Less"; 
-    moreText.style.display = "inline";
-  }
+//   if (dots.style.display === "none") {
+//     dots.style.display = "inline";
+//     btnText.innerHTML = "Show More"; 
+//     moreText.style.display = "none";
+//   } else {
+//     dots.style.display = "none";
+//     btnText.innerHTML = "Show Less"; 
+//     moreText.style.display = "inline";
+//   }
+// }
+console.log(localstorage.getItem('points'))
+function AutoCloseTimer(){
+  let timerInterval
+  Swal.fire({
+    title: 'Auto close alert!',
+    html: 'I will close in <b></b> milliseconds.',
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: () => {
+      Swal.showLoading()
+      const b = Swal.getHtmlContainer().querySelector('b')
+      timerInterval = setInterval(() => {
+        b.textContent = Swal.getTimerLeft()
+      }, 100)
+    },
+    willClose: () => {
+      clearInterval(timerInterval)
+    }
+  }).then((result) => {
+    /* Read more about handling dismissals below */
+    if (result.dismiss === Swal.DismissReason.timer) {
+      console.log('I was closed by the timer')
+    }
+  })
 }
 
 const reward = Vue.createApp({
@@ -32,7 +57,8 @@ const reward = Vue.createApp({
 }, 
   created(){
     // var productDict ={};
-    console.log(this.sorttype)
+    // console.log(this.sorttype)
+    this.AutoCloseTimer();
     var options = {
       method: 'GET',
       url: 'https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list',
@@ -62,6 +88,30 @@ const reward = Vue.createApp({
     
   },
   methods:{
+    AutoCloseTimer(){
+      let timerInterval
+      Swal.fire({
+        title: 'Auto close alert!',
+        html: 'I will close in <b></b> milliseconds.',
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading()
+          const b = Swal.getHtmlContainer().querySelector('b')
+          timerInterval = setInterval(() => {
+            b.textContent = Swal.getTimerLeft()
+          }, 100)
+        },
+        willClose: () => {
+          clearInterval(timerInterval)
+        }
+      }).then((result) => {
+        /* Read more about handling dismissals below */
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log('I was closed by the timer')
+        }
+      })
+    },
     redeempoint(productprice){
       // split dollar sign and number e.g. $ 49.99
       var splitprice = productprice.split("$ ");
@@ -186,7 +236,9 @@ const reward = Vue.createApp({
         }
       }
       // console.log(filterdata);
+      
       this.productfilter = filterdata;
+      this.sortbytype();
       return this.productfilter;
 
       // console.log(this.filtertype);
