@@ -97,7 +97,764 @@ function initMap() {
         }
     ]
             });
+            var options = {
+            method: 'GET',
+            url: 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword=adventure&language=en&apikey=UnWhZ0GbjpzxKlcM9GssA3xbSio89mM2'
+            };
+            var locations_list=[];
+            axios.request(options)
+            .then(response=>{
+                var attractionData=response.data.data;
+                
             
+                for (i=0; i<response.data.data.length; i++){
+                    // console.log(locations_list)
+                    var lat=attractionData[i].location.latitude
+                    var lng=attractionData[i].location.longitude
+                    var desc = attractionData[i].description;
+
+                    var name = attractionData[i].name; 
+              // console.log(attractionData)
+
+                    var type = attractionData[i].type; 
+                    // console.log(lat, lng)
+                    // var each_location={lat:location.latitude,lng:location.longitude}
+                    locations_list.push({attractionName:name,category:type, desc:desc,latitude:lat,longitude:lng})
+                    
+                }
+                const image_adventure = {
+                    url: "https://img.icons8.com/fluency/48/000000/adventure.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_arts = {
+                    url:"https://img.icons8.com/external-konkapp-outline-color-konkapp/64/000000/external-art-back-to-school-konkapp-outline-color-konkapp.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_history_culture = {
+                    url: "https://img.icons8.com/external-becris-lineal-color-becris/64/000000/external-history-literary-genres-becris-lineal-color-becris.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_nature_wildlife = {
+                    url: "https://img.icons8.com/fluency/48/000000/wildlife.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_leisure_recreation = {
+                    url: "https://img.icons8.com/fluency/48/000000/nintendo-switch-pro-controller.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                
+                const image_others = {
+                    url: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                // Shapes define the clickable region of the icon. The type defines an HTML
+                // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+                // The final coordinate closes the poly by connecting to the first coordinate.
+                const shape = {
+                    coords: [1, 1, 1, 20, 18, 20, 18, 1],
+                    type: "poly",
+                };
+                console.log(locations_list)
+                
+                for (let i = 0; i < locations_list.length; i++) {
+                    var image;
+                    
+                    
+                    var attraction_location = locations_list[i];
+                    if (attraction_location.category=="Adventure"){
+                        image=image_adventure;
+                    } else if (attraction_location.category=="Arts"){
+                        image=image_arts;
+                    } else if (attraction_location.category=="Leisure & Recreation"){
+                        image=image_leisure_recreation;
+                    } else if (attraction_location.category=="History & Culture"){
+                        image=image_history_culture;
+                    } else if (attraction_location.category=="Nature & Wildlife"){
+                        image=image_nature_wildlife;
+                    } else if (attraction_location.category=="Others"){
+                        image=image_others;
+                    }
+                    var marker=new google.maps.Marker({
+                        
+                    position: { lat: attraction_location.latitude, lng: attraction_location.longitude },
+                    map,
+                    icon: image,
+                    shape: shape,
+                    title: attraction_location.attractionName
+                    
+        
+                    });
+                    var lat=attraction_location.latitude
+                    var lng=attraction_location.longitude
+                    var name=locations_list[i].attractionName
+                    var category=locations_list[i].category
+                    
+                   
+                    
+                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>'+attraction_location.desc+'<br></br>' +'</div>' +'<div><button onclick=matchPosition('+lat+','+lng+',locationCode()) id="redeempoint" type="button" style="color:black">I arrived here now!</button></div>'
+                    
+
+
+                    infowindow=new google.maps.InfoWindow()
+                    google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+                    return function() {
+                        
+                        infowindow.setContent(content);
+                        infowindow.open(map,marker);
+                        };
+                    })(marker,content,infowindow)); 
+
+                    
+                    
+                    
+                }
+
+            }).catch(function (error) {
+            console.error(error);
+            });
+
+            var options = {
+            method: 'GET',
+            url: 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword=arts&language=en&apikey=UnWhZ0GbjpzxKlcM9GssA3xbSio89mM2'
+            };
+            var locations_list=[];
+            axios.request(options)
+            .then(response=>{
+                var attractionData=response.data.data;
+                
+            
+                for (i=0; i<response.data.data.length; i++){
+                    // console.log(locations_list)
+                    var lat=attractionData[i].location.latitude
+                    var lng=attractionData[i].location.longitude
+                    var desc = attractionData[i].description;
+
+                    var name = attractionData[i].name; 
+              // console.log(attractionData)
+
+                    var type = attractionData[i].type; 
+                    // console.log(lat, lng)
+                    // var each_location={lat:location.latitude,lng:location.longitude}
+                    locations_list.push({attractionName:name,category:type, desc:desc,latitude:lat,longitude:lng})
+                    
+                }
+                const image_adventure = {
+                    url: "https://img.icons8.com/fluency/48/000000/adventure.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_arts = {
+                    url:"https://img.icons8.com/external-konkapp-outline-color-konkapp/64/000000/external-art-back-to-school-konkapp-outline-color-konkapp.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_history_culture = {
+                    url: "https://img.icons8.com/external-becris-lineal-color-becris/64/000000/external-history-literary-genres-becris-lineal-color-becris.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_nature_wildlife = {
+                    url: "https://img.icons8.com/fluency/48/000000/wildlife.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_leisure_recreation = {
+                    url: "https://img.icons8.com/fluency/48/000000/nintendo-switch-pro-controller.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                
+                const image_others = {
+                    url: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                // Shapes define the clickable region of the icon. The type defines an HTML
+                // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+                // The final coordinate closes the poly by connecting to the first coordinate.
+                const shape = {
+                    coords: [1, 1, 1, 20, 18, 20, 18, 1],
+                    type: "poly",
+                };
+                console.log(locations_list)
+                
+                for (let i = 0; i < locations_list.length; i++) {
+                    var image;
+                    
+                    
+                    var attraction_location = locations_list[i];
+                    if (attraction_location.category=="Adventure"){
+                        image=image_adventure;
+                    } else if (attraction_location.category=="Arts"){
+                        image=image_arts;
+                    } else if (attraction_location.category=="Leisure & Recreation"){
+                        image=image_leisure_recreation;
+                    } else if (attraction_location.category=="History & Culture"){
+                        image=image_history_culture;
+                    } else if (attraction_location.category=="Nature & Wildlife"){
+                        image=image_nature_wildlife;
+                    } else if (attraction_location.category=="Others"){
+                        image=image_others;
+                    }
+                    var marker=new google.maps.Marker({
+                        
+                    position: { lat: attraction_location.latitude, lng: attraction_location.longitude },
+                    map,
+                    icon: image,
+                    shape: shape,
+                    title: attraction_location.attractionName
+                    
+        
+                    });
+                    var lat=attraction_location.latitude
+                    var lng=attraction_location.longitude
+                    var name=locations_list[i].attractionName
+                    var category=locations_list[i].category
+                    
+                   
+                    
+                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>'+attraction_location.desc+'<br></br>' +'</div>' +'<div><button onclick=matchPosition('+lat+','+lng+',locationCode()) id="redeempoint" type="button" style="color:black">I arrived here now!</button></div>'
+                    
+
+
+                    infowindow=new google.maps.InfoWindow()
+                    google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+                    return function() {
+                        
+                        infowindow.setContent(content);
+                        infowindow.open(map,marker);
+                        };
+                    })(marker,content,infowindow)); 
+
+                    
+                    
+                    
+                }
+
+            }).catch(function (error) {
+            console.error(error);
+            });
+            var options = {
+            method: 'GET',
+            url: 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword=Leisure&Recreation&language=en&apikey=UnWhZ0GbjpzxKlcM9GssA3xbSio89mM2'
+            };
+            var locations_list=[];
+            axios.request(options)
+            .then(response=>{
+                var attractionData=response.data.data;
+                
+            
+                for (i=0; i<response.data.data.length; i++){
+                    // console.log(locations_list)
+                    var lat=attractionData[i].location.latitude
+                    var lng=attractionData[i].location.longitude
+                    var desc = attractionData[i].description;
+
+                    var name = attractionData[i].name; 
+              // console.log(attractionData)
+
+                    var type = attractionData[i].type; 
+                    // console.log(lat, lng)
+                    // var each_location={lat:location.latitude,lng:location.longitude}
+                    locations_list.push({attractionName:name,category:type, desc:desc,latitude:lat,longitude:lng})
+                    
+                }
+                const image_adventure = {
+                    url: "https://img.icons8.com/fluency/48/000000/adventure.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_arts = {
+                    url:"https://img.icons8.com/external-konkapp-outline-color-konkapp/64/000000/external-art-back-to-school-konkapp-outline-color-konkapp.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_history_culture = {
+                    url: "https://img.icons8.com/external-becris-lineal-color-becris/64/000000/external-history-literary-genres-becris-lineal-color-becris.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_nature_wildlife = {
+                    url: "https://img.icons8.com/fluency/48/000000/wildlife.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_leisure_recreation = {
+                    url: "https://img.icons8.com/fluency/48/000000/nintendo-switch-pro-controller.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                
+                const image_others = {
+                    url: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                // Shapes define the clickable region of the icon. The type defines an HTML
+                // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+                // The final coordinate closes the poly by connecting to the first coordinate.
+                const shape = {
+                    coords: [1, 1, 1, 20, 18, 20, 18, 1],
+                    type: "poly",
+                };
+                console.log(locations_list)
+                
+                for (let i = 0; i < locations_list.length; i++) {
+                    var image;
+                    
+                    
+                    var attraction_location = locations_list[i];
+                    if (attraction_location.category=="Adventure"){
+                        image=image_adventure;
+                    } else if (attraction_location.category=="Arts"){
+                        image=image_arts;
+                    } else if (attraction_location.category=="Leisure & Recreation"){
+                        image=image_leisure_recreation;
+                    } else if (attraction_location.category=="History & Culture"){
+                        image=image_history_culture;
+                    } else if (attraction_location.category=="Nature & Wildlife"){
+                        image=image_nature_wildlife;
+                    } else if (attraction_location.category=="Others"){
+                        image=image_others;
+                    }
+                    var marker=new google.maps.Marker({
+                        
+                    position: { lat: attraction_location.latitude, lng: attraction_location.longitude },
+                    map,
+                    icon: image,
+                    shape: shape,
+                    title: attraction_location.attractionName
+                    
+        
+                    });
+                    var lat=attraction_location.latitude
+                    var lng=attraction_location.longitude
+                    var name=locations_list[i].attractionName
+                    var category=locations_list[i].category
+                    
+                   
+                    
+                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>'+attraction_location.desc+'<br></br>' +'</div>' +'<div><button onclick=matchPosition('+lat+','+lng+',locationCode()) id="redeempoint" type="button" style="color:black">I arrived here now!</button></div>'
+                    
+
+
+                    infowindow=new google.maps.InfoWindow()
+                    google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+                    return function() {
+                        
+                        infowindow.setContent(content);
+                        infowindow.open(map,marker);
+                        };
+                    })(marker,content,infowindow)); 
+
+                    
+                    
+                    
+                }
+
+            }).catch(function (error) {
+            console.error(error);
+            });
+            var options = {
+            method: 'GET',
+            url: 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword=nature&wildlife&language=en&apikey=UnWhZ0GbjpzxKlcM9GssA3xbSio89mM2'
+            };
+            var locations_list=[];
+            axios.request(options)
+            .then(response=>{
+                var attractionData=response.data.data;
+                
+            
+                for (i=0; i<response.data.data.length; i++){
+                    // console.log(locations_list)
+                    var lat=attractionData[i].location.latitude
+                    var lng=attractionData[i].location.longitude
+                    var desc = attractionData[i].description;
+
+                    var name = attractionData[i].name; 
+              // console.log(attractionData)
+
+                    var type = attractionData[i].type; 
+                    // console.log(lat, lng)
+                    // var each_location={lat:location.latitude,lng:location.longitude}
+                    locations_list.push({attractionName:name,category:type, desc:desc,latitude:lat,longitude:lng})
+                    
+                }
+                const image_adventure = {
+                    url: "https://img.icons8.com/fluency/48/000000/adventure.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_arts = {
+                    url:"https://img.icons8.com/external-konkapp-outline-color-konkapp/64/000000/external-art-back-to-school-konkapp-outline-color-konkapp.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_history_culture = {
+                    url: "https://img.icons8.com/external-becris-lineal-color-becris/64/000000/external-history-literary-genres-becris-lineal-color-becris.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_nature_wildlife = {
+                    url: "https://img.icons8.com/fluency/48/000000/wildlife.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_leisure_recreation = {
+                    url: "https://img.icons8.com/fluency/48/000000/nintendo-switch-pro-controller.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                
+                const image_others = {
+                    url: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                // Shapes define the clickable region of the icon. The type defines an HTML
+                // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+                // The final coordinate closes the poly by connecting to the first coordinate.
+                const shape = {
+                    coords: [1, 1, 1, 20, 18, 20, 18, 1],
+                    type: "poly",
+                };
+                console.log(locations_list)
+                
+                for (let i = 0; i < locations_list.length; i++) {
+                    var image;
+                    
+                    
+                    var attraction_location = locations_list[i];
+                    if (attraction_location.category=="Adventure"){
+                        image=image_adventure;
+                    } else if (attraction_location.category=="Arts"){
+                        image=image_arts;
+                    } else if (attraction_location.category=="Leisure & Recreation"){
+                        image=image_leisure_recreation;
+                    } else if (attraction_location.category=="History & Culture"){
+                        image=image_history_culture;
+                    } else if (attraction_location.category=="Nature & Wildlife"){
+                        image=image_nature_wildlife;
+                    } else if (attraction_location.category=="Others"){
+                        image=image_others;
+                    }
+                    var marker=new google.maps.Marker({
+                        
+                    position: { lat: attraction_location.latitude, lng: attraction_location.longitude },
+                    map,
+                    icon: image,
+                    shape: shape,
+                    title: attraction_location.attractionName
+                    
+        
+                    });
+                    var lat=attraction_location.latitude
+                    var lng=attraction_location.longitude
+                    var name=locations_list[i].attractionName
+                    var category=locations_list[i].category
+                    
+                   
+                    
+                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>'+attraction_location.desc+'<br></br>' +'</div>' +'<div><button onclick=matchPosition('+lat+','+lng+',locationCode()) id="redeempoint" type="button" style="color:black">I arrived here now!</button></div>'
+                    
+
+
+                    infowindow=new google.maps.InfoWindow()
+                    google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+                    return function() {
+                        
+                        infowindow.setContent(content);
+                        infowindow.open(map,marker);
+                        };
+                    })(marker,content,infowindow)); 
+
+                    
+                    
+                    
+                }
+
+            }).catch(function (error) {
+            console.error(error);
+            });
+            var options = {
+            method: 'GET',
+            url: 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword=history&culture&language=en&apikey=UnWhZ0GbjpzxKlcM9GssA3xbSio89mM2'
+            };
+            var locations_list=[];
+            axios.request(options)
+            .then(response=>{
+                var attractionData=response.data.data;
+                
+            
+                for (i=0; i<response.data.data.length; i++){
+                    // console.log(locations_list)
+                    var lat=attractionData[i].location.latitude
+                    var lng=attractionData[i].location.longitude
+                    var desc = attractionData[i].description;
+
+                    var name = attractionData[i].name; 
+              // console.log(attractionData)
+
+                    var type = attractionData[i].type; 
+                    // console.log(lat, lng)
+                    // var each_location={lat:location.latitude,lng:location.longitude}
+                    locations_list.push({attractionName:name,category:type, desc:desc,latitude:lat,longitude:lng})
+                    
+                }
+                const image_adventure = {
+                    url: "https://img.icons8.com/fluency/48/000000/adventure.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_arts = {
+                    url:"https://img.icons8.com/external-konkapp-outline-color-konkapp/64/000000/external-art-back-to-school-konkapp-outline-color-konkapp.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_history_culture = {
+                    url: "https://img.icons8.com/external-becris-lineal-color-becris/64/000000/external-history-literary-genres-becris-lineal-color-becris.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_nature_wildlife = {
+                    url: "https://img.icons8.com/fluency/48/000000/wildlife.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                const image_leisure_recreation = {
+                    url: "https://img.icons8.com/fluency/48/000000/nintendo-switch-pro-controller.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                
+                const image_others = {
+                    url: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    size: new google.maps.Size(30, 48),
+                    scaledSize: new google.maps.Size(30, 48),
+                    // The origin for this image is (0, 0).
+                    origin: new google.maps.Point(0, 0),
+                    // The anchor for this image is the base of the flagpole at (0, 32).
+                    anchor: new google.maps.Point(0, 32),
+                };
+                // Shapes define the clickable region of the icon. The type defines an HTML
+                // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+                // The final coordinate closes the poly by connecting to the first coordinate.
+                const shape = {
+                    coords: [1, 1, 1, 20, 18, 20, 18, 1],
+                    type: "poly",
+                };
+                console.log(locations_list)
+                
+                for (let i = 0; i < locations_list.length; i++) {
+                    var image;
+                    
+                    
+                    var attraction_location = locations_list[i];
+                    if (attraction_location.category=="Adventure"){
+                        image=image_adventure;
+                    } else if (attraction_location.category=="Arts"){
+                        image=image_arts;
+                    } else if (attraction_location.category=="Leisure & Recreation"){
+                        image=image_leisure_recreation;
+                    } else if (attraction_location.category=="History & Culture"){
+                        image=image_history_culture;
+                    } else if (attraction_location.category=="Nature & Wildlife"){
+                        image=image_nature_wildlife;
+                    } else if (attraction_location.category=="Others"){
+                        image=image_others;
+                    }
+                    var marker=new google.maps.Marker({
+                        
+                    position: { lat: attraction_location.latitude, lng: attraction_location.longitude },
+                    map,
+                    icon: image,
+                    shape: shape,
+                    title: attraction_location.attractionName
+                    
+        
+                    });
+                    var lat=attraction_location.latitude
+                    var lng=attraction_location.longitude
+                    var name=locations_list[i].attractionName
+                    var category=locations_list[i].category
+                    
+                   
+                    
+                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>'+attraction_location.desc+'<br></br>' +'</div>' +'<div><button onclick=matchPosition('+lat+','+lng+',locationCode()) id="redeempoint" type="button" style="color:black">I arrived here now!</button></div>'
+                    
+
+
+                    infowindow=new google.maps.InfoWindow()
+                    google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+                    return function() {
+                        
+                        infowindow.setContent(content);
+                        infowindow.open(map,marker);
+                        };
+                    })(marker,content,infowindow)); 
+
+                    
+                    
+                    
+                }
+
+            }).catch(function (error) {
+            console.error(error);
+            });
+  
+        
             
 
             setMarkers(map);
@@ -171,20 +928,24 @@ navigator.geolocation.getCurrentPosition(function(position) {
 });
 
 function locationCode() {
+  console.log(array)
    return array; 
   
 }
-function matchPosition(attraction_latitude,attraction_longitude,attraction_name,attraction_category,current_location){
+function matchPosition(latitude,longitude,current_location){
   
-  if (attraction_latitude.toFixed(2)==current_location[0].toFixed(2) && attraction_longitude.toFixed(2)==current_location[1].toFixed(2)){
+  if (latitude.toFixed(2)==current_location[0].toFixed(2) && longitude.toFixed(2)==current_location[1].toFixed(2)){
     alert("YAY you have arrived succesfully!point redeemd!")
 
   }else{
     alert("you are not here yet! Go Nearer to the Attraction!");
   }
-}   
+  console.log(current_location)
+  
+} 
 
 
+    
     
     var keyword = document.getElementById("keyword");
 
@@ -314,9 +1075,12 @@ function matchPosition(attraction_latitude,attraction_longitude,attraction_name,
                     });
                     var lat=attraction_location.latitude
                     var lng=attraction_location.longitude
+                    var name=locations_list[i].attractionName
+                    var category=locations_list[i].category
                     
+                   
                     
-                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>' + attraction_location.desc+'<br></br>' +'</div>' +'<div><button onclick=matchPosition('+lat+','+lng+','+attraction_location.attractionName+','+attraction_location.category+','+'locationCode()) id="redeempoint" type="button" style="color:black">I arrived here now!</button></div>'
+                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>'+attraction_location.desc+'<br></br>' +'</div>' +'<div><button onclick=matchPosition('+lat+','+lng+',locationCode()) id="redeempoint" type="button" style="color:black">I arrived here now!</button></div>'
                     
 
 
@@ -342,7 +1106,30 @@ function matchPosition(attraction_latitude,attraction_longitude,attraction_name,
     }
     
 
- 
+    
+        
+    function addTravel(location_name, location_type){
+        var email = localStorage.getItem('user_email')
+        const url = './db/addTravelHistory.php'
+        const data = { email: email, location: location_name,
+                                    category: location_type, 
+                        }
+                        
+            axios.get(url, {
+                    params: data
+            })
+                .then(response => {
+                    console.log(response.data)
+                    alert("Successful!")
+                })
+                
+
+                .catch(error => {
+                    console.log(error);
+                    alert(`Error: ${error}. <br/> Please Try Again Later`)
+                    // status = 'There was an error: ' + error.message 
+                })    
+    }
 
     
 
