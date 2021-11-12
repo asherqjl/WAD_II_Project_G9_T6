@@ -373,6 +373,14 @@ const reward = Vue.createApp({
           };
         }
         }
+    updatePoints(productpoint){
+      if(this.userpoints>=productpoint){
+        alert("YAYAYYAYA")
+        this.userpoints -= productpoint;
+        localStorage.setItem("user_points",this.userpoints);
+        deductPoints();
+      }
+      
     }
   }
 })
