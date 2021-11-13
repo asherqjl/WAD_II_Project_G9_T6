@@ -60,12 +60,12 @@ body {
 }
 
 .badge-primary {
-  background-color: #defadb;
-  color: #48b83e
+  background-color: #FF9900;
+  color: #fff
 }
 
 .brand .check {
-  background-color: #fff;
+  background-color: #FF9900;
   top: 3px;
   
 }
@@ -83,12 +83,12 @@ body {
 }
 
 .brand .tick input:checked~.check{
-  background-color: #61b15a
+  background-color: #FF9900
 }
 
 .brand-label {
-  background-color: #defadb;
-  color: #48b83e;
+  background-color:#FF9900;
+  color: #fff;
   border-radius: 5px;
   font-size: 0.8rem;
   margin: 0 3px
