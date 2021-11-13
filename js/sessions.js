@@ -6,6 +6,7 @@
     const thTab = document.querySelector('#thTab');
     const rewardTab = document.querySelector('#rewardTab');
     const rewardHist = document.querySelector('#rhTab');
+    
     // define the nameDisplayCheck() function
     function nameDisplayCheck() {
         // check whether the 'name' data item is stored in web Storage
