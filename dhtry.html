@@ -175,12 +175,17 @@ navigator.geolocation.getCurrentPosition(function(position) {
 });
 
 function locationCode() {
+<<<<<<< Updated upstream
   
+=======
+  console.log(array)
+>>>>>>> Stashed changes
    return array; 
   
 }
 function matchPosition(latitude,longitude,current_location){
   
+<<<<<<< Updated upstream
   if (latitude.toFixed(1)==current_location[0].toFixed(1) && longitude.toFixed(1)==current_location[1].toFixed(1)){
     alert("YAY you have arrived succesfully!point redeemd!");
     addTravel(latitude,longitude);
@@ -193,6 +198,17 @@ function matchPosition(latitude,longitude,current_location){
 } 
 
 
+=======
+  if (latitude.toFixed(2)==current_location[0].toFixed(2) && longitude.toFixed(2)==current_location[1].toFixed(2)){
+    alert("YAY you have arrived succesfully!point redeemd!")
+
+  }else{
+    alert("you are not here yet! Go Nearer to the Attraction!");
+  }
+  console.log(current_location)
+  
+} 
+>>>>>>> Stashed changes
 
 
     
@@ -359,11 +375,19 @@ function matchPosition(latitude,longitude,current_location){
 
     
         
+<<<<<<< Updated upstream
     function addTravel(longitude, latitude){
         var email = localStorage.getItem('user_email')
         const url = './db/addTravelHistory.php'
         const data = { email: email, longitude: longitude,
                                     latitude: latitude, 
+=======
+    function addTravel(location_name, location_type){
+        var email = localStorage.getItem('user_email')
+        const url = './db/addTravelHistory.php'
+        const data = { email: email, location: location_name,
+                                    category: location_type, 
+>>>>>>> Stashed changes
                         }
                         
             axios.get(url, {

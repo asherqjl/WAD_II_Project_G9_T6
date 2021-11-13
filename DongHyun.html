@@ -179,7 +179,7 @@ function locationCode() {
    return array; 
   
 }
-function matchPosition(latitude,longitude,current_location){
+function matchPosition(latitude,longitude,name,category,current_location){
   
   if (latitude.toFixed(2)==current_location[0].toFixed(2) && longitude.toFixed(2)==current_location[1].toFixed(2)){
     alert("YAY you have arrived succesfully!point redeemd!");
@@ -328,7 +328,7 @@ function matchPosition(latitude,longitude,current_location){
                     
                    
                     
-                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>'+attraction_location.desc+'<br></br>' +'</div>' +'<div><button onclick=matchPosition('+lat+','+lng+',locationCode()) id="redeempoint" type="button" style="color:black">I arrived here now!</button></div>'
+                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>'+attraction_location.desc+'<br></br>' +'</div>' +'<div><button onclick=matchPosition('+lat+','+lng+','+name+','+category+',locationCode()) id="redeempoint" type="button" style="color:black">I arrived here now!</button></div>'
                     
 
 
