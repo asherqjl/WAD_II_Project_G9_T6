@@ -164,7 +164,7 @@ class PostDAO {
     //     return $status;
     // }
 
-    public function add($id, $location_name, $time_visited, $category) {
+    public function add($email, $location_name, $category) {
         // STEP 1   
         $connMgr = new ConnectionManager();
         $conn = $connMgr->connect();
@@ -172,22 +172,21 @@ class PostDAO {
         // STEP 2
         $sql = "INSERT INTO travel_history
                     (
-                        user_id, 
+                        email, 
                         location_name,
                         time_visited,
                         category
                     )
                 VALUES
                     (
-                        :id,
+                        :email,
                         :location_name,
-                        :time_visited,
+                        CURRENT_TIMESTAMP,
                         :category
                     )";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':location_name', $location_name, PDO::PARAM_STR);
-        $stmt->bindParam(':time_visited', $time_visited, PDO::PARAM_STR);
         $stmt->bindParam(':category', $cagetory, PDO::PARAM_STR);
 
         //STEP 3
@@ -200,6 +199,47 @@ class PostDAO {
         // STEP 5
         return $status;
     }
+
+    public function addReward($email, $item_name, $img_url, $points_used) {
+        // STEP 1   
+        $connMgr = new ConnectionManager();
+        $conn = $connMgr->connect();
+
+        // STEP 2
+        $sql = "INSERT INTO travel_history
+                    (
+                        email, 
+                        item_name,
+                        img_url,
+                        points_used,
+                        time_redeemed
+                    )
+                VALUES
+                    (
+                        :email,
+                        :item_name,
+                        :img_url,
+                        :points_used,
+                        CURRENT_TIMESTAMP
+                    )";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':item_name', $item_name, PDO::PARAM_STR);
+        $stmt->bindParam(':img_url', $img_url, PDO::PARAM_STR);
+        $stmt->bindParam(':points_used', $points_used, PDO::PARAM_STR);
+        
+
+        //STEP 3
+        $status = $stmt->execute();
+        
+        // STEP 4
+        $stmt = null;
+        $conn = null;
+
+        // STEP 5
+        return $status;
+    }
+
     public function register($email, $password) {
         // STEP 1
         $connMgr = new ConnectionManager();

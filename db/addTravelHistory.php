@@ -2,13 +2,13 @@
 require_once 'common.php';
 $status = false;
 $result = [];
-if( isset($_REQUEST['location']) && isset($_REQUEST['time']) && isset($_REQUEST['category']) ) {
-    $location = $_REQUEST['location'];
-    $time = $_REQUEST['time'];
+if( isset($_REQUEST['email']) && isset($_REQUEST['location']) && isset($_REQUEST['category']) ) {
+    $email = $_REQUEST['email'];
+    $location= $_REQUEST['location'];
     $category = $_REQUEST['category'];
 
     $dao = new PostDAO();
-    $status = $dao->add(1, $location, $time, $category);
+    $status = $dao->add($email, $location, $category);
 }
 if ($status)
     $result["status"] = "Post added successfully";

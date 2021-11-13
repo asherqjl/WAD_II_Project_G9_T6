@@ -112,7 +112,7 @@ const attraction = Vue.createApp({
                 }
               }
             }else{
-              mrt ="     "
+              mrt ="nil"
               this.helperDictCount(mrt, this.MRTlist)
             }
 
@@ -121,7 +121,7 @@ const attraction = Vue.createApp({
               var photo = "./images/dummy-post-square-1.jpeg"
             }
             else{
-              if(attractionData[i].images[0].url.startsWith("https://")){
+              if(attractionData[i].images[0].url.startsWith("http")){
                 var photo = attractionData[i].images[0].url
               }
               else if(attractionData[i].images[0].uuid.length >2){

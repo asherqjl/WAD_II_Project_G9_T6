@@ -22,8 +22,9 @@
 
 </head>
 <body>
-
+  <br></br>
   <!-- Navigation -->
+  
     <div id="navdiv">
         <include-navbar></include-navbar>
     </div>
@@ -36,8 +37,8 @@
            
         <div class="input-group mb-3 my-3">
             
-                <input id="keyword" type="form" class="form-control me-2" placeholder="Search attraction by any keword!" aria-label="Search">
-                <button onclick="initMap()" class="btn btn-danger" type="submit">Search</button>
+                <input id="keyword" type="form" class="form-control me-2" placeholder="Search attraction by any keword!" aria-label="Search" >
+                <button onclick="initMap()" id="myBtn" class="btn btn-danger" type="submit">Search</button>
             
         </div>
 
@@ -63,6 +64,14 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
+var input = document.getElementById("keyword");
+input.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("myBtn").click();
+    }
+});
+    
    function showLocation(position) {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
@@ -165,7 +174,7 @@ function locationCode() {
    return array; 
   
 }
-function matchPosition(attraction_latitude,attraction_longitude,current_location){
+function matchPosition(attraction_latitude,attraction_longitude,attraction_name,attraction_category,current_location){
   
   if (attraction_latitude.toFixed(2)==current_location[0].toFixed(2) && attraction_longitude.toFixed(2)==current_location[1].toFixed(2)){
     alert("YAY you have arrived succesfully!point redeemd!")
@@ -307,7 +316,7 @@ function matchPosition(attraction_latitude,attraction_longitude,current_location
                     var lng=attraction_location.longitude
                     
                     
-                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>' + attraction_location.desc+'<br></br>' +'</div>' +'<div><button onclick=matchPosition('+lat+','+lng+','+'locationCode()) id="redeempoint" type="button" style="color:black">I arrived here now!</button></div>'
+                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>' + attraction_location.desc+'<br></br>' +'</div>' +'<div><button onclick=matchPosition('+lat+','+lng+','+attraction_location.attractionName+','+attraction_location.category+','+'locationCode()) id="redeempoint" type="button" style="color:black">I arrived here now!</button></div>'
                     
 
 
