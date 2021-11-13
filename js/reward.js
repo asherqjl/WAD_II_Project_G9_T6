@@ -333,17 +333,21 @@ const reward = Vue.createApp({
             // alert("YAYAYYAYA")
             this.userpoints -= productpoint;
             this.addReward(productname,productimg,productpoint);
-            // localStorage.setItem("user_points",this.userpoints);
-            // localStorage.setItem("redeemed",true);
+            localStorage.setItem("user_points",this.userpoints);
+            localStorage.setItem("redeemed",true);
+            Swal.fire(
+              'REDEEMED!',
+              'This product has been redeemed.',
+              'success',
+              window.location.href = "FangTing.html"
+            )
+          }else{
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Not enough points!',
+            })
           }
-          Swal.fire(
-            'REDEEMED!',
-            'This product has been redeemed.',
-            'success',
-            // window.location.href = "fangTing.html"
-            
-
-          )
         }
       })
     },
