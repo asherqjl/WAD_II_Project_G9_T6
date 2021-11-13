@@ -3,11 +3,8 @@ require_once 'common.php';
 $status = false;
 $result = [];
 
-if(isset($_REQUEST['points_used'])){
-    echo $_REQUEST['points_used'];
-}
+
 if(isset($_REQUEST['email']) && isset($_REQUEST['item_name'])  && isset($_REQUEST['img_url']) && isset($_REQUEST['points_used'])) {
-    echo "pee";
     $email = $_REQUEST['email'];
     $item_name= $_REQUEST['item_name'];
     $img_url = $_REQUEST['img_url'];

@@ -100,8 +100,12 @@
                         this.status = 'There was an error: ' + error.message 
                     })  */
                     // GET request
+                    var email = localStorage.getItem('user_email')
                     url="http://localhost/WAD_II_Project_G9_T6/db/getTravelHistory.php"
-                    axios.get(url)
+                    const data= {email: email}
+                    axios.get(url,{
+                params: data
+            })
                     .then(response => { 
                         console.log(response.data)
                         this.travel_history= response.data.reverse()

@@ -7,6 +7,7 @@ if( isset($_REQUEST['email']) && isset($_REQUEST['latitude']) && isset($_REQUEST
     $email = $_REQUEST['email'];
     $latitude= $_REQUEST['latitude'];
     $longitude = $_REQUEST['longitude'];
+    
     $dao = new PostDAO();
     $status = $dao->add($email, $longitude, $latitude);
 }

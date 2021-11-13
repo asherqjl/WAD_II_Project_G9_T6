@@ -6,7 +6,7 @@ create table acc (
     id integer auto_increment primary key,
     acc_email varchar(30),
     acc_password varchar(16),
-    points integer
+    points integer	
 );
 
 create table travel_history (
