@@ -20,25 +20,7 @@ const newUserEmail = document.querySelector('#updateUserEmail');
 const newUserPassword = document.querySelector('#newPassword');
 const cfmNewPassword = document.querySelector('#cfmNewPassword');
 
-// let resetEmail = '';
-// let passwordReset ='';
 
-// // Reset Password
-// function forgetPassword(){
-
-//     resetEmail = prompt("Enter Email to reset Password:");
-//     if(resetEmail){
-//         var res = (Math.random() + 1).toString(36).substring(6);
-//         passwordReset = res; 
-//         console.log(resetEmail);
-//         console.log(passwordReset);
-        
-        
-//     }
-// }
-
-// Database creation
-// Create an instance of a db object for us to store the open database in
 let db;
 
 window.onload = function() {
@@ -81,33 +63,7 @@ window.onload = function() {
         
         // console.log('Database setup complete');
     };
-    // if (resetEmail !== '' && passwordReset !== ''){
-    //     resetPassword();
-    // } else {
-    //     console.log("fucked");
-    // }
-    // function resetPassword(){
-    //         alert("hmm");
-    //         let transaction = db.transaction(['user_acc'], 'readwrite');
-        
-    //         // call an object store that's already been added to the database
-    //         let objectStore = transaction.objectStore('user_acc');        
-    //         let successCounter = 0;
-    //         objectStore.openCursor().onsuccess = function(e){
-    //             let cursor = e.target.result;
-    //             if (cursor) {
-    //                 if (cursor.value.email == resetEmail) {
-    //                     const updateData = cursor.value;
-                        
-    //                     updateData.password = passwordReset;
-
-    //                 }  
-    //                 cursor.continue();
-
-    //             } 
-    //         }
-        
-    // };
+    
     // Registration 
     if(signupForm!== null){
         signupForm.onsubmit = register;
@@ -135,7 +91,7 @@ window.onload = function() {
         
             // call an object store that's already been added to the database
             let objectStore = transaction.objectStore('user_acc');
-        
+
             // Make a request to add our newItem object to the object store
             let request = objectStore.add(newItem);
             
@@ -167,7 +123,31 @@ window.onload = function() {
             alert("Invalid Password!")
         }
     };
-  
+    // Admin Account
+    function createAdmin_Once() {
+        const foundAdmin = [];
+         
+        let newItem = { user_name: 'Admin', 
+            email: 'Admin@admin.com', 
+            password: '654321', 
+            points:1500 };
+        let transaction = db.transaction(['user_acc'], 'readwrite');
+        let objectStore = transaction.objectStore('user_acc');
+        objectStore.openCursor().onsuccess = function(e) {
+            // Get a reference to the cursor
+            let cursor = e.target.result;
+            if(cursor) {
+                
+                foundAdmin.push(cursor.value.user_name); 
+                
+                cursor.continue();
+            }
+        }
+        console.log(foundAdmin.includes("Admin"));
+        if (foundAdmin.includes("Admin")){
+            objectStore.add(newItem);
+        } 
+    }
     // Login Function 
     function login(e){
         e.preventDefault();
@@ -209,6 +189,7 @@ window.onload = function() {
     // Checking
     // to console.log data that's been added into the database see what is inside the database
     function displayData() {
+        createAdmin_Once();
         let objectStore = db.transaction('user_acc').objectStore('user_acc');
 
         objectStore.openCursor().onsuccess = function(e) {
