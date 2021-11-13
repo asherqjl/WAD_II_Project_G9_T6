@@ -33,90 +33,106 @@
     <div id="navdiv">
         <include-navbar></include-navbar>
     </div>
-
-    <div class ="main">
-
-
     
     <div class="container-fluid"  id='attraction'>
+        <div class ="main">
+            <div class= "row">
 
-        <div class="header-box">
-        <!--searchbar - search API keyword -->
-
-            <div class="mx-auto" style="width: 70%;">
-                <div class="input-group mb-3 my-3" >
-                    <input type="search" id="attractionSearch" class="form-control me-3" aria-label="Search" :placeholder=[[displayPlaceholder]] v-model="searchField"  @keyup.enter ="searchAttraction()">
-                    
-                    <!--search button icon -->
-                    <button class="btn btn-primary btn-block">
+            <!--searchbar - search API keyword (one line by itself in small port) -->
+            <div class="col-12">
+                <div class="mx-auto" style="width: 70%;">
+                    <div class="input-group mb-3 my-3" >
+                        <input type="search" id="attractionSearch" class="form-control me-3" aria-label="Search" :placeholder=[[displayPlaceholder]] v-model="searchField"  @keyup.enter ="searchAttraction()">
+                        
+                        <!--search button icon -->
+                        <button class="btn btn-light btn-block">
                         <i class="fas fa-search" @click="searchAttraction()"></i>
-                    </button> 
+                        </button> 
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="sidenav" >
-            <!--dropdown list category APIdynamically -->
-            <div class="form-floating mx-auto mb-5" >
-                <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" v-model="selected_cat" @change="displaySelected" >
-                    <option >All</option>
-                    <option v-for="cat_obj in attractionCat">{{cat_obj}}</option>
-                </select>
-                <label for="floatingSelectGrid">Search by category</label>
-            </div>
-
-            <p style="font-style:italic; text-align: center; text-decoration: underline ;background-color: brown; margin-bottom: 0%;" >Nearest MRT: </p>
-
-            <!--checkbox list - mrt stations-->
-            <div class="form-check list-inline list-group " id= "mrtCheckList">
-                
-                <label class="form-check-label d-flex justify-content-between mb-1" v-for="(count,mrt) in displayMRTlist">
-                    <input type="checkbox" v-model="selectedMRT" :value="mrt" @change="displaySelected">{{mrt}}
-                    <span class="badge badge-primary badge-pill">{{count}}</span>
-                </label>
-                <span class="visually-hidden">{{selectedMRT}} </span>
-            </div>
-
-        </div>
+            <!--dropdown list category APIdynamically (stack up in small port)-->
+            <div class="col-md-2" >
+                <div  class= "row">
+                    <div class="col-sm-6 col-md-12">
+                        <div class="form-floating mx-auto mb-5" >
+                            <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" v-model="selected_cat" @change="displaySelected" >
+                                <option >All</option>
+                                <option v-for="cat_obj in attractionCat">{{cat_obj}}</option>
+                            </select>
+                            <label for="floatingSelectGrid">Search by category</label>
+                        </div>
+                    </div>
+                        
             
-        <div class ="attractionCard">
-            <div class="row mx-auto" >
-                <!--display error msg if any-->
-                <p v-html ="errorMsg" @click='buttonDisplay()'></p>
-                
-                <!--display search + count -->
-                <div :value="displayField">
-                    <p style="color:brown">Displaying lists of: {{displayField}}   ({{FilteredAttByCat.length}} results)</p>
+                    <!--checkbox list - mrt stations (stack up in small port)-->
+                    <div class="col-sm-6 col-md-12">
+                        <p style="font-style:italic; text-align: center; text-decoration: underline ;background-color: black; margin-bottom: 5px;" >Nearest MRT: </p>
+                        
+                        <div class="form-check list-inline list-group " id= "mrtCheckList">
+                            
+                            <label class="form-check-label d-flex justify-content-between mb-1" v-for="(count,mrt) in displayMRTlist">
+                                <input type="checkbox" v-model="selectedMRT" :value="mrt" @change="displaySelected">{{mrt}}
+                                <span class="badge badge-primary badge-pill">{{count}}</span>
+                            </label>
+                            <span class="visually-hidden">{{selectedMRT}} </span>
+                        </div>
+                        
+                    </div>
                 </div>
+            
+            </div>
+
+
+
+            <!--the main display cards (display 2?)-->
+            <div class="col-md-10">
                 
-        
-                <div class="col-sm-12 col-md-6 col-lg-3 display: block" v-for="a_obj in FilteredAttByCat">
-                    <div class="card mb-5 border-2 border-secondary">
-                        <img :src="a_obj.photo" class="card-img-top mt-4 img-fluid" alt="item1">
-                        <div class="card-body ">
-                            <h6 class="card-title text-dark fw-bolder text-center">{{a_obj.attraction}}</h6>
-                            
-                            <p class="fas fa-subway text-danger ">
-                                <span style="color:rgb(199, 76, 76)">&nbsp;&nbsp;&nbsp;{{a_obj.mrt}}</span>
-                            </p>
-                            
-                            <p class="card-text text-dark shadow p-3 mb-5 bg-body rounded">{{a_obj.desc}}</p>
-                            <div class = "text-center">
-                                <!-- <a href="./indAttractionPage.html" class="btn btn-danger ">Read More</a> -->
-                                <button class="btn btn-danger"  @click="sweetAlert(a_obj.attraction, a_obj.rating , a_obj.contact, a_obj.website,a_obj.bizTime,a_obj.address, a_obj.photo)">Read More</button> 
+                <div class="row mx-auto" >
+                    <!--display error msg if any-->
+                    <p v-html ="errorMsg" @click='buttonDisplay()'></p>
+                    
+                    <!--display search + count -->
+                    <div :value="displayField">
+                        <p style="color:brown">Displaying lists of: {{displayField}}   ({{FilteredAttByCat.length}} results)</p>
+                    </div>
+                    
+                    
+                    <div class="col-sm-12 col-md-6 col-lg-3 d-flex align-items-stretch" v-for="a_obj in FilteredAttByCat">
+                        <div class="card mb-5 border-2 border-secondary">
+                            <img :src="a_obj.photo" class="card-img-top img-fluid"  alt="item1">
+                            <div class="card-body ">
+                                <h6 class="card-title text-dark fw-bolder text-center">{{a_obj.attraction}}</h6>
+                                
+                                <p class="fas fa-subway text-danger ">
+                                    <span style="color:rgb(199, 76, 76)">&nbsp;&nbsp;&nbsp;{{a_obj.mrt}}</span>
+                                </p>
+                                
+                                <div id="cardDesc">
+                                    <p class="card-text text-dark shadow p-3 mb-5 bg-body rounded">{{a_obj.desc}}</p>
+                                </div>
+                                    
+                                <div class = "text-center">
+                                    
+                                    <button class="btn btn-light"  @click="sweetAlert(a_obj.attraction, a_obj.rating , a_obj.contact, a_obj.website,a_obj.bizTime,a_obj.address, a_obj.photo)">Read More</button> 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+               
             </div>
+                
+            <!--the SeeMore Button-->
+            <div class="text-center mb-3" v-html ="displaySeeMore" :value='buttonCount'  @click='buttonDisplay()'>
+            </div> 
+            </div>
+        
         </div>
-            
-    <div class="text-center mb-3" v-html ="displaySeeMore" :value='buttonCount'  @click='buttonDisplay()'>
-        </div> 
     </div>
-    
-    </div>
-    
+
+
     <!-- Custom JS-->
     <script src="js/attraction.js"></script>
     <script src="js/navbar.js"></script>
