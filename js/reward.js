@@ -52,8 +52,8 @@ const reward = Vue.createApp({
         productfilter:[],
         searchfield:"",
         sorttype:"Points",
-        iconButton:"<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>",
-        iconButton2: "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-alpha-down'></i></button>",
+        iconButton:"<button class='btn btn-block' style='background-color: #FF9900'><i class='fas fa-sort-amount-down-alt' style='color:white' ></i></button>",
+        iconButton2: "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-alpha-down' style='color:white'></i></button>",
         userpoints: localStorage.getItem('user_points'),
         msg: "",
         displayproduct:""
@@ -257,13 +257,13 @@ const reward = Vue.createApp({
     sortbytype(){
       // console.log(this.productfilter.length)
       if(this.sorttype=="Points"){
-        if(this.iconButton =="<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>"){
+        if(this.iconButton =="<button class='btn btn-block' style='background-color: #FF9900'><i class='fas fa-sort-amount-down-alt' style='color:white'></i></button>"){
           this.productfilter.sort( function ( a, b ) { return a.point - b.point; } )
         }else{
           this.productfilter.sort( function ( a, b ) { return b.point - a.point; } )
         }    
       }else{
-        if(this.iconButton =="<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>"){
+        if(this.iconButton =="<button class='btn btn-block' style='background-color: #FF9900'><i class='fas fa-sort-amount-down-alt' style='color:white'></i></button>"){
           this.productfilter.sort(function (a,b){if (a.product<b.product){return-1}else if(a.product>b.product){return 1}else{return 0}})
         }else{
           this.productfilter.sort(function (a,b){if (a.product<b.product){return 1}else if(a.product>b.product){return -1}else{return 0}})
@@ -272,19 +272,19 @@ const reward = Vue.createApp({
       return this.productfilter
     },
     clickIcon(){
-      if(this.iconButton == "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>" ){
-        this.iconButton = "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-up'></i></button>"
+      if(this.iconButton == "<button class='btn  btn-block' style='background-color: #FF9900'><i class='fas fa-sort-amount-down-alt' style='color:white'></i></button>" ){
+        this.iconButton = "<button class='btn btn-block' style='background-color: #FF9900'><i class='fas fa-sort-amount-up' style='color:white'></i></button>"
       }else{
-        this.iconButton = "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-amount-down-alt'></i></button>" 
+        this.iconButton = "<button class='btn  btn-block' style='background-color: #FF9900'><i class='fas fa-sort-amount-down-alt' style='color:white'></i></button>" 
       }
     },
     changebutton(){
       console.log("hi")
       console.log(this.sorttype)
       if(this.sorttype=="Name"){
-        this.iconButton = "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-alpha-down'></i></button>"
+        this.iconButton = "<button class='btn btn-block' style='background-color: #FF9900'><i class='fas fa-sort-alpha-down' style='color:white'></i></button>"
       }else{
-        this.iconButton == "<button class='btn btn-secondary btn-block'><i class='fas fa-sort-alpha-down-alt'></i></button>" 
+        this.iconButton == "<button class='btnbtn-block' style='background-color: #FF9900'><i class='fas fa-sort-alpha-down-alt' style='color:white'></i></button>" 
       }
     },
     searchproduct(){
