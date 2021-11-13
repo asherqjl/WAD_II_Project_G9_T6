@@ -48,7 +48,7 @@ class PostDAO {
 
         // STEP 2
         $sql = "SELECT
-                    longtitude, latitude, time_visited
+                    longitude, latitude, time_visited
                 FROM travel_history
                 WHERE
                 email= :email"; // SELECT * FROM post; // This will also work
@@ -65,7 +65,7 @@ class PostDAO {
         while( $row = $stmt->fetch() ) {
             $travel_history[] =
                 new Post (
-                    $row['longtitude'],
+                    $row['longitude'],
                     $row['latitude'],
                     $row['time_visited']
                     );
@@ -170,7 +170,7 @@ class PostDAO {
     //     return $status;
     // }
 
-    public function add($email, $longtitude, $latitude) {
+    public function add($email, $longitude, $latitude) {
         // STEP 1   
         $connMgr = new ConnectionManager();
         $conn = $connMgr->connect();
@@ -179,19 +179,20 @@ class PostDAO {
         $sql = "INSERT INTO travel_history
                     (
                         email, 
-                        longtitude,
-                        latitude
+                        longitude,
+                        latitude,
+                        time_visited
                     )
                 VALUES
                     (
                         :email,
-                        :longtitude,
+                        :longitude,
                         :latitude,
                         CURRENT_TIMESTAMP
                     )";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-        $stmt->bindParam(':longtitude', $longtitude, PDO::PARAM_STR);
+        $stmt->bindParam(':longitude', $longitude, PDO::PARAM_STR);
         $stmt->bindParam(':latitude', $latitude, PDO::PARAM_STR);
 
         //STEP 3

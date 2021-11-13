@@ -184,7 +184,8 @@ function matchPosition(latitude,longitude,current_location){
   if (latitude.toFixed(1)==current_location[0].toFixed(1) && longitude.toFixed(1)==current_location[1].toFixed(1)){
     alert("YAY you have arrived succesfully!point redeemd!");
     var email = localStorage.getItem('user_email')
-    addTravel(email,latitude,longitude);
+    console.log(email);
+    addTravel(email,longitude, latitude);
   }else{
     alert("you are not here yet! Go Nearer to the Attraction!");
   }
