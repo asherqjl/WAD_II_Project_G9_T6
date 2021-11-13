@@ -64,6 +64,61 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
+function getLoc(latitude,longitude) {
+            
+            var url = 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword=park&language=en&apikey=UnWhZ0GbjpzxKlcM9GssA3xbSio89mM2';
+            var location_list=[];
+            axios.get(url)
+                .then(response => {
+                    var attractionData=response.data.data;
+                
+            
+                    for (i=0; i<response.data.data.length; i++){
+                        // console.log(locations_list)
+                        var lat=attractionData[i].location.latitude
+                        var lng=attractionData[i].location.longitude
+                        var desc = attractionData[i].description;
+
+                        var name = attractionData[i].name; 
+                // console.log(attractionData)
+
+                        var type = attractionData[i].type; 
+                    // console.log(lat, lng)
+                    // var each_location={lat:location.latitude,lng:location.longitude}
+                    locations_list.push({attractionName:name,category:type, desc:desc,latitude:lat,longitude:lng})
+                    
+                }
+                    for (let i = 0; i < locations_list.length; i++) {
+                        
+                        
+                        
+                        var attraction_location = locations_list[i];
+                        if (attraction_location.latitude==latitude && attraction_location.longitude==longitude){
+                            document.getElementById("displayPlaceName").innerHTML = info;
+                        }
+
+
+                        document.getElementById("displayPlaceName").innerHTML = info;
+                    
+                })
+                .catch(error => {
+                    console.log(error);
+                    
+                });
+        }
+
+        function getFullAddress(data) {
+            var addr = data["results"][0]["formatted_address"];
+            var loc = getLatLng(data);
+            return addr + "<br> lat: " + loc["lat"] + ", lng: " + loc["lng"];
+        }
+
+        function getLatLng(data) {
+            var location = data["results"][0]["geometry"]["location"];
+            return location;
+        }
+
+
 var input = document.getElementById("keyword");
 input.addEventListener("keyup", function(event) {
     if (event.keyCode === 13) {
@@ -175,24 +230,21 @@ navigator.geolocation.getCurrentPosition(function(position) {
 });
 
 function locationCode() {
-  
+  console.log(array)
    return array; 
   
 }
 function matchPosition(latitude,longitude,current_location){
   
-  if (latitude.toFixed(1)==current_location[0].toFixed(1) && longitude.toFixed(1)==current_location[1].toFixed(1)){
+  if (latitude.toFixed(2)==current_location[0].toFixed(2) && longitude.toFixed(2)==current_location[1].toFixed(2)){
     alert("YAY you have arrived succesfully!point redeemd!");
     addTravel(latitude,longitude);
   }else{
     alert("you are not here yet! Go Nearer to the Attraction!");
   }
-  console.log(latitude,longitude)
   
   
 } 
-
-
 
 
     

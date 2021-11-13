@@ -28,7 +28,7 @@
 
 </head>
 
-<body>
+<body >
     
     <!-- Navigation -->
     <div id="navdiv">
@@ -45,8 +45,33 @@
         <p>Welcome to our SmilingAcrossLocal Rewards Program!</p>
         <i class="fas fa-gifts"></i>
     </div>
-    <div class="rounded-circle" >
+    <div class="container-fluid pt-5">
+        <div class="row">
+            <p class="subheader">How to redeem your points</p>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="introfa justify-content-center text-center mx-auto ">
+                    <i class="fas fa-search-location fa-5x"></i>
+                </div>
+                <p class="subsubheading">Step 1</p>
+                <p class="normal"></p>
+            </div>
+            <div class="col-xs-12 col-sm-4  col-md-4">
+                <div class="introfa justify-content-center text-center mx-auto">
+                    <i class="fas fa-route fa-5x"></i>
+                </div>
+                <p class="subsubheading">Step 2</p>
+                <p class="normal"></p>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="introfa justify-content-center text-center mx-auto ">
+                    <i class="fas fa-cart-arrow-down fa-5x"></i>
+                </div>
+                <p class="subsubheading">Step 3</p>
+                <p class="normal">Browse the <b>rewards catalogue</b> & proceed to redeem with your points. Your redemption will be available to you <b>immediately</b>!</p>
+            </div>
+        </div>
     </div>
+
     <div class="p-3 text-white main" id='reward'>
         
         <div class= "myborder">
@@ -146,7 +171,7 @@
                                                     <p class="card-text" style="color:rgb(214, 70, 101)" v-else-if="product.category=='Ladies'"><i class="fas fa-female"></i><span >&nbsp;&nbsp;&nbsp;{{product.category}} </span> </p>
                                                     <p class="card-text" style="color:rgb(218, 102, 36)" v-else-if="product.category=='Kids'"><i class="fas fa-child"></i><span >&nbsp;&nbsp;&nbsp;{{product.category}} </span></p>
                                                     <p class="card-text" style="color:rgb(138, 71, 32)" v-else><i class="fas fa-shopping-bag"></i><span >&nbsp;&nbsp;&nbsp;{{product.category}} </span></p>
-                                                    <p class="card-text text-dark"><i class="fas fa-gift" style="background: -webkit-linear-gradient(#eee, #333);"></i>&nbsp;&nbsp;{{product.point}} Points</p>
+                                                    <p class="card-text text-dark"><i class="fas fa-gift" ></i>&nbsp;&nbsp;{{product.point}} Points</p>
                                                     <div class = "text-center">
                                                         <button type="button" class="btn btn-outline-primary" @click="RedeemClick(product.point,product.product, product.image,product.category)">Redeem</button>
                                                     </div>
