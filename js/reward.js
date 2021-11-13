@@ -352,9 +352,9 @@ const reward = Vue.createApp({
       console.log(email)
       const url = './db/addRewardHistory.php'
       const data = { email: email, item_name: item_name,
-                      img_url: img_url, point_used: points_used
+                      img_url: img_url, points_used: points_used
                       }
-                      
+      console.log(data)
           axios.get(url, {
                   params: data
           })

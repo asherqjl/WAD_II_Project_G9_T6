@@ -212,7 +212,7 @@ class PostDAO {
         $conn = $connMgr->connect();
 
         // STEP 2
-        $sql = "INSERT INTO travel_history
+        $sql = "INSERT INTO reward_history
                     (
                         email, 
                         item_name,

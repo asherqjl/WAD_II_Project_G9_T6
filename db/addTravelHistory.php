@@ -2,7 +2,9 @@
 require_once 'common.php';
 $status = false;
 $result = [];
+echo "2"
 if( isset($_REQUEST['email']) && isset($_REQUEST['location']) && isset($_REQUEST['category']) ) {
+    echo "2";
     $email = $_REQUEST['email'];
     $location= $_REQUEST['location'];
     $category = $_REQUEST['category'];
