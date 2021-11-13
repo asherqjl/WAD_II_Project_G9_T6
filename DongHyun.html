@@ -82,7 +82,7 @@ console.log(navigator.geolocation.getCurrentPosition(showLocation));
             
 
 
-var infoWindow;
+var infowindow;
 
 
 
@@ -331,8 +331,7 @@ function matchPosition(latitude,longitude,current_location){
                    
                     
                     var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>'+attraction_location.desc+'<br></br>' +'</div>' +'<div><button onclick=matchPosition('+lat+','+lng+',locationCode()) id="redeempoint" type="button" style="color:black">I arrived here now!</button></div>'
-                    
-
+                
 
                     infowindow=new google.maps.InfoWindow()
                     google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
