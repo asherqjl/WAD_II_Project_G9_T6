@@ -33,7 +33,7 @@ app.component('include-navbar',{
                             <a class="nav-link" href="DongHyun.html">MAPS</a>
                         </li>
                         <li id="thTab" class="nav-item">
-                            <a class="nav-link" href="zenyu.php">TRAVEL HISTORY</a>
+                            <a class="nav-link" href="zenyu.html">TRAVEL HISTORY</a>
                         </li>
                         <li id="rewardTab" class="nav-item">
                             <a class="nav-link" href="FangTing.html">REWARDS</a>
