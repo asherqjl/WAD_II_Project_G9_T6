@@ -20,6 +20,10 @@
     <script src="https://kit.fontawesome.com/fbf5c5a506.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@next"></script>
 
+    <!-- SweetAlert   ***kw changed*** -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 </head>
 <body>
   <br></br>
@@ -79,7 +83,7 @@ input.addEventListener("keyup", function(event) {
             
          }
 
-console.log(navigator.geolocation.getCurrentPosition(showLocation));
+// console.log(navigator.geolocation.getCurrentPosition(showLocation));
             
 
 
@@ -187,11 +191,31 @@ function matchPosition(latitude,longitude,current_location){
     var email = localStorage.getItem('user_email')
     console.log(email);
     addTravel(email,longitude, latitude);
+        Swal.fire({    // ***kw changed*** 
+            icon: 'success',
+            title: 'YAY you have arrived succesfully!',
+            text:"point redeemd!",
+            showConfirmButton: false,
+            timer: 1500
+            })
+    // alert("YAY you have arrived succesfully!point redeemd!");
+    addTravel(latitude,longitude);
   }else{
-    alert("you are not here yet! Go Nearer to the Attraction!");
+    // ***kw changed*** 
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'You are not here yet! Go Nearer to the Attraction!',
+        footer: '<a href="KaiWei.html">Look at the recommended Attraction?</a>',
+        confirmButtonColor: 'tomato'
+        })
+    // alert("you are not here yet! Go Nearer to the Attraction!");
   }
   console.log(latitude,longitude)
   console.log(current_location)
+//   console.log(latitude,longitude)
+  
+  
 } 
 
 
@@ -226,7 +250,7 @@ function matchPosition(latitude,longitude,current_location){
                     // console.log(lat, lng)
                     // var each_location={lat:location.latitude,lng:location.longitude}
                     locations_list.push({attractionName:name,category:type, desc:desc,latitude:lat,longitude:lng})
-                    
+ 
                 }
                 
                 const image_adventure = {
@@ -297,7 +321,7 @@ function matchPosition(latitude,longitude,current_location){
                     coords: [1, 1, 1, 20, 18, 20, 18, 1],
                     type: "poly",
                 };
-                console.log(locations_list)
+                // console.log(locations_list)
                 
                 for (let i = 0; i < locations_list.length; i++) {
                     var image;
@@ -374,7 +398,7 @@ function matchPosition(latitude,longitude,current_location){
             })
                 .then(response => {
                     console.log(response.data)
-                    alert("Successful!")
+                    // alert("Successful!")
                 })
                 
 
