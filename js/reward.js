@@ -256,14 +256,15 @@ const reward = Vue.createApp({
     },
     sortbytype(){
       // console.log(this.productfilter.length)
+      console.log(this.sorttype)
       if(this.sorttype=="Points"){
-        if(this.iconButton =="<button class='btn btn-block' style='background-color: #FF9900'><i class='fas fa-sort-amount-down-alt' style='color:white'></i></button>"){
+        if(this.iconButton =="<button class='btn btn-block' style='background-color: #FF9900'><i class='fas fa-sort-amount-down-alt' style='color:white' ></i></button>"){
           this.productfilter.sort( function ( a, b ) { return a.point - b.point; } )
         }else{
           this.productfilter.sort( function ( a, b ) { return b.point - a.point; } )
         }    
       }else{
-        if(this.iconButton =="<button class='btn btn-block' style='background-color: #FF9900'><i class='fas fa-sort-amount-down-alt' style='color:white'></i></button>"){
+        if(this.iconButton =="<button class='btn btn-block' style='background-color: #FF9900'><i class='fas fa-sort-amount-down-alt' style='color:white' ></i></button>"){
           this.productfilter.sort(function (a,b){if (a.product<b.product){return-1}else if(a.product>b.product){return 1}else{return 0}})
         }else{
           this.productfilter.sort(function (a,b){if (a.product<b.product){return 1}else if(a.product>b.product){return -1}else{return 0}})
@@ -272,10 +273,10 @@ const reward = Vue.createApp({
       return this.productfilter
     },
     clickIcon(){
-      if(this.iconButton == "<button class='btn  btn-block' style='background-color: #FF9900'><i class='fas fa-sort-amount-down-alt' style='color:white'></i></button>" ){
+      if(this.iconButton == "<button class='btn btn-block' style='background-color: #FF9900'><i class='fas fa-sort-amount-down-alt' style='color:white' ></i></button>" ){
         this.iconButton = "<button class='btn btn-block' style='background-color: #FF9900'><i class='fas fa-sort-amount-up' style='color:white'></i></button>"
       }else{
-        this.iconButton = "<button class='btn  btn-block' style='background-color: #FF9900'><i class='fas fa-sort-amount-down-alt' style='color:white'></i></button>" 
+        this.iconButton = "<button class='btn btn-block' style='background-color: #FF9900'><i class='fas fa-sort-amount-down-alt' style='color:white' ></i></button>" 
       }
     },
     changebutton(){
@@ -327,7 +328,7 @@ const reward = Vue.createApp({
         width: 'auto',
       }).then((result) => {
         if (result.isConfirmed) {
-          this.addReward(productname,productimg,productpoint);
+          // this.addReward(productname,productimg,productpoint);
           if(this.userpoints>=productpoint){
             // alert("YAYAYYAYA")
             this.userpoints -= productpoint;
