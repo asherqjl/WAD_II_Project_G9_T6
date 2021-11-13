@@ -45,6 +45,7 @@
 
         
         </div>
+        <div id="noPlaces"></div>
 
         <div id="map" class="map-responsive">
         </div>
@@ -190,6 +191,7 @@ function matchPosition(latitude,longitude,current_location){
     alert("you are not here yet! Go Nearer to the Attraction!");
   }
   console.log(latitude,longitude)
+  console.log(current_location)
 } 
 
 
@@ -226,6 +228,7 @@ function matchPosition(latitude,longitude,current_location){
                     locations_list.push({attractionName:name,category:type, desc:desc,latitude:lat,longitude:lng})
                     
                 }
+                
                 const image_adventure = {
                     url: "https://img.icons8.com/fluency/48/000000/adventure.png",
                     // This marker is 20 pixels wide by 32 pixels high.
