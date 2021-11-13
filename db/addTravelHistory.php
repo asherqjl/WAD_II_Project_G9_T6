@@ -17,6 +17,7 @@ else
     $result["status"] = "Post was not added";
 
 $postJSON = json_encode($result);
+echo"2";
 echo $postJSON;
 ?>
 
