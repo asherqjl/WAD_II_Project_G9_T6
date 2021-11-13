@@ -1,7 +1,7 @@
 <?php
 require_once 'common.php';
 $dao = new PostDAO();
-$posts = $dao->getAllTravel($email); // Get an Indexed Array of Post objects
+$posts = $dao->getAllTravel(); // Get an Indexed Array of Post objects
 
 $items = [];
 foreach( $posts as $post_object ) {
