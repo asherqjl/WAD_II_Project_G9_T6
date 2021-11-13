@@ -327,11 +327,11 @@ const reward = Vue.createApp({
         width: 'auto',
       }).then((result) => {
         if (result.isConfirmed) {
-          this.addTravel(productname,productimg,productpoint);
+          this.addReward(productname,productimg,productpoint);
           if(this.userpoints>=productpoint){
             // alert("YAYAYYAYA")
             this.userpoints -= productpoint;
-            this.addTravel(productname,productimg,productpoint);
+            this.addReward(productname,productimg,productpoint);
             // localStorage.setItem("user_points",this.userpoints);
             // localStorage.setItem("redeemed",true);
           }
@@ -346,7 +346,7 @@ const reward = Vue.createApp({
         }
       })
     },
-    addTravel(item_name, img_url, points_used,){
+    addReward(item_name, img_url, points_used,){
       
       var email = localStorage.getItem('user_email')
       const url = './db/addRewardHistory.php'
