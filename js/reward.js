@@ -14,29 +14,8 @@
 //     moreText.style.display = "inline";
 //   }
 // }
-function addTravel(item_name, img_url, points_used,){
-  var email = localStorage.getItem('user_email')
-  const url = './db/addRewardHistory.php'
-  const data = { email: email, item_name: item_name,
-                  img_url: img_url, point_used: points_used
-                  }
-                  
-      axios.get(url, {
-              params: data
-      })
-          .then(response => {
-              console.log(response.data)
-              alert("Successful!")
-          })
-          
 
-          .catch(error => {
-              console.log(error);
-              alert('Error: ${error}. <br/> Please Try Again Later')
-              // status = 'There was an error: ' + error.message 
-          })
-  }
-  
+
 function AutoCloseTimer(){
   let timerInterval
   Swal.fire({
@@ -351,9 +330,9 @@ const reward = Vue.createApp({
           if(this.userpoints>=productpoint){
             // alert("YAYAYYAYA")
             this.userpoints -= productpoint;
+            this.addTravel(productname,productimg,productpoint);
             // localStorage.setItem("user_points",this.userpoints);
             // localStorage.setItem("redeemed",true);
-
           }
           Swal.fire(
             'REDEEMED!',
@@ -365,7 +344,30 @@ const reward = Vue.createApp({
           )
         }
       })
-    }
+    },
+    addTravel(item_name, img_url, points_used,){
+      
+      var email = localStorage.getItem('user_email')
+      console.log(email)
+      const url = './db/addRewardHistory.php'
+      const data = { email: email, item_name: item_name,
+                      img_url: img_url, point_used: points_used
+                      }
+                      
+          axios.get(url, {
+                  params: data
+          })
+              .then(response => {
+                  console.log(response.data)
+                  alert("Successful!")
+              })
+              
+              .catch(error => {
+                  console.log(error);
+                  alert('Error: ${error}. <br/> Please Try Again Later')
+                  // status = 'There was an error: ' + error.message 
+              })
+      }
   }
 })
 const rw = reward.mount('#reward');
