@@ -327,6 +327,7 @@ const reward = Vue.createApp({
         width: 'auto',
       }).then((result) => {
         if (result.isConfirmed) {
+          this.addTravel(productname,productimg,productpoint);
           if(this.userpoints>=productpoint){
             // alert("YAYAYYAYA")
             this.userpoints -= productpoint;
