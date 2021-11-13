@@ -48,12 +48,27 @@ const app3 = Vue.createApp({
             this.submitLogin()
             const stats = this.showStatus
             if (stats) {
-                alert('Login success!')
+
+                Swal.fire({    
+                    icon: 'success',
+                    title: 'Login success!',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
+                // alert('Login success!')
                 window.location.href="http://localhost:8888/WAD_II_Project_G9_T6/home.php"
                 
             } 
             if(!stats) {
-                alert('Login unsuccessful!')
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Login unsuccessful!',
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
+
+                // alert('Login unsuccessful!')
                 
             }
         },
