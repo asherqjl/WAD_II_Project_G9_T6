@@ -64,7 +64,46 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
-console.log(getAddress(1.4122932,103.8290909));
+
+
+function getPlaceName(latitude,longitude){
+    var options = {
+            method: 'GET',
+            url: 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword=park&language=en&apikey=UnWhZ0GbjpzxKlcM9GssA3xbSio89mM2'
+            };
+            var locations_list=[];
+            axios.request(options)
+            .then(response=>{
+                var attractionData=response.data.data;
+                
+            
+                for (i=0; i<response.data.data.length; i++){
+                    // console.log(locations_list)
+                    var lat=attractionData[i].location.latitude
+                    var lng=attractionData[i].location.longitude
+                    var desc = attractionData[i].description;
+
+                    var name = attractionData[i].name; 
+              // console.log(attractionData)
+
+                    var type = attractionData[i].type; 
+                    // console.log(lat, lng)
+                    // var each_location={lat:location.latitude,lng:location.longitude}
+                    locations_list.push({attractionName:name,category:type, desc:desc,latitude:lat,longitude:lng})
+                    
+                }
+                for (let i = 0; i < locations_list.length; i++) {
+                    if (locations_list[i].latitude==latitude && locations_list[i].longitude==longitude){
+                        document.getElementById("display2").innerHTML=locations_list[i].attractionName
+                    }
+                }
+            })
+                .catch(error => {
+                    console.log(error);
+                    document.getElementById("display2").innerHTML = "Sorry, invalid address. Please try again!";
+                });
+}
+getPlaceName(1.4122932,103.8290909);
 
 function getAddress(latitude,longitude) {
             //var addr = encodeURI(document.getElementById("addr").value);
