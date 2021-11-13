@@ -43,8 +43,8 @@
         </div>
 
 
-        
-        </div>
+        <div id="display"></div>
+        <div id="display2"></div>
 
         <div id="map" class="map-responsive">
         </div>
@@ -64,60 +64,60 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
-function getLoc(latitude,longitude) {
-            
-            var url = 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword=park&language=en&apikey=UnWhZ0GbjpzxKlcM9GssA3xbSio89mM2';
-            var location_list=[];
+console.log(getAddress(1.4122932,103.8290909));
+
+function getAddress(latitude,longitude) {
+            //var addr = encodeURI(document.getElementById("addr").value);
+            var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude +','+longitude+"&key=AIzaSyDT6sTbyN3xQA9bTHQYcyFVXsqAXT54zfE";
+            var place_id;
             axios.get(url)
                 .then(response => {
-                    var attractionData=response.data.data;
-                
-            
-                    for (i=0; i<response.data.data.length; i++){
-                        // console.log(locations_list)
-                        var lat=attractionData[i].location.latitude
-                        var lng=attractionData[i].location.longitude
-                        var desc = attractionData[i].description;
+                    //console.log(url);
+                    //console.log(response.data);    
+                    var info = getFullAddress(response.data);
 
-                        var name = attractionData[i].name; 
-                // console.log(attractionData)
-
-                        var type = attractionData[i].type; 
-                    // console.log(lat, lng)
-                    // var each_location={lat:location.latitude,lng:location.longitude}
-                    locations_list.push({attractionName:name,category:type, desc:desc,latitude:lat,longitude:lng})
-                    
-                }
-                    for (let i = 0; i < locations_list.length; i++) {
-                        
-                        
-                        
-                        var attraction_location = locations_list[i];
-                        if (attraction_location.latitude==latitude && attraction_location.longitude==longitude){
-                            document.getElementById("displayPlaceName").innerHTML = info;
-                        }
-
-
-                        document.getElementById("displayPlaceName").innerHTML = info;
+                    document.getElementById("display").innerHTML = info;
+                    // refresh the hidden input values with new lat lng coordinates
+                    place_id=getplaceID(response.data)
                     
                 })
                 .catch(error => {
                     console.log(error);
-                    
+                    document.getElementById("display").innerHTML = "Sorry, invalid address. Please try again!";
                 });
+            return info; 
+            
+            
         }
-
         function getFullAddress(data) {
             var addr = data["results"][0]["formatted_address"];
-            var loc = getLatLng(data);
-            return addr + "<br> lat: " + loc["lat"] + ", lng: " + loc["lng"];
+            return addr;
         }
 
-        function getLatLng(data) {
-            var location = data["results"][0]["geometry"]["location"];
+        function getplaceID(data) {
+            var location = data["results"][0]["place_id"];
             return location;
         }
+        function getplaceName(data){
+            var name = data["result"]["name"]
+        }
+function getName(place_id){
+    var url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJPzulIQ8U2jER0xNuPd-Z0_4&fields=name%2Crating%2Cformatted_phone_number&key=AIzaSyDT6sTbyN3xQA9bTHQYcyFVXsqAXT54zfE";
+            axios.get(url)
+                .then(response => {
+                    //console.log(url);
+                    //console.log(response.data);    
+                    var info = getplaceName(response.data);
 
+                    document.getElementById("display2").innerHTML = info;
+                    // refresh the hidden input values with new lat lng coordinates
+                })
+                .catch(error => {
+                    console.log(error);
+                    document.getElementById("display2").innerHTML = "Sorry, invalid address. Please try again!";
+                });
+}
+getAddress(1.4122932,103.8290909);
 
 var input = document.getElementById("keyword");
 input.addEventListener("keyup", function(event) {

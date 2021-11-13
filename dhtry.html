@@ -37,7 +37,7 @@
            
         <div class="input-group mb-3 my-3">
             
-                <input id="keyword" type="form" class="form-control me-2" placeholder="Search attraction by any keword!" aria-label="Search" >
+                <input id="keyword" type="form" class="form-control me-2" placeholder="Search attraction by any keword!" value="beach" aria-label="Search" >
                 <button onclick="initMap()" id="myBtn" class="btn btn-danger" type="submit">Search</button>
             
         </div>
@@ -183,13 +183,12 @@ function matchPosition(latitude,longitude,current_location){
   
   if (latitude.toFixed(1)==current_location[0].toFixed(1) && longitude.toFixed(1)==current_location[1].toFixed(1)){
     alert("YAY you have arrived succesfully!point redeemd!");
-    addTravel(latitude,longitude);
+    var email = localStorage.getItem('user_email')
+    addTravel(email,latitude,longitude);
   }else{
     alert("you are not here yet! Go Nearer to the Attraction!");
   }
   console.log(latitude,longitude)
-  
-  
 } 
 
 
@@ -359,8 +358,8 @@ function matchPosition(latitude,longitude,current_location){
 
     
         
-    function addTravel(longitude, latitude){
-        var email = localStorage.getItem('user_email')
+    function addTravel(email, longitude, latitude){
+        
         const url = './db/addTravelHistory.php'
         const data = { email: email, longitude: longitude,
                                     latitude: latitude, 
