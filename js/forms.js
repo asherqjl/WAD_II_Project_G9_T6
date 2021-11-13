@@ -77,12 +77,7 @@ app2.component('login-form',{
                 <label class="form-label" for="loginPwd">Password(Minimum 6 Characters)</label>
             </div>
         </div>
-        <div class="d-flex flex-row align-items-center mb-4">
-            <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-            <div class="form-outline flex-fill mb-0">
-                <a style="cursor: pointer;color:blue;" onclick='forgetPassword();'>Forget password</a>
-            </div>
-        </div>
+        
         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
             <button type="submit" class="btn btn-primary btn-lg">Login</button>
         </div>

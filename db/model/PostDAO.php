@@ -41,7 +41,7 @@ class PostDAO {
         return $account;
     }
 
-    public function getAllTravel() {
+    public function getAllTravel($email) {
         // STEP 1
         $connMgr = new ConnectionManager();
         $conn = $connMgr->connect();
@@ -49,8 +49,12 @@ class PostDAO {
         // STEP 2
         $sql = "SELECT
                     location_name, time_visited, category
-                FROM travel_history"; // SELECT * FROM post; // This will also work
+                FROM travel_history
+                WHERE
+                email= :email"; // SELECT * FROM post; // This will also work
         $stmt = $conn->prepare($sql);
+
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
 
         // STEP 3
         $stmt->execute();
@@ -75,7 +79,7 @@ class PostDAO {
         return $travel_history;
     }
 
-    public function getAllRewards() {
+    public function getAllRewards($email) {
         // STEP 1
         $connMgr = new ConnectionManager();
         $conn = $connMgr->connect();
@@ -84,9 +88,11 @@ class PostDAO {
         $sql = "SELECT
                     item_name, img_url, points_used, time_redeemed
                 FROM reward_history 
+                WHERE
+                    email=:email
                 "; // SELECT * FROM post; // This will also work
         $stmt = $conn->prepare($sql);
-
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         // STEP 3
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -206,7 +212,7 @@ class PostDAO {
         $conn = $connMgr->connect();
 
         // STEP 2
-        $sql = "INSERT INTO travel_history
+        $sql = "INSERT INTO reward_history
                     (
                         email, 
                         item_name,

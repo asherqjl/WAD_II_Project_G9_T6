@@ -22,46 +22,23 @@
 
 </head>
 <body>
-    <!-- Navigation -->
+  <br></br>
+  <!-- Navigation -->
+  
     <div id="navdiv">
         <include-navbar></include-navbar>
     </div>
 
     <div class="searchbar">
         <div class="row g-2 my-2">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-floating ">
-                  <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" >
-                    <option selected></option>
-                    <option value="1">Adventure</option>
-                    <option value="2">Arts</option>
-                    <option value="3">History & Culture</option>
-                    <option value="4">Leisure & Recreation</option>
-                    <option value="5">Nature & Wildlife</option>
-                    <option value="6">Others</option>
-                  </select>
-                  <label for="floatingSelectGrid">Search by category</label>
-                </div>
-              </div>
-
-            <div class="col-md-6 col-sm-6">
-              <div class="form-floating ">
-                <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" >
-                  <option selected></option>
-                  <option value="1">North</option>
-                  <option value="2">South</option>
-                  <option value="3">East</option>
-                  <option value="4">West</option>
-                </select>
-                <label for="floatingSelectGrid">Search by area</label>
-              </div>
-            </div>
+            <div class="col-md-12 col-sm-12">
+                
 
            
         <div class="input-group mb-3 my-3">
             
-                <input id="keyword" type="form" class="form-control me-2" placeholder="Search by Attraction Name!" aria-label="Search">
-                <button onclick="initMap()" class="btn btn-danger" type="submit">Search</button>
+                <input id="keyword" type="form" class="form-control me-2" placeholder="Search attraction by any keword!" aria-label="Search" >
+                <button onclick="initMap()" id="myBtn" class="btn btn-danger" type="submit">Search</button>
             
         </div>
 
@@ -71,6 +48,8 @@
 
         <div id="map" class="map-responsive">
         </div>
+        <div id="legend"><h6>Legend</h6></div>
+        <div id="boolredeem"></div>
         
 
     <!--Load the API from the specified URL
@@ -85,20 +64,94 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
-
+var input = document.getElementById("keyword");
+input.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("myBtn").click();
+    }
+});
+    
+   function showLocation(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
             
- 
-   
+         }
+
+console.log(navigator.geolocation.getCurrentPosition(showLocation));
+            
+
+
+var infoWindow;
 
 
 
 function initMap() {
         const map = new google.maps.Map(document.getElementById("map"), {
+        
                 zoom: 11.7,
                 center: { lat: 1.3649170000000002, lng: 103.82287200000002 },
+                styles: [    
+        {
+            featureType: "poi",
+            elementType: "labels",
+            stylers: [{ visibility: "off" }]
+        }
+    ]
             });
+            
+  
+        
+            
 
             setMarkers(map);
+
+            const icons = {
+    Adventure: {
+      name: "Adventure",
+      icon: "https://img.icons8.com/fluency/48/000000/adventure.png",
+    },
+    Arts: {
+      name: "Arts",
+      icon: "https://img.icons8.com/external-konkapp-outline-color-konkapp/64/000000/external-art-back-to-school-konkapp-outline-color-konkapp.png",
+    },
+    LeisureRecreation: {
+      name: "Leisure & Recreation",
+      icon: "https://img.icons8.com/fluency/48/000000/nintendo-switch-pro-controller.png",
+    },
+    HistoryCulture: {
+      name: "History & Culture",
+      icon: "https://img.icons8.com/external-becris-lineal-color-becris/64/000000/external-history-literary-genres-becris-lineal-color-becris.png",
+
+    },
+    NatureWildlife: {
+      name: "Nature & Wildlife",
+      icon: "https://img.icons8.com/fluency/48/000000/wildlife.png",
+
+    },
+    Others: {
+      name: "Others",
+      icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+    }
+  };
+
+var legend = document.getElementById("legend");
+
+   for (var key in icons) {
+      const type = icons[key];
+      const name = type.name;
+      const icon = type.icon;
+      const div = document.createElement("div");
+
+    div.innerHTML = '<img src="' + icon + '" width=23" height="23"> ' + name;
+    legend.appendChild(div);
+  }
+
+  map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById('legend')); 
+
+
+
+
             }
 
             // Data for the markers consisting of a name, a LatLng and a zIndex for the
@@ -113,11 +166,70 @@ function initMap() {
 
   //  const hardcode_locations=[{latitude:1.360261,longitude:103.9892345},[1.2890235,103.8484538],[1.3016419,103.838816],[1.395499,103.924187],[1.256148,103.821552]
 //,[1.2540421,103.8238084],[1.3600727,103.9897102],[1.360208,103.989759],[1.255179,103.8218107],[1.28218,103.84415],[1.2711456,103.8195228]];
+var array = [];
+navigator.geolocation.getCurrentPosition(function(position) {
+   var lat = position.coords.latitude;
+   var lon = position.coords.longitude;
+   array.push(lat, lon); 
+   locationCode()  
+});
 
+function locationCode() {
+  
+   return array; 
+  
+}
+function matchPosition(latitude,longitude,current_location){
+  
+  if (latitude.toFixed(1)==current_location[0].toFixed(1) && longitude.toFixed(1)==current_location[1].toFixed(1)){
+    alert("YAY you have arrived succesfully!point redeemd!")
+    var options = {
+            method: 'GET',
+            url: 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword='+document.getElementById('keyword').value+'&language=en&apikey=UnWhZ0GbjpzxKlcM9GssA3xbSio89mM2'
+            };
+            var locations_list=[];
+            axios.request(options)
+            .then(response=>{
+                var attractionData=response.data.data;
+                for (i=0; i<response.data.data.length; i++){
+                    // console.log(locations_list)
+                    var lat=attractionData[i].location.latitude
+                    var lng=attractionData[i].location.longitude
+                    var desc = attractionData[i].description;
+
+                    var name = attractionData[i].name; 
+              // console.log(attractionData)
+
+                    var type = attractionData[i].type; 
+                    // console.log(lat, lng)
+                    // var each_location={lat:location.latitude,lng:location.longitude}
+                    locations_list.push({attractionName:name,category:type, desc:desc,latitude:lat,longitude:lng})
+                    
+                }
+            
+            }
+            )
+        for (let i = 0; i < locations_list.length; i++) {
+            if (locations_list[i].latitude==latitude,locations_list[i].longitude==longitude){
+                console.log([locations_list[i].attractionName,locaton_list[i].category])
+            }
+        }
+
+  }else{
+    alert("you are not here yet! Go Nearer to the Attraction!");
+  }
+  
+  
+    }
+
+
+
+    
     
     var keyword = document.getElementById("keyword");
 
     function setMarkers(map){
+      
             var options = {
             method: 'GET',
             url: 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword='+document.getElementById('keyword').value+'&language=en&apikey=UnWhZ0GbjpzxKlcM9GssA3xbSio89mM2'
@@ -241,16 +353,28 @@ function initMap() {
                     
         
                     });
-                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>' + attraction_location.desc+'<br></br>' +'</div>' +'<div><button type="button" style="color:black">I arrived here now!</button></div>'
+                    var lat=attraction_location.latitude
+                    var lng=attraction_location.longitude
+                    var name=locations_list[i].attractionName
+                    var category=locations_list[i].category
+                    
+                    
+                    
+                    var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>'+attraction_location.desc+'<br></br>' +'</div>' +'<div><button onclick="matchPosition('+lat+','+lng+',locationCode())" id="redeempoint" type="button" style="color:black">I arrived here now!</button></div>'
+                    
 
-                    var infowindow=new google.maps.InfoWindow()
+
+                    infowindow=new google.maps.InfoWindow()
                     google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
                     return function() {
+                        
                         infowindow.setContent(content);
                         infowindow.open(map,marker);
                         };
                     })(marker,content,infowindow)); 
 
+                    
+                    
                     
                 }
 
@@ -260,15 +384,36 @@ function initMap() {
             
             
     }
+    
+
+    
+        
+    function addTravel(location_name, location_type){
+        var email = localStorage.getItem('user_email')
+        const url = './db/addTravelHistory.php'
+        const data = { email: email, location: location_name,
+                                    category: location_type, 
+                        }
+                        
+            axios.get(url, {
+                    params: data
+            })
+                .then(response => {
+                    console.log(response.data)
+                    alert("Successful!")
+                })
+                
+
+                .catch(error => {
+                    console.log(error);
+                    alert('Error: ${error}. <br/> Please Try Again Later')
+                    // status = 'There was an error: ' + error.message 
+                })
+              }
+
+    
 
    
-           
-       
-        
-
-        // console.log(locations_list[0])
-        // console.log(typeof location_list[0]);
-        // console.log(typeof locations_list[0].lat);
         
     
     
@@ -283,9 +428,11 @@ function initMap() {
 
         <!-- Footer -->
     <!-- <script src="js/attraction.js"></script> -->
+    <script src="js/attractions_donghyun.js"></script>
     <script src="js/navbar.js"></script>
+    <script src="js/signOutPopUp.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
+    <script type="text/javascript" src="js/sessions.js"></script>
         
 </body>
 </html>
