@@ -6,7 +6,9 @@
     const thTab = document.querySelector('#thTab');
     const rewardTab = document.querySelector('#rewardTab');
     const rewardHist = document.querySelector('#rhTab');
-    
+
+    const toSign = document.querySelector('#to-signup');
+
     // define the nameDisplayCheck() function
     function nameDisplayCheck() {
         // check whether the 'name' data item is stored in web Storage
@@ -17,6 +19,11 @@
             profileTab.style.display = "block";
             signoutTab.style.display = "block";
             loginSignupTab.style.display = "none";
+            if(toSign!==null){
+                toSign.style.display = "none";
+            }
+
+            
 
         } else {
             // if not just login/sign up
@@ -27,6 +34,10 @@
             thTab.style.display = "none";
             rewardTab.style.display = "none";
             rewardHist.style.display = "none";
+            if(toSign!==null){
+                toSign.style.display = "block";
+
+            }
 
         }
     }

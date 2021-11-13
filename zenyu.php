@@ -62,7 +62,7 @@
                 <div class="d-flex justify-content-center" >
                     <table class="table bg-white w-75" id="listingTable">
                     </table> 
-                <div>
+                </div>
             
                 
                 <button v-on:click="prevPage" id="btn_prev">Prev</button>

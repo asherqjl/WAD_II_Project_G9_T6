@@ -1,7 +1,13 @@
 <?php
 require_once 'common.php';
 $dao = new PostDAO();
-$posts = $dao->getAllRewards(); // Get an Indexed Array of Post objects
+$posts=[];
+
+// if( isset($_REQUEST['email'])){
+    $email= "ongzenyu112@gmail.com";
+    $posts = $dao->getAllRewards($email);
+
+ // Get an Indexed Array of Post objects
 
 $items = [];
 foreach( $posts as $post_object ) {

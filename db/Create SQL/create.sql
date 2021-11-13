@@ -36,5 +36,6 @@ insert into reward_history(email, item_name, img_url, points_used, time_redeemed
 values("1", "Pants", "https://www.helikon-tex.com/media/catalog/product/cache/4/image/9df78eab33525d08d6e5fb8d27136e95/s/p/sp-pgm-dc-11.jpg", 200, CURRENT_TIMESTAMP);
 insert into reward_history(email, item_name, img_url, points_used, time_redeemed)
 values("1", "Pants", "https://www.helikon-tex.com/media/catalog/product/cache/4/image/9df78eab33525d08d6e5fb8d27136e95/s/p/sp-pgm-dc-11.jpg", 200, CURRENT_TIMESTAMP);
+
 select * from travel_history;
 select * from reward_history

@@ -15,6 +15,7 @@
 //   }
 // }
 
+
 function AutoCloseTimer(){
   let timerInterval
   Swal.fire({
@@ -62,13 +63,15 @@ const reward = Vue.createApp({
     // var productDict ={};
     // console.log(this.sorttype)
     // this.AutoCloseTimer();
+
+
     var options = {
       method: 'GET',
       url: 'https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list',
       params: {country: 'singapore', lang: 'en_sg', currentpage: '0', pagesize: '30'},
       headers: {
         'x-rapidapi-host': 'apidojo-hm-hennes-mauritz-v1.p.rapidapi.com',
-        'x-rapidapi-key': '1e670fe13emshd57432c4f489abap194516jsn2be446bb51dc'
+        'x-rapidapi-key': 'da34106539msh7ef6318fe045d9dp17788cjsn122f09e8eea4'
       }
     };
     
@@ -322,27 +325,50 @@ const reward = Vue.createApp({
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, redeem it!',
         width: 'auto',
-        height: 'auto'
       }).then((result) => {
         if (result.isConfirmed) {
+          this.addTravel(productname,productimg,productpoint);
           if(this.userpoints>=productpoint){
             // alert("YAYAYYAYA")
             this.userpoints -= productpoint;
-            localStorage.setItem("user_points",this.userpoints);
-            localStorage.setItem("redeemed",true);
-
+            this.addTravel(productname,productimg,productpoint);
+            // localStorage.setItem("user_points",this.userpoints);
+            // localStorage.setItem("redeemed",true);
           }
           Swal.fire(
             'REDEEMED!',
             'This product has been redeemed.',
             'success',
-            window.location.href = "fangTing.html"
+            // window.location.href = "fangTing.html"
             
 
           )
         }
       })
-    }
+    },
+    addTravel(item_name, img_url, points_used,){
+      
+      var email = localStorage.getItem('user_email')
+      console.log(email)
+      const url = './db/addRewardHistory.php'
+      const data = { email: email, item_name: item_name,
+                      img_url: img_url, points_used: points_used
+                      }
+      console.log(data)
+          axios.get(url, {
+                  params: data
+          })
+              .then(response => {
+                  console.log(response.data)
+                  alert("Successful!")
+              })
+              
+              .catch(error => {
+                  console.log(error);
+                  alert('Error: ${error}. <br/> Please Try Again Later')
+                  // status = 'There was an error: ' + error.message 
+              })
+      }
   }
 })
 const rw = reward.mount('#reward');
