@@ -8,7 +8,7 @@
     const rewardHist = document.querySelector('#rhTab');
 
     const toSign = document.querySelector('#to-signup');
-
+    const noSign = document.querySelector('#no-needsign');
     // define the nameDisplayCheck() function
     function nameDisplayCheck() {
         // check whether the 'name' data item is stored in web Storage
@@ -22,7 +22,9 @@
             if(toSign!==null){
                 toSign.style.display = "none";
             }
-
+            if(noSign!==null){
+                noSign.style.display = "block";
+            }
             
 
         } else {
@@ -38,7 +40,10 @@
                 toSign.style.display = "block";
 
             }
-
+            if(noSign!==null){
+                noSign.style.display = "none";
+            }
+            
         }
     }
     document.body.onload = nameDisplayCheck;
