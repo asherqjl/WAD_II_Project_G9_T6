@@ -82,7 +82,7 @@
                 return {
                     travel_history:'',
                     current_page: 1,
-                    records_per_page: 1,
+                    records_per_page: 3,
 
                 }
             },
@@ -140,13 +140,13 @@
 
                         listing_table.innerHTML = ""
                         for (var i = (page-1) * this.records_per_page; i < (page * this.records_per_page); i++) {
-                            console.log(this.travel_history[i])
+                            if(i<this.travel_history.length){
                             listing_table.innerHTML+= `<tr><td><h2>${this.travel_history[i].location_name}</h2><br/>${this.travel_history[i].category}</td>
-                                <td>${this.travel_history[i].time_visited}</td></tr>`
+                                <td>${this.travel_history[i].time_visited}</td></tr>`                                    
+                            }
                         }
 
                         page_span.innerHTML = page
-
                         if (page == 1) {
                             btn_prev.style.visibility = "hidden"
                         } else {

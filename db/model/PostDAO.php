@@ -48,7 +48,7 @@ class PostDAO {
 
         // STEP 2
         $sql = "SELECT
-                    location_name, time_visited, category
+                    longtitude, latitude, time_visited
                 FROM travel_history
                 WHERE
                 email= :email"; // SELECT * FROM post; // This will also work
@@ -65,9 +65,9 @@ class PostDAO {
         while( $row = $stmt->fetch() ) {
             $travel_history[] =
                 new Post (
-                    $row['location_name'],
-                    $row['time_visited'],
-                    $row['category']
+                    $row['longtitude'],
+                    $row['latitude'],
+                    $row['time_visited']
                     );
         }
 
@@ -170,7 +170,7 @@ class PostDAO {
     //     return $status;
     // }
 
-    public function add($email, $location_name, $category) {
+    public function add($email, $longtitude, $latitude) {
         // STEP 1   
         $connMgr = new ConnectionManager();
         $conn = $connMgr->connect();
@@ -179,21 +179,20 @@ class PostDAO {
         $sql = "INSERT INTO travel_history
                     (
                         email, 
-                        location_name,
-                        time_visited,
-                        category
+                        longtitude,
+                        latitude
                     )
                 VALUES
                     (
                         :email,
-                        :location_name,
-                        CURRENT_TIMESTAMP,
-                        :category
+                        :longtitude,
+                        :latitude,
+                        CURRENT_TIMESTAMP
                     )";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-        $stmt->bindParam(':location_name', $location_name, PDO::PARAM_STR);
-        $stmt->bindParam(':category', $cagetory, PDO::PARAM_STR);
+        $stmt->bindParam(':longtitude', $longtitude, PDO::PARAM_STR);
+        $stmt->bindParam(':latitude', $latitude, PDO::PARAM_STR);
 
         //STEP 3
         $status = $stmt->execute();

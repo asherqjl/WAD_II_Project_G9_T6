@@ -349,7 +349,6 @@ const reward = Vue.createApp({
     addTravel(item_name, img_url, points_used,){
       
       var email = localStorage.getItem('user_email')
-      console.log(email)
       const url = './db/addRewardHistory.php'
       const data = { email: email, item_name: item_name,
                       img_url: img_url, points_used: points_used
@@ -360,12 +359,10 @@ const reward = Vue.createApp({
           })
               .then(response => {
                   console.log(response.data)
-                  alert("Successful!")
               })
               
               .catch(error => {
                   console.log(error);
-                  alert('Error: ${error}. <br/> Please Try Again Later')
                   // status = 'There was an error: ' + error.message 
               })
       }

@@ -82,7 +82,7 @@ const app4 = Vue.createApp({
         return {
             reward_history:'',
             current_page: 1,
-            records_per_page: 1,
+            records_per_page: 3,
 
         }
     },
@@ -100,8 +100,13 @@ const app4 = Vue.createApp({
                 this.status = 'There was an error: ' + error.message 
             })  */
             // GET request
+            var email = localStorage.getItem('user_email')
             url="http://localhost/WAD_II_Project_G9_T6/db/getRewardHistory.php"
-            axios.get(url)
+            const data= {email: email}
+
+            axios.get(url, {
+                params: data
+            })
             .then(response => { 
                 console.log(response.data)
                 this.reward_history= response.data.reverse()
@@ -123,6 +128,7 @@ const app4 = Vue.createApp({
             },
             nextPage(){
                 if(this.current_page < this.numPages()){ 
+                    console.log(this.current_page)
                     console.log(this.numPages())
                     this.current_page++
                     this.changePage(this.current_page)
@@ -140,10 +146,11 @@ const app4 = Vue.createApp({
 
                 listing_table.innerHTML = ""
                 for (var i = (page-1) * this.records_per_page; i < (page * this.records_per_page); i++) {
-                    console.log(this.reward_history[i])
+                    if(i<this.reward_history.length){
                     listing_table.innerHTML+= `<tr><td><img src= "${this.reward_history[i].img_url}" width="200" height="200"></td>
                         <td><h2>${this.reward_history[i].item_name}</h2><br/>${this.reward_history[i].datetime}</td>
                         <td>${this.reward_history[i].points_used}</td></tr>`
+                    }
                 }
 
                 page_span.innerHTML = page

@@ -3,10 +3,10 @@ require_once 'common.php';
 $dao = new PostDAO();
 $posts=[];
 
-// if( isset($_REQUEST['email'])){
-    $email= "ongzenyu112@gmail.com";
+if( isset($_REQUEST['email'])){
+    $email= $_REQUEST['email'];
     $posts = $dao->getAllRewards($email);
-
+}
  // Get an Indexed Array of Post objects
 
 $items = [];

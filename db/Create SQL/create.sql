@@ -11,9 +11,9 @@ create table acc (
 
 create table travel_history (
 	email varchar(50),
-	location_name varchar(250),
-    time_visited datetime,
-    category varchar(50)
+	longitude varchar(20),
+    latitude varchar(20),
+    time_visited datetime
     );
     
 create table reward_history (
@@ -24,18 +24,5 @@ create table reward_history (
     time_redeemed datetime
 	);	
     
-
-insert into travel_history(email, location_name, time_visited, category) 
-values ("1", "Bugis", CURRENT_TIMESTAMP, "Tourism");
-
-insert into travel_history(email, location_name, time_visited, category)
-values ("1", "Orchard", CURRENT_TIMESTAMP, "Shopping");
-insert into travel_history(email, location_name, time_visited, category)
-values ("1", "Orchard", CURRENT_TIMESTAMP, "Shopping");
-insert into reward_history(email, item_name, img_url, points_used, time_redeemed)
-values("1", "Pants", "https://www.helikon-tex.com/media/catalog/product/cache/4/image/9df78eab33525d08d6e5fb8d27136e95/s/p/sp-pgm-dc-11.jpg", 200, CURRENT_TIMESTAMP);
-insert into reward_history(email, item_name, img_url, points_used, time_redeemed)
-values("1", "Pants", "https://www.helikon-tex.com/media/catalog/product/cache/4/image/9df78eab33525d08d6e5fb8d27136e95/s/p/sp-pgm-dc-11.jpg", 200, CURRENT_TIMESTAMP);
-
 select * from travel_history;
 select * from reward_history
