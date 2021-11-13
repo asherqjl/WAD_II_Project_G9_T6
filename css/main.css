@@ -234,14 +234,13 @@ body {
 
 
 .footer {
-  left: 0;
-  right:0;
   bottom: 0;
+  margin-bottom: 0;
+  display:inline-block;
   width: 100%;
   background-color: darkgray;
   color: white;
   text-align: center;
-  border: 3px solid darkgray;
 }
 
 
