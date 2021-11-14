@@ -89,19 +89,6 @@
                 }
             },
             mounted:function()  {
-                    // POST request
-                    /* axios.post(url, data
-                    )
-                    .then(response => {
-                        console.log(response.data)
-                        this.showStatus = true
-                        this.status = response.data
-                    })
-                    .catch(error => {
-                        this.showStatus = true
-                        this.status = 'There was an error: ' + error.message 
-                    })  */
-                    // GET request
                     var email = localStorage.getItem('user_email')
                     url="./db/getRewardHistory.php"
                     const data= {email: email}
@@ -110,9 +97,7 @@
                         params: data
                     })
                     .then(response => { 
-                        console.log(response.data)
                         this.reward_history= response.data.reverse()
-                        console.log(this.reward_history)
                         this.status = response.data
                         this.changePage(1)
                     })
@@ -130,8 +115,6 @@
                     },
                     nextPage(){
                         if(this.current_page < this.numPages()){ 
-                            console.log(this.current_page)
-                            console.log(this.numPages())
                             this.current_page++
                             this.changePage(this.current_page)
                         }
@@ -164,8 +147,7 @@
                                 }
                             
                             }
-                            listing_table.innerHTML+=`</tbody>`;
-                            // console.log(listing_table)
+                            listing_table.innerHTML+=`</tbody>`
                             page_span.innerHTML = page
                             
                             if (page == 1) {

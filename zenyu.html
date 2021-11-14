@@ -114,7 +114,6 @@
                 params: data
             })
                     .then(response => { 
-                        console.log(response.data)
                         var lat_lng_list=response.data;
                         for (let i=0;i<lat_lng_list.length;i++){
                             const attraction=lat_lng_list[i];
