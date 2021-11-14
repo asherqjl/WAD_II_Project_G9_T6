@@ -339,8 +339,9 @@ const reward = Vue.createApp({
               'REDEEMED!',
               'This product has been redeemed.',
               'success',
-              window.location.href = "FangTing.html"
+              
             )
+            window.location.href = "FangTing.html"
           }else{
             Swal.fire({
               icon: 'error',

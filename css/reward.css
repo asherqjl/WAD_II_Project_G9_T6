@@ -24,11 +24,13 @@ header {
     color: white;
     text-align: center;
   }
+ 
   h1 {
     text-transform: uppercase;
     margin: 0;
     font-size: 3rem;
     white-space: nowrap;
+    display: inline-block;
   }
   .img-hover-zoom {
     height: 5%; /* [1.1] Set it as per your need */

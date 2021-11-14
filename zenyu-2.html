@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="css/rewardhistory.css">
         <script src="https://unpkg.com/vue@next"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://kit.fontawesome.com/f6d34cc2a5.js" crossorigin="anonymous"></script>
 
         <title>Smiling Across Local SG</title>
         <title>Travel History</title>
@@ -26,33 +27,49 @@
         </div>
     <div class="main">
         <div id="app4">
+        <header>
+            <div class="title">
+                <div v-if="reward_history.length===0" class="titledesc">                   
+                    <h1 style="font-size: clamp(26px, 5vw, 3rem); padding-bottom:20px">No Rewards History</h1>
+                    <p style="font-size: clamp(14px, 3vw, 18px);" >Fill it up with your first redeem product</p>
+                    <a href="FangTing.html"><button class="rwbtn" style="vertical-align:middle;font-size: clamp(14px, 3vw, 18px);" ><span>Redeem Rewards Now</span></button></a>
+                </div>
+                <div v-else class="titledesc">
+                    <h1 style="font-size: clamp(26px, 5vw, 3rem); padding-bottom:20px">REWARDS HISTORY</h1>
+                    <p style="font-size: clamp(14px, 3vw, 18px);">Scroll to view your redeemed history</p>
+                    <p  style="font-size: clamp(14px, 3vw, 18px); font-style: italic;">Or</p>
+                    <a href="FangTing.html"><button class="rwbtn" style="vertical-align:middle;font-size: clamp(14px, 3vw, 18px);" ><span>Redeem Rewards Now</span></button></a>
+                </div>
+            </div>
+          </header>
+        
             
-            <div class='row'>
+            <!-- <div class='row'>
                 <div class='col-sm d-flex justify-content-center' >
                     <img  v-if="reward_history.length===0" src='./images/sad.png' class='img-fluid d-flex justify-content-center '></img>
                     <img  v-else src='./images/happy.png' class='img-fluid d-flex justify-content-center'></img>
                 </div>
-            </div>
+            </div> -->
             
-            <div class='row'>
-                <div class='col-sm d-flex justify-content-center'>
-                    <h1 v-if="reward_history.length===0">No History</h1>
-                    <h1 v-else> Your Reward History</h1>
+            <!-- <div class='row'>
+                <div class='col-sm d-flex justify-content-center subheader' >
+                    <p v-if="reward_history.length===0">No History</p>     
+                    <p v-else>Reward History</p>
                 </div>
-            </div>
+            </div> -->
             
-            <div class='row'>
+            <!-- <div class='row'>
                 <div class='col'>
                 </div>
                 <div class='col text-center'>
-                    <!-- <form action="./FangTing.html">
+                    <form action="./FangTing.html">
                         <input type="submit" class="btn btn-secondary" value="Redeem Now!" />
-                    </form> -->
-                    <a href="FangTing.html"><button class="rwbtn" style="vertical-align:middle" ><span>Reward History </span></button></a>
+                    </form>
+                    <a href="FangTing.html"><button class="rwbtn" style="vertical-align:middle" ><span>Redeem Rewards Now</span></button></a>
                 </div>
                 <div class='col'>
                 </div>
-            </div>
+            </div> -->
             
             <!-- <div class="d-flex justify-content-center "> -->
                 <!-- <table class="table bg-white w-75"> -->
@@ -62,20 +79,40 @@
                         <!-- </tr> -->
                         <!-- </table> -->
                         <!-- </div> -->
-                        <div class="row" >
-                            <div class="d-flex justify-content-center" >
-                                <table class="table bg-white w-75 table-bordered" id="listingTable">
+                        
+                            <!-- <div class=" table-responsive justify-content-center" >
+                                <table class="table table-hover bg-white w-75 table-bordered" id="listingTable" >
                                 </table> 
+                            </div> -->
+                            
+                            <!-- <div v-on:click="prevPage" id="btn_prev">
+
+                                <i class="fas fa-arrow-alt-circle-left" ></i>
+                            </div> -->
+                            
+                            
+                            <div class=" container " >
+                                <div>
+                                    <p class="subheader">
+                                        Check your redeemed product now!
+                                    </p>
+                                </div>
+                                <div >
+                                    <i class="fas fa-arrow-alt-circle-left fa-2x" v-on:click="prevPage" id="btn_prev" style="color: #FF6600;"></i>
+                                   <span style="padding-left: 30px; padding-right: 30px;">Current Page: <span id="page"></span></span> 
+                                    <i class="fas fa-arrow-alt-circle-right fa-2x" v-on:click="nextPage" id="btn_next" style="color: #FF6600;"></i>
+                                </div>
+                                <div class="table-responsive justify-content-center">
+                                    <table class="table table-hover styled-table" id="listingTable" >
+                                    </table>
+                                </div>
                             </div>
+
                             
-                            
-                            <button v-on:click="prevPage" id="btn_prev">Prev</button>
-                            <button v-on:click="nextPage" id="btn_next">Next</button>
-                            page: <span id="page"></span>  
-                        </div>   
-                    </div>
-                    
-                    
+                              
+                         
+                        
+                    </div> 
                 </div>
                     
                 </body>
@@ -152,14 +189,21 @@ const app4 = Vue.createApp({
                 if (page < 1) page = 1
                 if (page > this.numPages()) page = this.numPages()  
 
-                listing_table.innerHTML = ""
+                listing_table.innerHTML = `<thead><tr>
+                                        <th>Product Image</th>
+                                        <th>Product Name</th>
+                                        <th>Product Points</th>
+                                        <th>Redeemed Time</th>
+                                    </tr></thead><tbody>`
                 for (var i = (page-1) * this.records_per_page; i < (page * this.records_per_page); i++) {
                     if(i<this.reward_history.length){
-                    listing_table.innerHTML+= `<tr><td><img src= "${this.reward_history[i].img_url}" width="200" height="200"></td>
-                        <td><h2>${this.reward_history[i].item_name}</h2><br/>${this.reward_history[i].datetime}</td>
-                        <td>${this.reward_history[i].points_used}</td></tr>`
+                    listing_table.innerHTML+= `<tr><td><img src= "${this.reward_history[i].img_url}" width="150" height="200"></td>
+                        <td style="font-size:28px;  font-weight:bold">${this.reward_history[i].item_name}</td>
+                        <td style="font-size:28px; color:#103E92; font-weight:bold">${this.reward_history[i].points_used}</td>
+                        <td style="font-size:16px;font-style: italic;"><i class="fas fa-calendar-check me-3"></i>${this.reward_history[i].datetime}</td></tr>`
                     }
                 }
+                listing_table.innerHTML+=`</tbody>`;
 
                 page_span.innerHTML = page
 
