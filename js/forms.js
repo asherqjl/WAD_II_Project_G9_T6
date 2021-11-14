@@ -37,14 +37,6 @@ app1.component('signup-form',{
                 <label class="form-label" for="cfmPwd">Repeat your password(Minimum 6 Characters)</label>
             </div>
         </div>
-
-        <div class="form-check d-flex justify-content-center mb-5">
-            <input class="form-check-input me-2" type="checkbox" value='true' id="ToS" required/>
-            <label class="form-check-label" for="ToS">
-                I agree all statements in <a>Terms of service</a>
-            </label>
-        </div>
-
         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
             <button type="submit" class="btn btn-primary btn-lg">Register</button>
         </div>

@@ -36,6 +36,7 @@ window.onload = function() {
         console.log('Database opened successfully');
         db = request.result;
         displayData();
+        
     }
     
     // Setup the database tables if this has not already been done Usually only need to do this once it's like innit like that
@@ -79,13 +80,13 @@ window.onload = function() {
         // prevent default - we don't want the form to submit in the conventional way
         e.preventDefault();
         // validate the forms first before allowing registration
-        if ( (cfmPwd.value!=='' || pwd1.value!=='') && pwd1.value === cfmPwd.value){
+        if ( (cfmPwd.value!=='' || pwd1.value!=='') && pwd1.value === cfmPwd.value ){
             // grab the values entered into the form fields and store them in an object ready for being inserted into the DB
             let newItem = { user_name: userName.value, 
                             email: userEmail.value, 
                             password: cfmPwd.value, 
                             points:0 };
-        
+                
             // open a read/write db transaction, ready for registration
             let transaction = db.transaction(['user_acc'], 'readwrite');
         
@@ -117,7 +118,7 @@ window.onload = function() {
                 displayData();
             };
             transaction.onerror = function() {
-            console.log('Transaction not opened due to error');
+                console.log('Transaction not opened due to error');
             };
         } else {
             alert("Invalid Password!")
@@ -125,10 +126,9 @@ window.onload = function() {
     };
     // Admin Account
     function createAdmin_Once() {
-        const foundAdmin = [];
-         
+        var adminCount = 0;
         let newItem = { user_name: 'Admin', 
-            email: 'Admin@admin.com', 
+            email: 'sunjun@admin.com', 
             password: '654321', 
             points:1500 };
         let transaction = db.transaction(['user_acc'], 'readwrite');
@@ -137,16 +137,52 @@ window.onload = function() {
             // Get a reference to the cursor
             let cursor = e.target.result;
             if(cursor) {
-                
-                foundAdmin.push(cursor.value.user_name); 
+                if(cursor.value.user_name == 'Admin'){
+                    adminCount++;
+                }
                 
                 cursor.continue();
+            }else {
+                console.log('');
+            }
+            if(adminCount==0){
+                objectStore.add(newItem);
+                return
             }
         }
-        console.log(foundAdmin.includes("Admin"));
-        if (foundAdmin.includes("Admin")){
-            objectStore.add(newItem);
-        } 
+    }
+    
+    // Check for similar account
+    function checkEmailUserName(username,email){
+        var userNameFound = 0;
+        var userEmailFound = 0;
+        var errMsg = '';
+        let transaction = db.transaction('user_acc');
+        let objectStore = transaction.objectStore('user_acc');
+        objectStore.openCursor().onsuccess = function(e) {
+            // Get a reference to the cursor
+            let cursor = e.target.result;
+            if(cursor) {
+                if(cursor.value.user_name == username){
+                    userNameFound ++;
+                } 
+                if (cursor.value.email == email){
+                    userEmailFound ++;
+                } 
+                cursor.continue();
+            } else {
+                console.log('')
+            } 
+
+            if(userNameFound!==0 || userEmailFound!==0){
+                //errMsg += 'Username / Email already exist !';
+                return false;
+            } else {
+                return true;
+            }
+            
+        }
+        
     }
     // Login Function 
     function login(e){
@@ -179,9 +215,7 @@ window.onload = function() {
                 
                 cursor.continue();
             } else {
-                
-                // if there are no more cursor items to iterate through, say so
-                console.log('No more accounts are found');
+                alert('Invalid Password/Username/Email details !');
             }
         }
     };
@@ -190,7 +224,7 @@ window.onload = function() {
     // to console.log data that's been added into the database see what is inside the database
     function displayData() {
         createAdmin_Once();
-        let objectStore = db.transaction('user_acc').objectStore('user_acc');
+        let objectStore = db.transaction(['user_acc'],'readwrite').objectStore('user_acc');
 
         objectStore.openCursor().onsuccess = function(e) {
             // Get a reference to the cursor
@@ -207,6 +241,8 @@ window.onload = function() {
                 console.log('Cursor is empty / Table is empty')
             }
         };
+        //objectStore.clear();
+
     }
 }
 // }
