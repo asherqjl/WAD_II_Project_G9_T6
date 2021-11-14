@@ -239,7 +239,6 @@ window.onload = function() {
                         }).then(function() {
                             window.location.href = "home.html";
                         })
-                    
                     // Session
                     localStorage.setItem('user_name', currentUserName);
                     localStorage.setItem('user_points', currentPoints);
