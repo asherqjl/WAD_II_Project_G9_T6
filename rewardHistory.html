@@ -99,6 +99,7 @@
                     .then(response => { 
                         this.reward_history= response.data.reverse()
                         this.status = response.data
+                        console.log(response.data)
                         this.changePage(1)
                     })
                     .catch(error => {
