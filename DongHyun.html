@@ -14,11 +14,12 @@
     <link rel="stylesheet" href="css/navbar.css">
 
     <!-- Custom JavaScript -->
-    
+    <!-- SweetAlert   -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
-    <script src="js/attraction.js"></script>
     <script src="https://kit.fontawesome.com/fbf5c5a506.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@next"></script>
+    <!-- <script src="js/attraction.js"></script> -->
 
 </head>
 <body>
@@ -358,7 +359,7 @@ function matchPosition(latitude,longitude,current_location){
     
         
     function addTravel(email, longitude, latitude){
-        
+        var currPoints = localStorage.getItem("user_points");
         const url = './db/addTravelHistory.php'
         const data = { email: email, longitude: longitude,
                                     latitude: latitude, 
@@ -369,7 +370,11 @@ function matchPosition(latitude,longitude,current_location){
             })
                 .then(response => {
                     console.log(response.data)
+                    currPoints = Number(currPoints)+Number(50);
+                    localStorage.setItem("user_points",currPoints);
+                    localStorage.setItem("add",true);
                     alert("Successful!")
+                    window.location.href="DongHyun.html"
                 })
                 
 
@@ -398,10 +403,12 @@ function matchPosition(latitude,longitude,current_location){
         <!-- Footer -->
     <!-- <script src="js/attraction.js"></script> -->
     <script src="js/attractions_donghyun.js"></script>
+
     <script src="js/navbar.js"></script>
     <script src="js/signOutPopUp.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/sessions.js"></script>
+    <script src="js/rewardsAddPoints.js"></script>
         
 </body>
 </html>
