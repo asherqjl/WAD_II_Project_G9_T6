@@ -13,7 +13,7 @@
         <script src="https://unpkg.com/vue@next"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <title>Smiling Across Local SG</title>      
-
+    
     </head>
 
     <body>
@@ -142,7 +142,7 @@ var legend = document.getElementById("legend");
                             const attraction=lat_lng_list[i];
 
                             var marker=new google.maps.Marker({
-                                position:{lat:parseFloat(attraction.latitude),lng:parseFloat(attraction.longitude)},
+                                position:{lat:parseFloat(attraction.longitude),lng:parseFloat(attraction.latitude)},
                                 map,
                                 icon:image,
                                 shape:shape,
