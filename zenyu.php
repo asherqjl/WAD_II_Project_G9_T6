@@ -21,9 +21,16 @@
         <div id="navdiv">
             <include-navbar></include-navbar>
         </div>
-    
+        >
+        
         <div id="app3">
-
+            <div class="searchbar">
+                <div class="row g-2 my-2">
+                    <div class="col-md-12 col-sm-12">
+                        
+        
+                   
+               
 
             <!-- <div class="d-flex justify-content-center "> -->
                 <!-- <table class="table bg-white w-75"> -->
@@ -33,7 +40,10 @@
                     <!-- </tr> -->
                 <!-- </table> -->
             <!-- </div> -->
-        <div id="map" class="map-responsive"></div>
+        
+        <div id="map2" class="map-responsive"></div>
+        <div id="legend"><h6>Legend</h6></div>
+        
 
     </body>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT6sTbyN3xQA9bTHQYcyFVXsqAXT54zfE&callback=initMap"
@@ -45,7 +55,7 @@
     <script>
         var infowindow;
         function initMap() {
-        const map = new google.maps.Map(document.getElementById("map"), {
+        const map = new google.maps.Map(document.getElementById("map2"), {
         
                 zoom: 11.7,
                 center: { lat: 1.3649170000000002, lng: 103.82287200000002 },
@@ -57,7 +67,29 @@
         }
     ]
             });
+
             setMarkers(map);
+            const icons = {
+    
+    VistedAttraction: {
+      name: "Visited Attraction",
+      icon: "https://img.icons8.com/external-wanicon-lineal-color-wanicon/64/000000/external-check-user-interface-wanicon-lineal-color-wanicon.png",
+    }
+  };
+
+var legend = document.getElementById("legend");
+
+   for (var key in icons) {
+      const type = icons[key];
+      const name = type.name;
+      const icon = type.icon;
+      const div = document.createElement("div");
+
+    div.innerHTML = '<img src="' + icon + '" width=23" height="23"> ' + name;
+    legend.appendChild(div);
+  }
+
+  map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById('legend')); 
             
   
         
@@ -70,7 +102,7 @@
         
             function setMarkers(map)  {
                 const image = {
-                    url: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+                    url: "https://img.icons8.com/external-wanicon-lineal-color-wanicon/64/000000/external-check-user-interface-wanicon-lineal-color-wanicon.png",
                     // This marker is 20 pixels wide by 32 pixels high.
                     size: new google.maps.Size(30, 48),
                     scaledSize: new google.maps.Size(30, 48),
@@ -114,14 +146,14 @@
                                 map,
                                 icon:image,
                                 shape:shape,
-                                title:"visited place"
+                                title:"visited attraction"
                             })
 
-                            var content='<div><h3>'+attraction.time_visited+'</h3></div>'
+                            var content='<div><h2>You visited this attraction on: '+attraction.time_visited+'</h2></div>'
                             infowindow=new google.maps.InfoWindow()
                             google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
                             return function() {
-                                alert("wad");
+                                
                                 infowindow.setContent(content);
                                 infowindow.open(map,marker);
                                 };

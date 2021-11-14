@@ -14,11 +14,12 @@
     <link rel="stylesheet" href="css/navbar.css">
 
     <!-- Custom JavaScript -->
-    
+    <!-- SweetAlert   -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
-    <script src="js/attraction.js"></script>
     <script src="https://kit.fontawesome.com/fbf5c5a506.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@next"></script>
+    <!-- <script src="js/attraction.js"></script> -->
 
 </head>
 <body>
@@ -37,7 +38,7 @@
            
         <div class="input-group mb-3 my-3">
             
-                <input id="keyword" type="form" class="form-control me-2" placeholder="Search attraction by any keword!" value="beach" aria-label="Search" >
+                <input id="keyword" type="form" class="form-control me-2" placeholder="Search attraction by any keword!" value="Museum" aria-label="Search" >
                 <button onclick="initMap()" id="myBtn" class="btn btn-danger" type="submit">Search</button>
             
         </div>
@@ -182,11 +183,17 @@ function locationCode() {
 function matchPosition(latitude,longitude,current_location){
   
   if (latitude.toFixed(1)==current_location[0].toFixed(1) && longitude.toFixed(1)==current_location[1].toFixed(1)){
-    alert("YAY you have arrived succesfully!point redeemd!");
+    //alert("YAY you have arrived succesfully!point redeemd!");
     var email = localStorage.getItem('user_email')
     addTravel(email,latitude,longitude);
   }else{
-    alert("you are not here yet! Go Nearer to the Attraction!");
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'You are not here yet! Go Nearer to the Attraction!',
+        footer: '<a href="KaiWei.html">Look at the recommended Attraction?</a>',
+        confirmButtonColor: 'tomato'
+        })
   }
   console.log(latitude,longitude)
 } 
@@ -358,18 +365,28 @@ function matchPosition(latitude,longitude,current_location){
     
         
     function addTravel(email, longitude, latitude){
-        
+        var currPoints = localStorage.getItem("user_points");
         const url = './db/addTravelHistory.php'
         const data = { email: email, longitude: longitude,
                                     latitude: latitude, 
                         }
-                        
             axios.get(url, {
                     params: data
             })
                 .then(response => {
                     console.log(response.data)
-                    alert("Successful!")
+                    currPoints = Number(currPoints)+Number(50);
+                    localStorage.setItem("user_points",currPoints);
+                    localStorage.setItem("add",true);
+                    Swal.fire({    
+                        icon: 'success',
+                        title: 'Point Added Success!',
+                        text: "Points added successfully !",
+                        confirmButtonColor: 'green'
+                        }).then(function() {
+                            window.location.href = "DongHyun.html";
+                        })
+                    
                 })
                 
 
@@ -380,16 +397,6 @@ function matchPosition(latitude,longitude,current_location){
                 })
               }
 
-    
-
-   
-        
-    
-    
-   
-        
-                        
-            
     </script>
         
             
@@ -398,10 +405,12 @@ function matchPosition(latitude,longitude,current_location){
         <!-- Footer -->
     <!-- <script src="js/attraction.js"></script> -->
     <script src="js/attractions_donghyun.js"></script>
+
     <script src="js/navbar.js"></script>
     <script src="js/signOutPopUp.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/sessions.js"></script>
+    <script src="js/rewardsAddPoints.js"></script>
         
 </body>
 </html>

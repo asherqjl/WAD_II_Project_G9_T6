@@ -36,6 +36,7 @@ window.onload = function() {
         console.log('Database opened successfully');
         db = request.result;
         displayData();
+        
     }
     
     // Setup the database tables if this has not already been done Usually only need to do this once it's like innit like that
@@ -78,14 +79,29 @@ window.onload = function() {
     function register(e) {
         // prevent default - we don't want the form to submit in the conventional way
         e.preventDefault();
+
+        checkEmailUserName(userName.value,userEmail.value);
+
         // validate the forms first before allowing registration
-        if ( (cfmPwd.value!=='' || pwd1.value!=='') && pwd1.value === cfmPwd.value){
+        if (localStorage.getItem('checking')=='false'){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: localStorage.getItem('errMsg'),
+                confirmButtonColor: 'tomato'
+                })
+            userName.value = '';
+            userEmail.value = '';
+            cfmPwd.value = '';
+            pwd1.value = ''
+        }
+        else if ( (cfmPwd.value!=='' || pwd1.value!=='') && pwd1.value === cfmPwd.value ){
             // grab the values entered into the form fields and store them in an object ready for being inserted into the DB
             let newItem = { user_name: userName.value, 
                             email: userEmail.value, 
                             password: cfmPwd.value, 
-                            points:0 };
-        
+                            points: 100 };
+                
             // open a read/write db transaction, ready for registration
             let transaction = db.transaction(['user_acc'], 'readwrite');
         
@@ -105,30 +121,43 @@ window.onload = function() {
             // Report on the success of the transaction completing, when everything is done
             transaction.oncomplete = function() {
                 var usernamee = userName.value;
-                alert('Registration Successful '+usernamee+' !');
+                // alert('Registration Successful '+usernamee+' !');
                 // Session
                 localStorage.setItem('user_name', userName.value);
-                localStorage.setItem('user_points', 0);
+                localStorage.setItem('user_points', 100);
                 localStorage.setItem('user_email', userEmail.value);
                 localStorage.setItem("redeemed",false);
-                window.location.href="home.html";                
+                Swal.fire({    
+                    icon: 'success',
+                    title: 'Registration Success!',
+                    text:"Wecome "+usernamee+" !",
+                    confirmButtonColor: 'green'
+                    }).then(function() {
+                        window.location.href = "home.html";
+                    })
+                           
                 userName.value = '';
                 // update the display of data to show the newly added item, by running displayData() again.
                 displayData();
             };
             transaction.onerror = function() {
-            console.log('Transaction not opened due to error');
+                console.log('Transaction not opened due to error');
             };
         } else {
-            alert("Invalid Password!")
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Invalid Password !',
+                confirmButtonColor: 'tomato'
+                })
+            // alert("Invalid Password!")
         }
     };
     // Admin Account
     function createAdmin_Once() {
-        const foundAdmin = [];
-         
+        var adminCount = 0;
         let newItem = { user_name: 'Admin', 
-            email: 'Admin@admin.com', 
+            email: 'sunjun@admin.com', 
             password: '654321', 
             points:1500 };
         let transaction = db.transaction(['user_acc'], 'readwrite');
@@ -137,16 +166,52 @@ window.onload = function() {
             // Get a reference to the cursor
             let cursor = e.target.result;
             if(cursor) {
-                
-                foundAdmin.push(cursor.value.user_name); 
+                if(cursor.value.user_name == 'Admin'){
+                    adminCount++;
+                }
                 
                 cursor.continue();
+            }else {
+                if(adminCount==0){
+                    objectStore.add(newItem);
+                    return
+                };
             }
+            
         }
-        console.log(foundAdmin.includes("Admin"));
-        if (foundAdmin.includes("Admin")){
-            objectStore.add(newItem);
-        } 
+    }
+    
+    // Check for similar account
+    function checkEmailUserName(username,email){
+        var userNameFound = 0;
+        var userEmailFound = 0;
+        let transaction = db.transaction('user_acc');
+        let objectStore = transaction.objectStore('user_acc');
+        objectStore.openCursor().onsuccess = function(e) {
+            // Get a reference to the cursor
+            let cursor = e.target.result;
+            if(cursor) {
+                if(cursor.value.user_name == username){
+                    userNameFound ++;
+                } 
+                if (cursor.value.email == email){
+                    userEmailFound ++;
+                } 
+                cursor.continue();
+            } else {
+                console.log('')
+            } 
+            console.log(userNameFound, userEmailFound);
+            if(userNameFound!==0 || userEmailFound!==0){
+                //errMsg += 'Username / Email already exist !';
+                localStorage.setItem('checking', false);
+                localStorage.setItem('errMsg', 'Username / Email already exist !');
+            } else {
+                localStorage.setItem('checking', true);
+            }
+            
+        }
+        
     }
     // Login Function 
     function login(e){
@@ -166,22 +231,33 @@ window.onload = function() {
                     var currentUserName = cursor.value.user_name;
                     var currentEmail = cursor.value.email;
                     var currentPoints = cursor.value.points;
-                    alert(currentUserName + ' Login Successful!');
+                    Swal.fire({    
+                        icon: 'success',
+                        title: 'Login Success!',
+                        text:"Wecome "+currentUserName+" !",
+                        confirmButtonColor: 'green'
+                        }).then(function() {
+                            window.location.href = "home.html";
+                        })
                     
                     // Session
                     localStorage.setItem('user_name', currentUserName);
                     localStorage.setItem('user_points', currentPoints);
                     localStorage.setItem('user_email', currentEmail);
                     
-                    window.location.href="home.html";                
-                    
+                    // window.location.href="home.html";                
+                    return
                 } 
                 
                 cursor.continue();
             } else {
-                
-                // if there are no more cursor items to iterate through, say so
-                console.log('No more accounts are found');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Invalid Password/Username/Email !',
+                    confirmButtonColor: 'tomato'
+                    })
+                // alert('Invalid Password/Username/Email details !');
             }
         }
     };
@@ -190,7 +266,8 @@ window.onload = function() {
     // to console.log data that's been added into the database see what is inside the database
     function displayData() {
         createAdmin_Once();
-        let objectStore = db.transaction('user_acc').objectStore('user_acc');
+
+        let objectStore = db.transaction(['user_acc'],'readwrite').objectStore('user_acc');
 
         objectStore.openCursor().onsuccess = function(e) {
             // Get a reference to the cursor
@@ -207,6 +284,9 @@ window.onload = function() {
                 console.log('Cursor is empty / Table is empty')
             }
         };
+        // checkEmailUserName('Admin','sunjun@admin.com')
+        //objectStore.clear();
+
     }
 }
 // }
