@@ -99,9 +99,9 @@
                                         Check your redeemed product now!
                                     </p>
                                 </div>
-                                <div v-if="reward_history.length!==0" >
+                                <div >
                                     <i class="fas fa-arrow-alt-circle-left fa-2x" v-on:click="prevPage" id="btn_prev" style="color: #FF6600;"></i>
-                                   <span style="padding-left: 30px; padding-right: 30px;">Current Page: <span id="page"></span></span> 
+                                   <span v-if="reward_history.length!==0" style="padding-left: 30px; ">Current Page:</span> <span id="page" style="padding-right: 30px;"></span>
                                     <i class="fas fa-arrow-alt-circle-right fa-2x" v-on:click="nextPage" id="btn_next" style="color: #FF6600;"></i>
                                 </div>
                                 <div class="table-responsive justify-content-center">
@@ -195,35 +195,44 @@ const app4 = Vue.createApp({
                 if (page < 1) page = 1
                 if (page > this.numPages()) page = this.numPages()  
 
-                listing_table.innerHTML = `<thead><tr>
-                                        <th>Product Image</th>
-                                        <th>Product Name</th>
-                                        <th>Product Points</th>
-                                        <th>Redeemed Time</th>
-                                    </tr></thead><tbody>`
-                for (var i = (page-1) * this.records_per_page; i < (page * this.records_per_page); i++) {
-                    if(i<this.reward_history.length){
-                    listing_table.innerHTML+= `<tr><td><img src= "${this.reward_history[i].img_url}" width="150" height="200"></td>
-                        <td style="font-size:28px;  font-weight:bold">${this.reward_history[i].item_name}</td>
-                        <td style="font-size:28px; color:#103E92; font-weight:bold">${this.reward_history[i].points_used}</td>
-                        <td style="font-size:16px;font-style: italic;"><i class="fas fa-calendar-check me-3"></i>${this.reward_history[i].datetime}</td></tr>`
+                if(this.reward_history.length !==0){
+
+                    listing_table.innerHTML = `<thead><tr>
+                                            <th>Product Image</th>
+                                            <th>Product Name</th>
+                                            <th>Product Points</th>
+                                            <th>Redeemed Time</th>
+                                        </tr></thead><tbody>`
+                    for (var i = (page-1) * this.records_per_page; i < (page * this.records_per_page); i++) {
+                        if(i<this.reward_history.length){
+                        listing_table.innerHTML+= `<tr><td><img src= "${this.reward_history[i].img_url}" width="150" height="200"></td>
+                            <td style="font-size:28px;  font-weight:bold">${this.reward_history[i].item_name}</td>
+                            <td style="font-size:28px; color:#103E92; font-weight:bold">${this.reward_history[i].points_used}</td>
+                            <td style="font-size:16px;font-style: italic;"><i class="fas fa-calendar-check me-3"></i>${this.reward_history[i].datetime}</td></tr>`
+                        }
+                    
                     }
-                }
-                listing_table.innerHTML+=`</tbody>`;
-                console.log(listing_table)
-                page_span.innerHTML = page
+                    listing_table.innerHTML+=`</tbody>`;
+                    // console.log(listing_table)
+                    page_span.innerHTML = page
+                    
+                    if (page == 1) {
+                        btn_prev.style.visibility = "hidden"
+                    } else {
+                        btn_prev.style.visibility = "visible"
+                    }
 
-                if (page == 1) {
-                    btn_prev.style.visibility = "hidden"
-                } else {
-                    btn_prev.style.visibility = "visible"
-                }
-
-                if (page == this.numPages()) {
+                    if (page == this.numPages()) {
+                        btn_next.style.visibility = "hidden"
+                    } else {
+                        btn_next.style.visibility = "visible"
+                    }
+                }else{
+                    btn_prev.style.visibility = "hidden";
                     btn_next.style.visibility = "hidden"
-                } else {
-                    btn_next.style.visibility = "visible"
                 }
+
+
             },
             numPages(){
                 return Math.ceil(this.reward_history.length / this.records_per_page )
