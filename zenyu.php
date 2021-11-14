@@ -26,24 +26,14 @@
             <div id="app3">
                 <div class="searchbar">
                     <div class="row g-2 my-2">
-                        <div class="col-md-12 col-sm-12">
-                            
-            
-                    
-                
-
-                <!-- <div class="d-flex justify-content-center "> -->
-                    <!-- <table class="table bg-white w-75"> -->
-                        <!-- <tr v-for="travel in travel_history"> -->
-                            <!-- <td><h2>{{travel.location_name}}</h2><br/>{{travel.category}}</td> -->
-                            <!-- <td>{{travel.time_visited}}</td> -->
-                        <!-- </tr> -->
-                    <!-- </table> -->
-                <!-- </div> -->
-            
-            <div id="map2" class="map-responsive"></div>
-            <div id="legend"><h6>Legend</h6></div>
-        
+                        <div class="col-md-12 col-sm-12">       
+                            <div id="map2" class="map-responsive"></div>
+                            <div id="legend"><h6>Legend</h6></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </body>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT6sTbyN3xQA9bTHQYcyFVXsqAXT54zfE&callback=initMap"
@@ -116,23 +106,10 @@ var legend = document.getElementById("legend");
                     type: "poly",
                 };
                 var travel_history=''
-                    // POST request
-                    /* axios.post(url, data
-                    )
-                    .then(response => {
-                        console.log(response.data)
-                        this.showStatus = true
-                        this.status = response.data
-                    })
-                    .catch(error => {
-                        this.showStatus = true
-                        this.status = 'There was an error: ' + error.message 
-                    })  */
-                    // GET request
-                    var email = localStorage.getItem('user_email')
-                    url="./db/getTravelHistory.php"
-                    const data= {email: email}
-                    axios.get(url,{
+                var email = localStorage.getItem('user_email')
+                url="./db/getTravelHistory.php"
+                const data= {email: email}
+                axios.get(url,{
                 params: data
             })
                     .then(response => { 
