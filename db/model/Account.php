@@ -11,7 +11,7 @@ class Account {
         $this->id= 1;
         $this->$acc_email= $acc_email;
         $this->acc_password= $acc_password;
-        $this->points= $points
+        $this->points= $points;
     }
 
     public function getID() {
