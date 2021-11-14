@@ -68,10 +68,10 @@ const reward = Vue.createApp({
     var options = {
       method: 'GET',
       url: 'https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list',
-      params: {country: 'singapore', lang: 'en_sg', currentpage: '0', pagesize: '30'},
+      params: {country: 'Singapore', lang: 'en_sg', currentpage: '0', pagesize: '30'},
       headers: {
         'x-rapidapi-host': 'apidojo-hm-hennes-mauritz-v1.p.rapidapi.com',
-        'x-rapidapi-key': 'da34106539msh7ef6318fe045d9dp17788cjsn122f09e8eea4'
+        'x-rapidapi-key': '541a6daee0msh077da98de6068d8p1892e8jsn3a84fc4ece4c'
       }
     };
     
