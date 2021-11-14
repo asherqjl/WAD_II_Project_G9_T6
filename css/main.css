@@ -144,10 +144,49 @@ body {
   z-index: 1;
 }
 
-
 #mrtCheckList .form-check-label:hover {background-color: #ddd;}
 
-.dropdown:hover .dropdown-content {display: block;}
+#attraction .img-hover-zoom {
+  height: 5%; /* [1.1] Set it as per your need */
+  overflow: hidden; /* [1.2] Hide the overflowing of child elements */
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+/* [2] Transition property for smooth transformation of images */
+#attraction .img-hover-zoom img {
+  transition: transform .5s ease;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+/* [3] Finally, transforming the image when container gets hovered */
+#attraction .img-hover-zoom:hover img {
+  transform: scale(1.2);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+#attraction #TopBtn {
+  display: none; /*Hidden by default*/
+  position: fixed; /* Fixed/sticky position */
+  bottom: 20px; /* Place the button at the bottom of the page */
+  right: 30px; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  background-color: #FF9900; /* Set a background color */
+  color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 15px; /* Some padding */
+  border-radius: 15px; /* Rounded corners */
+  font-size: 18px; /* Increase font size */
+}
+
+#attraction #TopBtn:hover {
+  background-color: red; /* Add a dark-grey background on hover */
+}
+
 
 .form-floating{  
   color:black;
@@ -161,6 +200,8 @@ body {
 #cardDesc::-webkit-scrollbar {
   display: none;
 }
+
+
 
 
 

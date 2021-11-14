@@ -36,11 +36,16 @@
     
     <div class="container-fluid"  id='attraction'>
         <div class ="main">
+
+            <!-- Back to Top -->
+            <button onclick="topFunction()" id="TopBtn" title="Go to top"><i class="fas fa-angle-double-up"></i></button>
+
+
             <div class= "row">
 
             <!--searchbar - search API keyword (one line by itself in small port) -->
             <div class="col-12">
-                <div class="mx-auto" style="width: 70%;">
+                <div class="mx-auto" style="width: 65%;">
                     <div class="input-group mb-3 my-3" >
                         <input type="search" id="attractionSearch" class="form-control me-3" aria-label="Search" :placeholder=[[displayPlaceholder]] v-model="searchField"  @keyup.enter ="searchAttraction()">
                         
@@ -99,9 +104,12 @@
                     </div>
                     
                     
-                    <div class="col-sm-12 col-md-6 col-lg-3 d-flex align-items-stretch" v-for="a_obj in FilteredAttByCat">
-                        <div class="card mb-5 border-2 border-secondary">
-                            <img :src="a_obj.photo" class="card-img-top img-fluid"  alt="item1">
+                    <div class="col-sm-12 col-md-6 col-lg-3" v-for="a_obj in FilteredAttByCat">
+                        <div class= "card mb-5 img-rounded " style="border-radius: 20px;">
+                            <div class="img-hover-zoom">
+
+                            <img :src="a_obj.photo" class="card-img-top img-fluid"  style="border-top-left-radius: 20px;border-top-right-radius: 20px;" alt="item1">
+                            </div>
                             <div class="card-body ">
                                 <h6 class="card-title text-dark fw-bolder text-center">{{a_obj.attraction}}</h6>
                                 
@@ -115,7 +123,7 @@
                                     
                                 <div class = "text-center">
                                     
-                                    <button class="btn btn-light"  @click="sweetAlert(a_obj.attraction, a_obj.rating , a_obj.contact, a_obj.website,a_obj.bizTime,a_obj.address, a_obj.photo)">Read More</button> 
+                                    <button class="btn btn-outline-primary"  @click="sweetAlert(a_obj.attraction, a_obj.rating , a_obj.contact, a_obj.website,a_obj.bizTime,a_obj.address, a_obj.photo)">Read More</button> 
                                 </div>
                             </div>
                         </div>
@@ -123,6 +131,8 @@
                 </div>
                
             </div>
+
+
                 
             <!--the SeeMore Button-->
             <div class="text-center mb-3" v-html ="displaySeeMore" :value='buttonCount'  @click='buttonDisplay()'>

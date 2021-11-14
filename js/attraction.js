@@ -3,7 +3,7 @@ const attraction = Vue.createApp({
     return {
       searchField:"",   //input search textbox
       displayField:"",          //display which API cate is being called 
-      displayPlaceholder:"Enter attraction here!",   //placeholder
+      displayPlaceholder:"Search by attraction name!",   //placeholder
       attractionDict: [],  //main data dict (the clean data)
       attractionCat:[],         //dropdown category option
       FilteredAttByCat:[],      //the filtered data
@@ -13,7 +13,7 @@ const attraction = Vue.createApp({
       displayMRTlist:{},      //filtered list of mrt dict
       selectedMRT:[],          //checkbox mrt list
       buttonCount:0,         //when click button the count ++ 
-      displaySeeMore: "<button type='button' class='btn btn-primary' >See More</button>"
+      displaySeeMore: "<button type='button' class='btn btn-warning' >See More</button>"
     };
   },
   created(){
@@ -51,7 +51,7 @@ const attraction = Vue.createApp({
       
             var website = attractionData[i].officialWebsite
             if(website.trim() ==""){
-              website = "KaiWei.html"  //tbc
+              website = "Attraction.html"  //tbc
             }
             else if(! website.startsWith("http") ){
               website = "https://" + website + ' target="_blank"'
@@ -154,7 +154,7 @@ const attraction = Vue.createApp({
 
         this.displaySeeMore =""
         this.searchField=""
-        this.displayPlaceholder="Enter attraction here!"
+        this.displayPlaceholder="Search by attraction name!"
         return this.attractionDict
         
       }).catch(error=> {
@@ -162,7 +162,7 @@ const attraction = Vue.createApp({
         this.displayField =keyword
         this.displaySeeMore =""
         this.displayPlaceholder = "Cannot find! Please enter another Attraction Name!"
-        this.errorMsg="<span style='padding-top: 15px; font-size: small; color: red;'>No record found! Take a look at our recommended attractions? <button type='button' class='btn btn-primary btn-sm ml-50'>Yes!</button></span>"
+        this.errorMsg="<span style='padding-top: 15px; font-size: small; color: red;'>No record found! Take a look at our recommended attractions? <br><br><br> <button type='button' class='btn btn-outline-primary btn-sm'>Yes!</button></span>"
       }
       )
   }, 
@@ -174,7 +174,7 @@ const attraction = Vue.createApp({
     if(this.buttonCount<5){
       // console.log(defaultkeyword[this.buttonCount])
       this.getAttraction(defaultkeyword[this.buttonCount])
-      this.displaySeeMore= "<button type='button' class='btn btn-primary' >See More</button>"
+      this.displaySeeMore= "<button type='button' class='btn btn-warning' >See More</button>"
     }else{
       this.displaySeeMore= ""
     }
@@ -227,16 +227,10 @@ const attraction = Vue.createApp({
       imageWidth: 400,
       imageHeight: 200,
       imageAlt: 'Custom image',
-      width: '45rem',
+      width: '30rem',
       showCloseButton: true,
-      showCancelButton: true,
-      focusConfirm: false,
-      confirmButtonText:
-        '<i class="fa fa-thumbs-up"></i> Great!',
-      confirmButtonAriaLabel: 'Thumbs up, great!',
-      cancelButtonText:
-        '<i class="fa fa-thumbs-down"></i>',
-      cancelButtonAriaLabel: 'Thumbs down'
+      focusConfirm: true,
+      confirmButtonText: 'Back!'
     })
   }
   },
@@ -253,7 +247,7 @@ const attraction = Vue.createApp({
         }
 
         if(this.displayField== "Singapore Key Attractions!"){
-          this.displaySeeMore= "<button type='button' class='btn btn-primary' >See More</button>"
+          this.displaySeeMore= "<button type='button' class='btn btn-warning' >See More</button>"
         }
         return
       }
@@ -283,7 +277,7 @@ const attraction = Vue.createApp({
       return
     }
     else{   //3. checkbox list >0 (split "All" case & the rest)
-      console.log(this.selected_cat)
+      // console.log(this.selected_cat)
 
       if (this.selected_cat !="All"){   //everything
       //   this.displayMRTlist = this.MRTlist
@@ -319,3 +313,24 @@ const attraction = Vue.createApp({
   }
 })
 const attraction_vm = attraction.mount('#attraction');
+
+
+//Get the button:
+mybutton = document.getElementById("TopBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
