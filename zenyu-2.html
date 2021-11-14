@@ -210,27 +210,29 @@ const app4 = Vue.createApp({
                             <td style="font-size:28px; color:#103E92; font-weight:bold">${this.reward_history[i].points_used}</td>
                             <td style="font-size:16px;font-style: italic;"><i class="fas fa-calendar-check me-3"></i>${this.reward_history[i].datetime}</td></tr>`
                         }
+                    
                     }
                     listing_table.innerHTML+=`</tbody>`;
                     // console.log(listing_table)
                     page_span.innerHTML = page
-                }
-                if(page==0){
+                    
+                    if (page == 1) {
+                        btn_prev.style.visibility = "hidden"
+                    } else {
+                        btn_prev.style.visibility = "visible"
+                    }
+
+                    if (page == this.numPages()) {
+                        btn_next.style.visibility = "hidden"
+                    } else {
+                        btn_next.style.visibility = "visible"
+                    }
+                }else{
                     btn_prev.style.visibility = "hidden";
                     btn_next.style.visibility = "hidden"
                 }
 
-                if (page == 1) {
-                    btn_prev.style.visibility = "hidden"
-                } else {
-                    btn_prev.style.visibility = "visible"
-                }
 
-                if (page == this.numPages()) {
-                    btn_next.style.visibility = "hidden"
-                } else {
-                    btn_next.style.visibility = "visible"
-                }
             },
             numPages(){
                 return Math.ceil(this.reward_history.length / this.records_per_page )
