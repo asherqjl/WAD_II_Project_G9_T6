@@ -93,8 +93,8 @@
                             </div> -->
                             
                             
-                            <div v-if="reward_history.length!==0" class=" container ">
-                                <div>
+                            <div class=" container ">
+                                <div v-if="reward_history.length!==0" >
                                     <p class="subheader">
                                         Check your redeemed product now!
                                     </p>
@@ -109,6 +109,7 @@
                                     </table>
                                 </div>
                             </div>
+
 
                             
                               
@@ -187,6 +188,7 @@ const app4 = Vue.createApp({
                 var listing_table = document.getElementById("listingTable")
                 var page_span = document.getElementById("page")
 
+
                 // Validate page
                 if (page < 1) page = 1
                 if (page > this.numPages()) page = this.numPages()  
@@ -206,7 +208,7 @@ const app4 = Vue.createApp({
                     }
                 }
                 listing_table.innerHTML+=`</tbody>`;
-
+                console.log(listing_table)
                 page_span.innerHTML = page
 
                 if (page == 1) {
