@@ -36,6 +36,7 @@
         </div>
 
     </body>
+    <!--calling google map api-->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT6sTbyN3xQA9bTHQYcyFVXsqAXT54zfE&callback=initMap"
         async defer></script>
     <script type="text/javascript" src="js/navbar.js"></script>
@@ -44,6 +45,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script>
         var infowindow;
+
+        //function to initialize google map , same as Maps.html
         function initMap() {
         const map = new google.maps.Map(document.getElementById("map2"), {
         
@@ -57,7 +60,7 @@
         }
     ]
             });
-
+        //Pin markers in google map that display attractions that user already visited before. 
             setMarkers(map);
             const icons = {
     
@@ -80,16 +83,11 @@ var legend = document.getElementById("legend");
   }
 
   map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById('legend')); 
-            
-  
-        
-            
-
-
-
-
             }
-        
+
+
+        //below is the function that set markers of attractions that user already visited before. 
+        //User can click marker, then infoWindow will open up, which will display the Time of visit , when user clicked the "I arrived here button" succesfully. 
             function setMarkers(map)  {
                 const image = {
                     url: "https://img.icons8.com/external-wanicon-lineal-color-wanicon/64/000000/external-check-user-interface-wanicon-lineal-color-wanicon.png",
