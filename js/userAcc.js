@@ -130,7 +130,7 @@ window.onload = function() {
                     text:"Wecome "+usernamee+" !",
                     confirmButtonColor: 'green'
                     }).then(function() {
-                        window.location.href = "home.html";
+                        window.location.href = "index.html";
                     })
                            
                 userName.value = '';
@@ -230,14 +230,13 @@ window.onload = function() {
                         text:"Wecome "+currentUserName+" !",
                         confirmButtonColor: 'green'
                         }).then(function() {
-                            window.location.href = "home.html";
+                            window.location.href = "index.html";
                         })
                     // Session
                     localStorage.setItem('user_name', currentUserName);
                     localStorage.setItem('user_points', currentPoints);
                     localStorage.setItem('user_email', currentEmail);
                     
-                    // window.location.href="home.html";                
                     return
                 } 
                 
