@@ -135,6 +135,12 @@ body {
   overflow: hidden;
 }
 
+#map2 {
+  position: relative;
+  padding-bottom: 75%;
+  height: 0;
+  overflow: hidden;
+}
 .map-responsive iframe{
   position: absolute;
     top: 0;
