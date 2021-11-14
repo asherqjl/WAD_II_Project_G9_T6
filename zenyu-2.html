@@ -27,219 +27,153 @@
         <div id="navdiv">
             <include-navbar></include-navbar>
         </div>
-    <div class="main">
-        <div id="app4">
-        <header>
-            <div class="title">
-                <div v-if="reward_history.length===0" class="titledesc">                   
-                    <h1 style="font-size: clamp(26px, 5vw, 3rem); padding-bottom:20px">No Rewards History</h1>
-                    <p style="font-size: clamp(14px, 3vw, 18px);" >Fill it up with your first redeem product</p>
-                    <a href="FangTing.html"><button class="rwbtn" style="vertical-align:middle;font-size: clamp(14px, 3vw, 18px);" ><span>Redeem Rewards Now</span></button></a>
+        <div class="main">
+            <div id="app4">
+            <header>
+                <div class="title">
+                    <div v-if="reward_history.length===0" class="titledesc">                   
+                        <h1 style="font-size: clamp(26px, 5vw, 3rem); padding-bottom:20px">No Rewards History</h1>
+                        <p style="font-size: clamp(14px, 3vw, 18px);" >Fill it up with your first redeem product</p>
+                        <a href="FangTing.html"><button class="rwbtn" style="vertical-align:middle;font-size: clamp(14px, 3vw, 18px);" ><span>Redeem Rewards Now</span></button></a>
+                    </div>
+                    <div v-else class="titledesc">
+                        <h1 style="font-size: clamp(26px, 5vw, 3rem); padding-bottom:20px">REWARDS HISTORY</h1>
+                        <p style="font-size: clamp(14px, 3vw, 18px);">Scroll to view your redeemed history</p>
+                        <p  style="font-size: clamp(14px, 3vw, 18px); font-style: italic;">Or</p>
+                        <a href="FangTing.html"><button class="rwbtn" style="vertical-align:middle;font-size: clamp(14px, 3vw, 18px);" ><span>Redeem Rewards Now</span></button></a>
+                    </div>
                 </div>
-                <div v-else class="titledesc">
-                    <h1 style="font-size: clamp(26px, 5vw, 3rem); padding-bottom:20px">REWARDS HISTORY</h1>
-                    <p style="font-size: clamp(14px, 3vw, 18px);">Scroll to view your redeemed history</p>
-                    <p  style="font-size: clamp(14px, 3vw, 18px); font-style: italic;">Or</p>
-                    <a href="FangTing.html"><button class="rwbtn" style="vertical-align:middle;font-size: clamp(14px, 3vw, 18px);" ><span>Redeem Rewards Now</span></button></a>
+            </header>
+
+            <div class=" container ">
+                <div v-if="reward_history.length!==0" >
+                    <p class="subheader">
+                        Check your redeemed product now!
+                    </p>
+                </div>
+                <div >
+                    <i class="fas fa-arrow-alt-circle-left fa-2x" v-on:click="prevPage" id="btn_prev" style="color: #FF6600;"></i>
+                    <span v-if="reward_history.length!==0" style="padding-left: 30px; ">Current Page:</span> <span id="page" style="padding-right: 30px;"></span>
+                    <i class="fas fa-arrow-alt-circle-right fa-2x" v-on:click="nextPage" id="btn_next" style="color: #FF6600;"></i>
+                </div>
+                <div class="table-responsive justify-content-center">
+                    <table class="table table-hover styled-table" id="listingTable" >
+                    </table>
                 </div>
             </div>
-          </header>
-        
-            
-            <!-- <div class='row'>
-                <div class='col-sm d-flex justify-content-center' >
-                    <img  v-if="reward_history.length===0" src='./images/sad.png' class='img-fluid d-flex justify-content-center '></img>
-                    <img  v-else src='./images/happy.png' class='img-fluid d-flex justify-content-center'></img>
-                </div>
-            </div> -->
-            
-            <!-- <div class='row'>
-                <div class='col-sm d-flex justify-content-center subheader' >
-                    <p v-if="reward_history.length===0">No History</p>     
-                    <p v-else>Reward History</p>
-                </div>
-            </div> -->
-            
-            <!-- <div class='row'>
-                <div class='col'>
-                </div>
-                <div class='col text-center'>
-                    <form action="./FangTing.html">
-                        <input type="submit" class="btn btn-secondary" value="Redeem Now!" />
-                    </form>
-                    <a href="FangTing.html"><button class="rwbtn" style="vertical-align:middle" ><span>Redeem Rewards Now</span></button></a>
-                </div>
-                <div class='col'>
-                </div>
-            </div> -->
-            
-            <!-- <div class="d-flex justify-content-center "> -->
-                <!-- <table class="table bg-white w-75"> -->
-                    <!-- <tr v-for="travel in travel_history"> -->
-                        <!-- <td><h2>{{travel.location_name}}</h2><br/>{{travel.category}}</td> -->
-                        <!-- <td>{{travel.time_visited}}</td> -->
-                        <!-- </tr> -->
-                        <!-- </table> -->
-                        <!-- </div> -->
-                        
-                            <!-- <div class=" table-responsive justify-content-center" >
-                                <table class="table table-hover bg-white w-75 table-bordered" id="listingTable" >
-                                </table> 
-                            </div> -->
-                            
-                            <!-- <div v-on:click="prevPage" id="btn_prev">
-
-                                <i class="fas fa-arrow-alt-circle-left" ></i>
-                            </div> -->
-                            
-                            
-                            <div class=" container ">
-                                <div v-if="reward_history.length!==0" >
-                                    <p class="subheader">
-                                        Check your redeemed product now!
-                                    </p>
-                                </div>
-                                <div >
-                                    <i class="fas fa-arrow-alt-circle-left fa-2x" v-on:click="prevPage" id="btn_prev" style="color: #FF6600;"></i>
-                                   <span v-if="reward_history.length!==0" style="padding-left: 30px; ">Current Page:</span> <span id="page" style="padding-right: 30px;"></span>
-                                    <i class="fas fa-arrow-alt-circle-right fa-2x" v-on:click="nextPage" id="btn_next" style="color: #FF6600;"></i>
-                                </div>
-                                <div class="table-responsive justify-content-center">
-                                    <table class="table table-hover styled-table" id="listingTable" >
-                                    </table>
-                                </div>
-                            </div>
 
 
+                                
+                                
                             
-                              
-                         
-                        
-                    </div> 
-                </div>
+                            
+            </div> 
+        </div>
                     
-                </body>
-                <script src="js/navbar.js"></script>
-                <script type="text/javascript" src="js/sessions.js"></script>
-    <script src="js/signOutPopUp.js"></script>
+    </body>
+        <script src="js/navbar.js"></script>
+        <script type="text/javascript" src="js/sessions.js"></script>
+        <script src="js/signOutPopUp.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" 
         crossorigin="anonymous"></script>
     <script>
-const app4 = Vue.createApp({
-    data(){
-        return {
-            reward_history:'',
-            current_page: 1,
-            records_per_page: 3,
+        const app4 = Vue.createApp({
+            data(){
+                return {
+                    reward_history:'',
+                    current_page: 1,
+                    records_per_page: 3,
 
-        }
-    },
-    mounted:function()  {
-            // POST request
-            /* axios.post(url, data
-            )
-            .then(response => {
-                console.log(response.data)
-                this.showStatus = true
-                this.status = response.data
-            })
-            .catch(error => {
-                this.showStatus = true
-                this.status = 'There was an error: ' + error.message 
-            })  */
-            // GET request
-            var email = localStorage.getItem('user_email')
-            url="./db/getRewardHistory.php"
-            const data= {email: email}
-
-            axios.get(url, {
-                params: data
-            })
-            .then(response => { 
-                console.log(response.data)
-                this.reward_history= response.data.reverse()
-                console.log(this.reward_history)
-                this.status = response.data
-                this.changePage(1)
-            })
-            .catch(error => {
-                this.status = 'There was an error: ' + error.message 
-            }) 
-            
-        },
-        methods:{
-            prevPage(){
-                if (this.current_page > 1) {
-                    this.current_page--
-                    this.changePage(this.current_page)
                 }
             },
-            nextPage(){
-                if(this.current_page < this.numPages()){ 
-                    console.log(this.current_page)
-                    console.log(this.numPages())
-                    this.current_page++
-                    this.changePage(this.current_page)
-                }
-            },
-            changePage(page){
-                var btn_next = document.getElementById("btn_next")
-                var btn_prev = document.getElementById("btn_prev")
-                var listing_table = document.getElementById("listingTable")
-                var page_span = document.getElementById("page")
+            mounted:function()  {
+                    var email = localStorage.getItem('user_email')
+                    url="./db/getRewardHistory.php"
+                    const data= {email: email}
 
-
-                // Validate page
-                if (page < 1) page = 1
-                if (page > this.numPages()) page = this.numPages()  
-
-                if(this.reward_history.length !==0){
-
-                    listing_table.innerHTML = `<thead><tr>
-                                            <th>Product Image</th>
-                                            <th>Product Name</th>
-                                            <th>Product Points</th>
-                                            <th>Redeemed Time</th>
-                                        </tr></thead><tbody>`
-                    for (var i = (page-1) * this.records_per_page; i < (page * this.records_per_page); i++) {
-                        if(i<this.reward_history.length){
-                        listing_table.innerHTML+= `<tr><td><img src= "${this.reward_history[i].img_url}" width="150" height="200"></td>
-                            <td style="font-size:28px;  font-weight:bold">${this.reward_history[i].item_name}</td>
-                            <td style="font-size:28px; color:#103E92; font-weight:bold">${this.reward_history[i].points_used}</td>
-                            <td style="font-size:16px;font-style: italic;"><i class="fas fa-calendar-check me-3"></i>${this.reward_history[i].datetime}</td></tr>`
+                    axios.get(url, {
+                        params: data
+                    })
+                    .then(response => { 
+                        this.reward_history= response.data.reverse()
+                        this.status = response.data
+                        this.changePage(1)
+                    })
+                    .catch(error => {
+                        this.status = 'There was an error: ' + error.message 
+                    }) 
+                    
+                },
+                methods:{
+                    prevPage(){
+                        if (this.current_page > 1) {
+                            this.current_page--
+                            this.changePage(this.current_page)
                         }
-                    
-                    }
-                    listing_table.innerHTML+=`</tbody>`;
-                    // console.log(listing_table)
-                    page_span.innerHTML = page
-                    
-                    if (page == 1) {
-                        btn_prev.style.visibility = "hidden"
-                    } else {
-                        btn_prev.style.visibility = "visible"
-                    }
-
-                    if (page == this.numPages()) {
-                        btn_next.style.visibility = "hidden"
-                    } else {
-                        btn_next.style.visibility = "visible"
-                    }
-                }else{
-                    btn_prev.style.visibility = "hidden";
-                    btn_next.style.visibility = "hidden"
-                }
+                    },
+                    nextPage(){
+                        if(this.current_page < this.numPages()){ 
+                            this.current_page++
+                            this.changePage(this.current_page)
+                        }
+                    },
+                    changePage(page){
+                        var btn_next = document.getElementById("btn_next")
+                        var btn_prev = document.getElementById("btn_prev")
+                        var listing_table = document.getElementById("listingTable")
+                        var page_span = document.getElementById("page")
 
 
-            },
-            numPages(){
-                return Math.ceil(this.reward_history.length / this.records_per_page )
-            }
-        },
-})
-const vm4 = app4.mount("#app4");
+                        // Validate page
+                        if (page < 1) page = 1
+                        if (page > this.numPages()) page = this.numPages()  
+
+                        if(this.reward_history.length !==0){
+
+                            listing_table.innerHTML = `<thead><tr>
+                                                    <th>Product Image</th>
+                                                    <th>Product Name</th>
+                                                    <th>Product Points</th>
+                                                    <th>Redeemed Time</th>
+                                                </tr></thead><tbody>`
+                            for (var i = (page-1) * this.records_per_page; i < (page * this.records_per_page); i++) {
+                                if(i<this.reward_history.length){
+                                listing_table.innerHTML+= `<tr><td><img src= "${this.reward_history[i].img_url}" width="150" height="200"></td>
+                                    <td style="font-size:28px;  font-weight:bold">${this.reward_history[i].item_name}</td>
+                                    <td style="font-size:28px; color:#103E92; font-weight:bold">${this.reward_history[i].points_used}</td>
+                                    <td style="font-size:16px;font-style: italic;"><i class="fas fa-calendar-check me-3"></i>${this.reward_history[i].datetime}</td></tr>`
+                                }
+                            
+                            }
+                            listing_table.innerHTML+=`</tbody>`
+                            page_span.innerHTML = page
+                            
+                            if (page == 1) {
+                                btn_prev.style.visibility = "hidden"
+                            } else {
+                                btn_prev.style.visibility = "visible"
+                            }
+
+                            if (page == this.numPages()) {
+                                btn_next.style.visibility = "hidden"
+                            } else {
+                                btn_next.style.visibility = "visible"
+                            }
+                        }else{
+                            btn_prev.style.visibility = "hidden";
+                            btn_next.style.visibility = "hidden"
+                        }
+
+
+                    },
+                    numPages(){
+                        return Math.ceil(this.reward_history.length / this.records_per_page )
+                    }
+                },
+        })
+        const vm4 = app4.mount("#app4");
 
     </script>
 </html>

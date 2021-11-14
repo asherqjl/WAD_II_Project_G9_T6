@@ -18,11 +18,8 @@ window.onload = function() {
     // (see onupgradeneeded below)
     let request = window.indexedDB.open('smilingAcrossLocal', 2);
     // onerror handler signifies that the database didn't open successfully
-    request.onerror = function() {
-        console.log('Database failed to open');
-    };
+
     request.onsuccess = function() {
-        console.log('Database opened successfully');
         db = request.result;
         displayData();
     };
@@ -69,18 +66,13 @@ window.onload = function() {
                                     localStorage.setItem('user_name', newUserName.value);
                                     window.location.href = "home.html";
                                 })
-                            
                         };
-
                     }  
                     cursor.continue();
-
                 } 
             }
         }
-    };
-    // Checking
-    // to console.log data that's been added into the database see what is inside the database
+    }; 
     function displayData() {
         let objectStore = db.transaction('user_acc').objectStore('user_acc');
 
@@ -97,11 +89,7 @@ window.onload = function() {
                 }
                 
                 cursor.continue();
-            } else {
-                // if there are no more cursor items to iterate through, say so
-                console.log('Cursor is empty / Table is empty')
-            }
+            } 
         };
-    }
+    }; 
 }
-// }

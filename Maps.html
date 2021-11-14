@@ -14,10 +14,12 @@
     <link rel="stylesheet" href="css/navbar.css">
 
     <!-- Custom JavaScript -->
-    <script src="https://unpkg.com/vue@next"></script>
-
+    <!-- SweetAlert   -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
     <script src="https://kit.fontawesome.com/fbf5c5a506.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- <script src="js/attraction.js"></script> -->
 
 </head>
 <body>
@@ -36,20 +38,24 @@
            
         <div class="input-group mb-3 my-3">
             
-                <input id="keyword" type="form" class="form-control me-2" placeholder="Search attraction by any keword!" aria-label="Search" >
+                <input id="keyword" type="form" class="form-control me-2" placeholder="Search attraction by any keword!" value="Museum" aria-label="Search" >
                 <button onclick="initMap()" id="myBtn" class="btn btn-danger" type="submit">Search</button>
             
         </div>
 
 
-        <div id="display"></div>
-        <div id="display2"></div>
+        
+        </div>
 
         <div id="map" class="map-responsive">
         </div>
         <div id="legend"><h6>Legend</h6></div>
         <div id="boolredeem"></div>
         
+        <div class="footer">
+            <p class="small text-muted">Made with ❤️ by IS216 Team 6 <br>
+            © SmilingAcrossLocal Copyrights. All rights reserved.</p>
+        </div>
 
     <!--Load the API from the specified URL
     * The async attribute allows the browser to render the page while the API loads
@@ -63,100 +69,6 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
-
-
-function getPlaceName(latitude,longitude){
-    var options = {
-            method: 'GET',
-            url: 'https://tih-api.stb.gov.sg/content/v1/attractions/search?keyword=park&language=en&apikey=UnWhZ0GbjpzxKlcM9GssA3xbSio89mM2'
-            };
-            var locations_list=[];
-            axios.request(options)
-            .then(response=>{
-                var attractionData=response.data.data;
-                
-            
-                for (i=0; i<response.data.data.length; i++){
-                    // console.log(locations_list)
-                    var lat=attractionData[i].location.latitude
-                    var lng=attractionData[i].location.longitude
-                    var desc = attractionData[i].description;
-
-                    var name = attractionData[i].name; 
-              // console.log(attractionData)
-
-                    var type = attractionData[i].type; 
-                    // console.log(lat, lng)
-                    // var each_location={lat:location.latitude,lng:location.longitude}
-                    locations_list.push({attractionName:name,category:type, desc:desc,latitude:lat,longitude:lng})
-                    
-                }
-                for (let i = 0; i < locations_list.length; i++) {
-                    if (locations_list[i].latitude==latitude && locations_list[i].longitude==longitude){
-                        document.getElementById("display2").innerHTML=locations_list[i].attractionName
-                    }
-                }
-            })
-                .catch(error => {
-                    console.log(error);
-                    document.getElementById("display2").innerHTML = "Sorry, invalid address. Please try again!";
-                });
-}
-getPlaceName(1.4122932,103.8290909);
-
-function getAddress(latitude,longitude) {
-            //var addr = encodeURI(document.getElementById("addr").value);
-            var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude +','+longitude+"&key=AIzaSyDT6sTbyN3xQA9bTHQYcyFVXsqAXT54zfE";
-            var place_id;
-            axios.get(url)
-                .then(response => {
-                    //console.log(url);
-                    //console.log(response.data);    
-                    var info = getFullAddress(response.data);
-
-                    document.getElementById("display").innerHTML = info;
-                    // refresh the hidden input values with new lat lng coordinates
-                    place_id=getplaceID(response.data)
-                    
-                })
-                .catch(error => {
-                    console.log(error);
-                    document.getElementById("display").innerHTML = "Sorry, invalid address. Please try again!";
-                });
-            return info; 
-            
-            
-        }
-        function getFullAddress(data) {
-            var addr = data["results"][0]["formatted_address"];
-            return addr;
-        }
-
-        function getplaceID(data) {
-            var location = data["results"][0]["place_id"];
-            return location;
-        }
-        function getplaceName(data){
-            var name = data["result"]["name"]
-        }
-function getName(place_id){
-    var url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJPzulIQ8U2jER0xNuPd-Z0_4&fields=name%2Crating%2Cformatted_phone_number&key=AIzaSyDT6sTbyN3xQA9bTHQYcyFVXsqAXT54zfE";
-            axios.get(url)
-                .then(response => {
-                    //console.log(url);
-                    //console.log(response.data);    
-                    var info = getplaceName(response.data);
-
-                    document.getElementById("display2").innerHTML = info;
-                    // refresh the hidden input values with new lat lng coordinates
-                })
-                .catch(error => {
-                    console.log(error);
-                    document.getElementById("display2").innerHTML = "Sorry, invalid address. Please try again!";
-                });
-}
-getAddress(1.4122932,103.8290909);
-
 var input = document.getElementById("keyword");
 input.addEventListener("keyup", function(event) {
     if (event.keyCode === 13) {
@@ -171,11 +83,11 @@ input.addEventListener("keyup", function(event) {
             
          }
 
-console.log(navigator.geolocation.getCurrentPosition(showLocation));
+
             
 
 
-var infoWindow;
+var infowindow;
 
 
 
@@ -268,21 +180,29 @@ navigator.geolocation.getCurrentPosition(function(position) {
 });
 
 function locationCode() {
-  console.log(array)
+  
    return array; 
   
 }
 function matchPosition(latitude,longitude,current_location){
   
-  if (latitude.toFixed(1)==current_location[0].toFixed(1) && longitude.toFixed(1)==current_location[1].toFixed(1)){
-    alert("YAY you have arrived succesfully!point redeemd!");
+  if (latitude.toFixed(2)==current_location[0].toFixed(2) && longitude.toFixed(2)==current_location[1].toFixed(2)){
+    //alert("YAY you have arrived succesfully!point redeemd!");
     var email = localStorage.getItem('user_email')
     addTravel(email,latitude,longitude);
   }else{
-    alert("you are not here yet! Go Nearer to the Attraction!");
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'You are not here yet! Go Nearer to the Attraction!',
+        footer: '<a href="KaiWei.html">Look at the recommended Attraction?</a>',
+        confirmButtonColor: 'tomato'
+        })
   }
-  console.log(latitude,longitude)
+  
 } 
+
+
 
 
     
@@ -384,7 +304,7 @@ function matchPosition(latitude,longitude,current_location){
                     coords: [1, 1, 1, 20, 18, 20, 18, 1],
                     type: "poly",
                 };
-                console.log(locations_list)
+                
                 
                 for (let i = 0; i < locations_list.length; i++) {
                     var image;
@@ -422,8 +342,7 @@ function matchPosition(latitude,longitude,current_location){
                    
                     
                     var content='<h3 style="color:Tomato">'+ attraction_location.attractionName + '</h3>' +'<div style="font-weight:bold">Attraction type: '+ attraction_location.category+'</div>'+'<br><div>'+attraction_location.desc+'<br></br>' +'</div>' +'<div><button onclick=matchPosition('+lat+','+lng+',locationCode()) id="redeempoint" type="button" style="color:black">I arrived here now!</button></div>'
-                    
-
+                
 
                     infowindow=new google.maps.InfoWindow()
                     google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
@@ -449,24 +368,29 @@ function matchPosition(latitude,longitude,current_location){
 
     
         
-    function addTravel(longitude, latitude){
-        var email = localStorage.getItem('user_email')
+    function addTravel(email, longitude, latitude){
         var currPoints = localStorage.getItem("user_points");
-        
         const url = './db/addTravelHistory.php'
         const data = { email: email, longitude: longitude,
                                     latitude: latitude, 
                         }
-                        
             axios.get(url, {
                     params: data
             })
                 .then(response => {
-                    console.log(response.data)
-                    currPoints += 50;
+                    
+                    currPoints = Number(currPoints)+Number(50);
                     localStorage.setItem("user_points",currPoints);
                     localStorage.setItem("add",true);
-                    alert("Successful!")
+                    Swal.fire({    
+                        icon: 'success',
+                        title: 'Point Added Success!',
+                        text: "Points added successfully !",
+                        confirmButtonColor: 'green'
+                        }).then(function() {
+                            window.location.href = "DongHyun.html";
+                        })
+                    
                 })
                 
 
@@ -475,8 +399,8 @@ function matchPosition(latitude,longitude,current_location){
                     alert('Error: ${error}. <br/> Please Try Again Later')
                     // status = 'There was an error: ' + error.message 
                 })
-    }
-           
+              }
+
     </script>
         
             
@@ -484,12 +408,13 @@ function matchPosition(latitude,longitude,current_location){
 
         <!-- Footer -->
     <!-- <script src="js/attraction.js"></script> -->
-    <script src="js/attractions_donghyun.js"></script>
+   
+
     <script src="js/navbar.js"></script>
     <script src="js/signOutPopUp.js"></script>
-    <script src="js/rewardsDeductPoints.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/sessions.js"></script>
+    <script src="js/rewardsAddPoints.js"></script>
         
 </body>
 </html>

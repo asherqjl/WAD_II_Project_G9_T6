@@ -29,11 +29,8 @@ window.onload = function() {
     // (see onupgradeneeded below)
     let request = window.indexedDB.open('smilingAcrossLocal', 2);
     // onerror handler signifies that the database didn't open successfully
-    request.onerror = function() {
-        console.log('Database failed to open');
-    };
+    
     request.onsuccess = function() {
-        console.log('Database opened successfully');
         db = request.result;
         displayData();
         
@@ -137,8 +134,6 @@ window.onload = function() {
                     })
                            
                 userName.value = '';
-                // update the display of data to show the newly added item, by running displayData() again.
-                displayData();
             };
             transaction.onerror = function() {
                 console.log('Transaction not opened due to error');
@@ -150,7 +145,6 @@ window.onload = function() {
                 text: 'Invalid Password !',
                 confirmButtonColor: 'tomato'
                 })
-            // alert("Invalid Password!")
         }
     };
     // Admin Account
@@ -203,7 +197,6 @@ window.onload = function() {
             } 
             console.log(userNameFound, userEmailFound);
             if(userNameFound!==0 || userEmailFound!==0){
-                //errMsg += 'Username / Email already exist !';
                 localStorage.setItem('checking', false);
                 localStorage.setItem('errMsg', 'Username / Email already exist !');
             } else {
@@ -263,6 +256,7 @@ window.onload = function() {
     
     // Checking
     // to console.log data that's been added into the database see what is inside the database
+    // creating Admin account
     function displayData() {
         createAdmin_Once();
 
@@ -274,18 +268,10 @@ window.onload = function() {
 
             // If there is still another data item to iterate through, keep running this code
             if(cursor) {
-                console.log(cursor.value)
-
-                
                 cursor.continue();
-            } else {
-                // if there are no more cursor items to iterate through, say so
-                console.log('Cursor is empty / Table is empty')
-            }
+            } 
         };
-        // checkEmailUserName('Admin','sunjun@admin.com')
         //objectStore.clear();
 
     }
 }
-// }

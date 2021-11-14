@@ -117,59 +117,6 @@ class PostDAO {
         return $reward_history;
     }
 
-    public function update($email, $points) {
-
-        // STEP 1
-        $connMgr = new ConnectionManager();
-        $conn = $connMgr->connect();
-
-        // STEP 2
-        $sql = "UPDATE
-                    acc
-                SET
-                    points+= :points
-                WHERE 
-                    acc_email = :email";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-        $stmt->bindParam(':points', $points, PDO::PARAM_INT);
-
-
-        //STEP 3
-        $status = $stmt->execute();
-        
-        // STEP 4
-        $stmt = null;
-        $conn = null;
-
-        // STEP 5
-        return $status;
-    }
-
-    // public function delete($id) {
-    //     // STEP 1
-    //     $connMgr = new ConnectionManager();
-    //     $conn = $connMgr->connect();
-
-    //     // STEP 2
-    //     $sql = "DELETE FROM
-    //                 post
-    //             WHERE 
-    //                 id = :id";
-    //     $stmt = $conn->prepare($sql);
-    //     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-
-    //     //STEP 3
-    //     $status = $stmt->execute();
-        
-    //     // STEP 4
-    //     $stmt = null;
-    //     $conn = null;
-
-    //     // STEP 5
-    //     return $status;
-    // }
-
     public function add($email, $longitude, $latitude) {
         // STEP 1   
         $connMgr = new ConnectionManager();
@@ -246,70 +193,8 @@ class PostDAO {
         return $status;
     }
 
-    public function register($email, $password) {
-        // STEP 1
-        $connMgr = new ConnectionManager();
-        $conn = $connMgr->connect();
-
-        // STEP 2
-        $sql = "INSERT INTO acc
-                    (
-                        acc_email,
-                        acc_password,
-                        points
-                    )
-                VALUES
-                    (
-                        :acc_email,
-                        :acc_password,
-                        0
-                    )";            
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':acc_email', $email, PDO::PARAM_STR);
-        $stmt->bindParam(':acc_password', $password, PDO::PARAM_STR);
-
-        //STEP 3
-        $status = $stmt->execute();
-        
-        // STEP 4
-        $stmt = null;
-        $conn = null;
-
-        // STEP 5
-        return $status;
-    }
-    public function login($email, $password) {
-        // STEP 1
-        $connMgr = new ConnectionManager();
-        $conn = $connMgr->connect();
-
-        // STEP 2
-        $sql = "SELECT * 
-                FROM acc 
-                WHERE acc_email = :acc_email 
-                AND acc_password = :acc_password";
-                    
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':acc_email',  $email, PDO::PARAM_STR);
-        $stmt->bindParam(':acc_password', $password, PDO::PARAM_STR);
-        
-        //STEP 3
-        // if( $stmt->execute() ) {
-        $status = False;
-        
-        $stmt->execute();
-        // $stmt->setFetchMode(PDO::FETCH_ASSOC);
-
-        if ($stmt->rowCount() > 0){
-            $status = True;
-        }
-        // STEP 4
-        $stmt = null;
-        $conn = null;
-
-        // STEP 5
-        return $status;
-    }
+    
+    
     public function getPoints($id) {
         // STEP 1
         $connMgr = new ConnectionManager();
