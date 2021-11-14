@@ -39,7 +39,8 @@
         <div class="input-group mb-3 my-3">
             
                 <input id="keyword" type="form" class="form-control me-2" placeholder="Search attraction by any keword!" value="Museum" aria-label="Search" >
-                <button onclick="initMap()" id="myBtn" class="btn btn-danger" type="submit">Search</button>
+                <button onclick="initMap()" id="myBtn" style="background-color: #FF9900" type="submit"><i class="fas fa-search" style="color:white"></i></button>
+                
             
         </div>
 
@@ -190,14 +191,16 @@ function matchPosition(latitude,longitude,current_location){
     //alert("YAY you have arrived succesfully!point redeemd!");
     var email = localStorage.getItem('user_email')
     addTravel(email,latitude,longitude);
+    
   }else{
     Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: 'You are not here yet! Go Nearer to the Attraction!',
-        footer: '<a href="KaiWei.html">Look at the recommended Attraction?</a>',
+        footer: '<a href="Attraction.html">Look at the recommended Attraction?</a>',
         confirmButtonColor: 'tomato'
         })
+
   }
   
 } 

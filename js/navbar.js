@@ -7,7 +7,7 @@ app.component('include-navbar',{
     template: ` 
         <div><nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <a href="home.html" class="navbar-brand">SmilingAcrossLocal<span style="font-size: 11px;"> SG</span></a> 
+                <a href="index.html" class="navbar-brand">SmilingAcrossLocal<span style="font-size: 11px;"> SG</span></a> 
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
                                    data-bs-target="#navbarNav" aria-controls="navbarNav"
                                    aria-expanded="false" aria-label="Toggle navigation">
@@ -33,13 +33,13 @@ app.component('include-navbar',{
                             <a class="nav-link" href="Maps.html">MAPS</a>
                         </li>
                         <li id="thTab" class="nav-item">
-                            <a class="nav-link" href="zenyu.php">TRAVEL HISTORY</a>
+                            <a class="nav-link" href="travelHistory.html">TRAVEL HISTORY</a>
                         </li>
                         <li id="rewardTab" class="nav-item">
                             <a class="nav-link" href="Rewards.html">REWARDS</a>
                         </li>
                         <li id="rhTab" class="nav-item">
-                            <a class="nav-link" href="rewardHist.html">REWARD HISTORY</a>
+                            <a class="nav-link" href="rewardHistory.html">REWARD HISTORY</a>
                         </li>
                         <li id="signout" class="nav-item active"> 
                             <a class="nav-link" data-toggle="modal" aria-current="page" onclick="signout();" style="cursor: pointer;">Sign Out</a>
