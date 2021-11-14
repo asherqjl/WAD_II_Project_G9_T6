@@ -30,7 +30,7 @@ app.component('include-navbar',{
                             <a class="nav-link" href="KaiWei.html">ATTRACTIONS</a>
                         </li>
                         <li id="mapTab" class="nav-item">
-                            <a class="nav-link" href="DongHyun.html">MAPS</a>
+                            <a class="nav-link" href="Maps.html">MAPS</a>
                         </li>
                         <li id="thTab" class="nav-item">
                             <a class="nav-link" href="zenyu.php">TRAVEL HISTORY</a>
