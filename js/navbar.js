@@ -7,7 +7,7 @@ app.component('include-navbar',{
     template: ` 
         <div><nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <a href="home.html" class="navbar-brand">SmilingAcrossLocal<span style="font-size: 11px;"> SG</span></a> 
+                <a href="index.html" class="navbar-brand">SmilingAcrossLocal<span style="font-size: 11px;"> SG</span></a> 
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
                                    data-bs-target="#navbarNav" aria-controls="navbarNav"
                                    aria-expanded="false" aria-label="Toggle navigation">
