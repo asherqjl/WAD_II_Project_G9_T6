@@ -64,7 +64,7 @@ window.onload = function() {
                                 confirmButtonColor: 'green'
                                 }).then(function() {
                                     localStorage.setItem('user_name', newUserName.value);
-                                    window.location.href = "home.html";
+                                    window.location.href = "index.html";
                                 })
                         };
                     }  

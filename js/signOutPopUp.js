@@ -13,7 +13,7 @@ function signout(){
                 localStorage.removeItem('user_name');
                 localStorage.removeItem('user_email');
                 localStorage.removeItem('user_points');
-                window.location.href = "home.html";
+                window.location.href = "index.html";
             }
         
         })
