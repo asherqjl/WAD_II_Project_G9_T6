@@ -39,7 +39,7 @@ app.component('include-navbar',{
                             <a class="nav-link" href="Rewards.html">REWARDS</a>
                         </li>
                         <li id="rhTab" class="nav-item">
-                            <a class="nav-link" href="rewardHist.html">REWARD HISTORY</a>
+                            <a class="nav-link" href="rewardHistory.html">REWARD HISTORY</a>
                         </li>
                         <li id="signout" class="nav-item active"> 
                             <a class="nav-link" data-toggle="modal" aria-current="page" onclick="signout();" style="cursor: pointer;">Sign Out</a>
