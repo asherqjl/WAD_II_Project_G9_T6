@@ -5,7 +5,7 @@ const app = Vue.createApp({
 // DO NOT EDIT - start
 app.component('include-navbar',{
     template: ` 
-        <div><nav class="navbar navbar-expand-md">
+        <div><nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <a href="home.html" class="navbar-brand">SmilingAcrossLocal<span style="font-size: 11px;"> SG</span></a> 
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
@@ -27,7 +27,7 @@ app.component('include-navbar',{
                             <a class="nav-link" href="home.html">HOME</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="KaiWei.html">ATTRACTIONS</a>
+                            <a class="nav-link" href="Attraction.html">ATTRACTIONS</a>
                         </li>
                         <li id="mapTab" class="nav-item">
                             <a class="nav-link" href="Maps.html">MAPS</a>
