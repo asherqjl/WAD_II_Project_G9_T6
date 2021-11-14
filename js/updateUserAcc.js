@@ -21,6 +21,7 @@ window.onload = function() {
 
     request.onsuccess = function() {
         db = request.result;
+        displayData();
     };
     
     // Update
@@ -71,5 +72,24 @@ window.onload = function() {
                 } 
             }
         }
-    };   
+    }; 
+    function displayData() {
+        let objectStore = db.transaction('user_acc').objectStore('user_acc');
+
+        objectStore.openCursor().onsuccess = function(e) {
+            // Get a reference to the cursor
+            let cursor = e.target.result;
+
+            // If there is still another data item to iterate through, keep running this code
+            if(cursor) {
+                // console.log(cursor.value)
+                if (cursor.value.user_name == userNameLoggedIn) {
+                    newUserName.value = cursor.value.user_name;
+                    newUserEmail.value = cursor.value.email;
+                }
+                
+                cursor.continue();
+            } 
+        };
+    }; 
 }
