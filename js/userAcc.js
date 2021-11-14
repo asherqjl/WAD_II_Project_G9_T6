@@ -35,7 +35,7 @@ window.onload = function() {
     request.onsuccess = function() {
         console.log('Database opened successfully');
         db = request.result;
-        //displayData();
+        displayData();
         
     }
     
@@ -100,7 +100,7 @@ window.onload = function() {
             let newItem = { user_name: userName.value, 
                             email: userEmail.value, 
                             password: cfmPwd.value, 
-                            points:0 };
+                            points: 100 };
                 
             // open a read/write db transaction, ready for registration
             let transaction = db.transaction(['user_acc'], 'readwrite');
@@ -124,7 +124,7 @@ window.onload = function() {
                 // alert('Registration Successful '+usernamee+' !');
                 // Session
                 localStorage.setItem('user_name', userName.value);
-                localStorage.setItem('user_points', 0);
+                localStorage.setItem('user_points', 100);
                 localStorage.setItem('user_email', userEmail.value);
                 localStorage.setItem("redeemed",false);
                 Swal.fire({    
@@ -172,12 +172,12 @@ window.onload = function() {
                 
                 cursor.continue();
             }else {
-                console.log('');
+                if(adminCount==0){
+                    objectStore.add(newItem);
+                    return
+                };
             }
-            if(adminCount==0){
-                objectStore.add(newItem);
-                return
-            }
+            
         }
     }
     
