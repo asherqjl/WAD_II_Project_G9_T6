@@ -1,45 +1,4 @@
 
-// function myFunction() {
-//   var dots = document.getElementById("dots");
-//   var moreText = document.getElementById("more");
-//   var btnText = document.getElementById("myBtn");
-
-//   if (dots.style.display === "none") {
-//     dots.style.display = "inline";
-//     btnText.innerHTML = "Show More"; 
-//     moreText.style.display = "none";
-//   } else {
-//     dots.style.display = "none";
-//     btnText.innerHTML = "Show Less"; 
-//     moreText.style.display = "inline";
-//   }
-// }
-
-
-function AutoCloseTimer(){
-  let timerInterval
-  Swal.fire({
-    title: 'Auto close alert!',
-    html: 'I will close in <b></b> milliseconds.',
-    timer: 2000,
-    timerProgressBar: true,
-    didOpen: () => {
-      Swal.showLoading()
-      const b = Swal.getHtmlContainer().querySelector('b')
-      timerInterval = setInterval(() => {
-        b.textContent = Swal.getTimerLeft()
-      }, 100)
-    },
-    willClose: () => {
-      clearInterval(timerInterval)
-    }
-  }).then((result) => {
-    /* Read more about handling dismissals below */
-    if (result.dismiss === Swal.DismissReason.timer) {
-      console.log('I was closed by the timer')
-    }
-  })
-}
 
 const reward = Vue.createApp({
   data() {
@@ -63,10 +22,10 @@ const reward = Vue.createApp({
     var options = {
       method: 'GET',
       url: 'https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list',
-      params: {country: 'Singapore', lang: 'en_sg', currentpage: '0', pagesize: '30'},
+      params: {country: 'singapore', lang: 'en_sg', currentpage: '0', pagesize: '30'},
       headers: {
         'x-rapidapi-host': 'apidojo-hm-hennes-mauritz-v1.p.rapidapi.com',
-        'x-rapidapi-key': '541a6daee0msh077da98de6068d8p1892e8jsn3a84fc4ece4c'
+        'x-rapidapi-key': 'b4b2a34742msh33d120726d73126p146316jsn5d5064a3141b'
       }
     };
     
