@@ -187,7 +187,13 @@ function matchPosition(latitude,longitude,current_location){
     var email = localStorage.getItem('user_email')
     addTravel(email,latitude,longitude);
   }else{
-    alert("you are not here yet! Go Nearer to the Attraction!");
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'You are not here yet! Go Nearer to the Attraction!',
+        footer: '<a href="KaiWei.html">Look at the recommended Attraction?</a>',
+        confirmButtonColor: 'tomato'
+        })
   }
   console.log(latitude,longitude)
 } 
