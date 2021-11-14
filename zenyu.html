@@ -22,9 +22,15 @@
             <include-navbar></include-navbar>
         </div>
         >
-    
+        
         <div id="app3">
-
+            <div class="searchbar">
+                <div class="row g-2 my-2">
+                    <div class="col-md-12 col-sm-12">
+                        
+        
+                   
+               
 
             <!-- <div class="d-flex justify-content-center "> -->
                 <!-- <table class="table bg-white w-75"> -->
