@@ -36,7 +36,7 @@ app.component('include-navbar',{
                             <a class="nav-link" href="zenyu.php">TRAVEL HISTORY</a>
                         </li>
                         <li id="rewardTab" class="nav-item">
-                            <a class="nav-link" href="FangTing.html">REWARDS</a>
+                            <a class="nav-link" href="Rewards.html">REWARDS</a>
                         </li>
                         <li id="rhTab" class="nav-item">
                             <a class="nav-link" href="rewardHist.html">REWARD HISTORY</a>
