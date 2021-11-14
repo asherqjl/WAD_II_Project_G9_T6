@@ -33,7 +33,7 @@ function deductPoints(){
                 const request = cursor.update(updateData);
 
                 request.onsuccess = function() {
-                    window.location.href = "fangTing.html"; 
+                    window.location.href = "Rewards.html"; 
                     localStorage.setItem("redeemed",false);
                 };
 

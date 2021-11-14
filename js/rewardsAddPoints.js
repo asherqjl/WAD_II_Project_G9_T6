@@ -35,7 +35,7 @@ function addPoints(){
 
                 request.onsuccess = function() {
                     // console.log("Redeem Successful");
-                    window.location.href = "DongHyun.html"; 
+                    window.location.href = "Maps.html"; 
                     localStorage.setItem("add",false);
                 };
 
