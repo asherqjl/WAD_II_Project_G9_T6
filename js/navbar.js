@@ -24,7 +24,7 @@ app.component('include-navbar',{
                             <a class="nav-link" aria-current="page" href="login-signup.html">LOGIN/SIGNUP</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="home.html">HOME</a>
+                            <a class="nav-link" href="index.html">HOME</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="Attraction.html">ATTRACTIONS</a>
