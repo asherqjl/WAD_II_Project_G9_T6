@@ -53,10 +53,7 @@
         <div id="legend"><h6>Legend</h6></div>
         <div id="boolredeem"></div>
         
-        <div class="footer">
-            <p class="small text-muted">Made with ❤️ by IS216 Team 6 <br>
-            © SmilingAcrossLocal Copyrights. All rights reserved.</p>
-        </div>
+        
 
     <!--Load the API from the specified URL
     * The async attribute allows the browser to render the page while the API loads
@@ -187,7 +184,7 @@ function locationCode() {
 }
 function matchPosition(latitude,longitude,current_location){
   
-  if (latitude.toFixed(2)==current_location[0].toFixed(2) && longitude.toFixed(2)==current_location[1].toFixed(2)){
+  if (latitude.toFixed(1)==current_location[0].toFixed(1) && longitude.toFixed(1)==current_location[1].toFixed(1)){
     //alert("YAY you have arrived succesfully!point redeemd!");
     var email = localStorage.getItem('user_email')
     addTravel(email,latitude,longitude);
@@ -391,7 +388,7 @@ function matchPosition(latitude,longitude,current_location){
                         text: "Points added successfully !",
                         confirmButtonColor: 'green'
                         }).then(function() {
-                            window.location.href = "DongHyun.html";
+                            window.location.href = "Maps.html";
                         })
                     
                 })
@@ -411,8 +408,12 @@ function matchPosition(latitude,longitude,current_location){
 
         <!-- Footer -->
     <!-- <script src="js/attraction.js"></script> -->
-   
-
+</div>  
+</div>
+    <div class="footer">
+        <p class="small text-muted">Made with ❤ by IS216 Team 6 <br>
+        © SmilingAcrossLocal Copyrights. All rights reserved.</p>
+    </div>
     <script src="js/navbar.js"></script>
     <script src="js/signOutPopUp.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
