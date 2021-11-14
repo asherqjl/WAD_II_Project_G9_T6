@@ -77,10 +77,18 @@ window.onload = function() {
 
     // Define the register() function 
     function register(e) {
+        checkEmailUserName(userName.value,userEmail.value);
         // prevent default - we don't want the form to submit in the conventional way
         e.preventDefault();
         // validate the forms first before allowing registration
-        if ( (cfmPwd.value!=='' || pwd1.value!=='') && pwd1.value === cfmPwd.value ){
+        if (localStorage.getItem('checking')=='false'){
+            alert(localStorage.getItem('errMsg')); 
+            userName.value = '';
+            userEmail.value = '';
+            cfmPwd.value = '';
+            pwd1.value = ''
+        }
+        else if ( (cfmPwd.value!=='' || pwd1.value!=='') && pwd1.value === cfmPwd.value ){
             // grab the values entered into the form fields and store them in an object ready for being inserted into the DB
             let newItem = { user_name: userName.value, 
                             email: userEmail.value, 
@@ -156,7 +164,6 @@ window.onload = function() {
     function checkEmailUserName(username,email){
         var userNameFound = 0;
         var userEmailFound = 0;
-        var errMsg = '';
         let transaction = db.transaction('user_acc');
         let objectStore = transaction.objectStore('user_acc');
         objectStore.openCursor().onsuccess = function(e) {
@@ -176,9 +183,10 @@ window.onload = function() {
 
             if(userNameFound!==0 || userEmailFound!==0){
                 //errMsg += 'Username / Email already exist !';
-                return false;
+                localStorage.setItem('checking', false);
+                localStorage.setItem('errMsg', 'Username / Email already exist !');
             } else {
-                return true;
+                localStorage.setItem('checking', true);
             }
             
         }
@@ -210,7 +218,7 @@ window.onload = function() {
                     localStorage.setItem('user_email', currentEmail);
                     
                     window.location.href="home.html";                
-                    
+                    return
                 } 
                 
                 cursor.continue();
@@ -224,6 +232,7 @@ window.onload = function() {
     // to console.log data that's been added into the database see what is inside the database
     function displayData() {
         createAdmin_Once();
+
         let objectStore = db.transaction(['user_acc'],'readwrite').objectStore('user_acc');
 
         objectStore.openCursor().onsuccess = function(e) {
@@ -241,6 +250,7 @@ window.onload = function() {
                 console.log('Cursor is empty / Table is empty')
             }
         };
+        // checkEmailUserName('Admin','sunjun@admin.com')
         //objectStore.clear();
 
     }
