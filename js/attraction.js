@@ -218,20 +218,37 @@ const attraction = Vue.createApp({
       }
   },
   sweetAlert(name,rating,contact, website,bizTime,address, photo){
-    Swal.fire({
+    if(website =="Attraction.html"){
+      Swal.fire({
       
-      title: '<span style="color: #1abc9c">'+name + '</span>',
-      html: '<strong> Rating: </strong>' + rating +'<br><strong> Business Hour: </strong>'+ bizTime +'<br><strong>Address: </strong>'+ address + '<br><strong>Contact: </strong>'+ contact ,
-      footer: '<a href=' +website+ '>Visit Official Website</a> ' ,
-      imageUrl: photo,
-      imageWidth: 400,
-      imageHeight: 200,
-      imageAlt: 'Custom image',
-      width: '30rem',
-      showCloseButton: true,
-      focusConfirm: true,
-      confirmButtonText: 'Back!'
-    })
+        title: '<span style="color: #1abc9c">'+name + '</span>',
+        html: '<strong> Rating: </strong>' + rating +'<br><strong> Business Hour: </strong>'+ bizTime +'<br><strong>Address: </strong>'+ address + '<br><strong>Contact: </strong>'+ contact ,
+        imageUrl: photo,
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: 'Custom image',
+        width: '30rem',
+        showCloseButton: true,
+        focusConfirm: true,
+        confirmButtonText: 'Back!'
+      })
+    }else{
+
+      Swal.fire({
+        
+        title: '<span style="color: #1abc9c">'+name + '</span>',
+        html: '<strong> Rating: </strong>' + rating +'<br><strong> Business Hour: </strong>'+ bizTime +'<br><strong>Address: </strong>'+ address + '<br><strong>Contact: </strong>'+ contact ,
+        footer: '<a href=' +website+ '>Visit Official Website</a> ' ,
+        imageUrl: photo,
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: 'Custom image',
+        width: '30rem',
+        showCloseButton: true,
+        focusConfirm: true,
+        confirmButtonText: 'Back!'
+      })
+    }
   }
   },
   computed :{
