@@ -114,7 +114,7 @@ window.onload = function() {
             request.onsuccess = function() {
                 // Clear the form, ready for adding the next entry
                 
-                userEmail.value = '';
+               
                 cfmPwd.value='';
                 pwd1.value='';
             };

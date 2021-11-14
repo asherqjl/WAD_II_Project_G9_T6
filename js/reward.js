@@ -355,6 +355,7 @@ const reward = Vue.createApp({
     addReward(item_name, img_url, points_used,){
       
       var email = localStorage.getItem('user_email')
+      console.log(email)
       const url = './db/addRewardHistory.php'
       const data = { email: email, item_name: item_name,
                       img_url: img_url, points_used: points_used
