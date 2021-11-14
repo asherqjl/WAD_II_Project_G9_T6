@@ -3,44 +3,6 @@
 require_once 'common.php';
 
 class PostDAO {
-    public function getUserInfo($id) {
-        //points, username, 
-        // STEP 1
-        $connMgr = new ConnectionManager();
-        $conn = $connMgr->connect();
-
-        // STEP 2
-        $sql = "SELECT  *
-                FROM    acc
-                WHERE   id = :userID"; 
-        $stmt = $conn->prepare($sql);
-
-        // STEP 3
-        $stmt = $conn->prepare($sql);
-
-        $stmt->bindParam(':userID', $id, PDO::PARAM_STR);
-        $stmt->setFetchMode(PDO::FETCH_ASSOC);
-
-        // STEP 4
-        $account = []; // Indexed Array of Post objects
-        while( $row = $stmt->fetch() ) {
-            $account[] =
-                new Account(
-                    $row['id'],
-                    $row['acc_email'],
-                    $row['acc_password'],
-                    $row['points']
-                    );
-        }
-
-        // STEP 5
-        $stmt = null;
-        $conn = null;
-
-        // STEP 6
-        return $account;
-    }
-
     public function getAllTravel($email) {
         // STEP 1
         $connMgr = new ConnectionManager();
@@ -51,7 +13,7 @@ class PostDAO {
                     longitude, latitude, time_visited
                 FROM travel_history
                 WHERE
-                email= :email"; // SELECT * FROM post; // This will also work
+                email= :email"; 
         $stmt = $conn->prepare($sql);
 
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
@@ -90,7 +52,7 @@ class PostDAO {
                 FROM reward_history 
                 WHERE
                     email=:email
-                "; // SELECT * FROM post; // This will also work
+                "; 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         // STEP 3
@@ -192,41 +154,6 @@ class PostDAO {
         // STEP 5
         return $status;
     }
-
-    
-    
-    public function getPoints($id) {
-        // STEP 1
-        $connMgr = new ConnectionManager();
-        $conn = $connMgr->connect();
-
-        // STEP 2
-        $sql = "SELECT points
-                FROM acc
-                WHERE id = :id";
-                    
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id',  $id, PDO::PARAM_INT);
-        
-        //STEP 3
-        // if( $stmt->execute() ) {
-        $status = False;
-        
-        $stmt->execute();
-        // $stmt->setFetchMode(PDO::FETCH_ASSOC);
-
-        if ($stmt->rowCount() > 0){
-            $status = True;
-        }
-        // STEP 4
-        $stmt = null;
-        $conn = null;
-
-        // STEP 5
-        return $status;
-
-    
-}
 }
 
 
