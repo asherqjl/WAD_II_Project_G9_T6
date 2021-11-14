@@ -40,12 +40,12 @@ let db;
                     const request = cursor.update(updateData);
 
                     request.onerror = function() {
-                        alert("Update Failed");
+                        console.log("Update Failed");
                     };
 
                     request.onsuccess = function() {
                         // console.log("Redeem Successful");
-                        window.location.href = "donghyun_trial.html"; 
+                        window.location.href = "DongHyun.html"; 
                         localStorage.setItem("add",false);
                     };
 

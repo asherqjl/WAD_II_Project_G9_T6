@@ -38,7 +38,7 @@
            
         <div class="input-group mb-3 my-3">
             
-                <input id="keyword" type="form" class="form-control me-2" placeholder="Search attraction by any keword!" value="beach" aria-label="Search" >
+                <input id="keyword" type="form" class="form-control me-2" placeholder="Search attraction by any keword!" value="Museum" aria-label="Search" >
                 <button onclick="initMap()" id="myBtn" class="btn btn-danger" type="submit">Search</button>
             
         </div>
@@ -183,7 +183,7 @@ function locationCode() {
 function matchPosition(latitude,longitude,current_location){
   
   if (latitude.toFixed(1)==current_location[0].toFixed(1) && longitude.toFixed(1)==current_location[1].toFixed(1)){
-    alert("YAY you have arrived succesfully!point redeemd!");
+    //alert("YAY you have arrived succesfully!point redeemd!");
     var email = localStorage.getItem('user_email')
     addTravel(email,latitude,longitude);
   }else{
@@ -364,7 +364,6 @@ function matchPosition(latitude,longitude,current_location){
         const data = { email: email, longitude: longitude,
                                     latitude: latitude, 
                         }
-                        
             axios.get(url, {
                     params: data
             })
@@ -373,8 +372,15 @@ function matchPosition(latitude,longitude,current_location){
                     currPoints = Number(currPoints)+Number(50);
                     localStorage.setItem("user_points",currPoints);
                     localStorage.setItem("add",true);
-                    alert("Successful!")
-                    window.location.href="DongHyun.html"
+                    Swal.fire({    
+                        icon: 'success',
+                        title: 'Point Added Success!',
+                        text: "Points added successfully !",
+                        confirmButtonColor: 'green'
+                        }).then(function() {
+                            window.location.href = "DongHyun.html";
+                        })
+                    
                 })
                 
 
@@ -385,16 +391,6 @@ function matchPosition(latitude,longitude,current_location){
                 })
               }
 
-    
-
-   
-        
-    
-    
-   
-        
-                        
-            
     </script>
         
             
