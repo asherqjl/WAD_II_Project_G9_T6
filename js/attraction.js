@@ -162,7 +162,7 @@ const attraction = Vue.createApp({
         this.displayField =keyword
         this.displaySeeMore =""
         this.displayPlaceholder = "Cannot find! Please enter another Attraction Name!"
-        this.errorMsg="<span style='padding-top: 15px; font-size: small; color: red;'>No record found! Take a look at our recommended attractions? <br><br><br> <button type='button' class='btn btn-outline-primary btn-sm'>Yes!</button></span>"
+        this.errorMsg="<span style='padding-top: 15px; font-size: small; color: red;'>No record found! Take a look at our recommended attractions? &nbsp;&nbsp;&nbsp;<button type='button' class='btn btn-danger btn-sm'>Yes!</button></span>"
       }
       )
   }, 
