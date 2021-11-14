@@ -212,12 +212,12 @@ const app4 = Vue.createApp({
                         }
                     }
                     listing_table.innerHTML+=`</tbody>`;
-                    console.log(listing_table)
+                    // console.log(listing_table)
                     page_span.innerHTML = page
-                }else{
+                }
+                if(page==0){
                     btn_prev.style.visibility = "hidden";
                     btn_next.style.visibility = "hidden"
-
                 }
 
                 if (page == 1) {
