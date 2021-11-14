@@ -1,4 +1,4 @@
-<html>
+    <html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
         <script src="https://unpkg.com/vue@next"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <title>Smiling Across Local SG</title>      
-    
+
     </head>
 
     <body>
@@ -26,24 +26,14 @@
             <div id="app3">
                 <div class="searchbar">
                     <div class="row g-2 my-2">
-                        <div class="col-md-12 col-sm-12">
-                            
-            
-                    
-                
-
-                <!-- <div class="d-flex justify-content-center "> -->
-                    <!-- <table class="table bg-white w-75"> -->
-                        <!-- <tr v-for="travel in travel_history"> -->
-                            <!-- <td><h2>{{travel.location_name}}</h2><br/>{{travel.category}}</td> -->
-                            <!-- <td>{{travel.time_visited}}</td> -->
-                        <!-- </tr> -->
-                    <!-- </table> -->
-                <!-- </div> -->
-            
-            <div id="map2" class="map-responsive"></div>
-            <div id="legend"><h6>Legend</h6></div>
-        
+                        <div class="col-md-12 col-sm-12">   
+                            <div id="map2" class="map-responsive"></div>
+                            <div id="legend"><h6>Legend</h6></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </body>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT6sTbyN3xQA9bTHQYcyFVXsqAXT54zfE&callback=initMap"
@@ -70,28 +60,28 @@
 
             setMarkers(map);
             const icons = {
-    
+
     VistedAttraction: {
-      name: "Visited Attraction",
-      icon: "https://img.icons8.com/external-wanicon-lineal-color-wanicon/64/000000/external-check-user-interface-wanicon-lineal-color-wanicon.png",
+        name: "Visited Attraction",
+        icon: "https://img.icons8.com/external-wanicon-lineal-color-wanicon/64/000000/external-check-user-interface-wanicon-lineal-color-wanicon.png",
     }
-  };
+    };
 
-var legend = document.getElementById("legend");
+    var legend = document.getElementById("legend");
 
-   for (var key in icons) {
-      const type = icons[key];
-      const name = type.name;
-      const icon = type.icon;
-      const div = document.createElement("div");
+    for (var key in icons) {
+        const type = icons[key];
+        const name = type.name;
+        const icon = type.icon;
+        const div = document.createElement("div");
 
     div.innerHTML = '<img src="' + icon + '" width=23" height="23"> ' + name;
     legend.appendChild(div);
-  }
+    }
 
-  map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById('legend')); 
+    map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById('legend')); 
             
-  
+
         
             
 
@@ -116,19 +106,7 @@ var legend = document.getElementById("legend");
                     type: "poly",
                 };
                 var travel_history=''
-                    // POST request
-                    /* axios.post(url, data
-                    )
-                    .then(response => {
-                        console.log(response.data)
-                        this.showStatus = true
-                        this.status = response.data
-                    })
-                    .catch(error => {
-                        this.showStatus = true
-                        this.status = 'There was an error: ' + error.message 
-                    })  */
-                    // GET request
+
                     var email = localStorage.getItem('user_email')
                     url="./db/getTravelHistory.php"
                     const data= {email: email}
@@ -175,7 +153,7 @@ var legend = document.getElementById("legend");
                 }
 
                 
-               
-    
+                
+
     </script>
 </html>
