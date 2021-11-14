@@ -182,7 +182,7 @@ function locationCode() {
 }
 function matchPosition(latitude,longitude,current_location){
   
-  if (latitude.toFixed(1)==current_location[0].toFixed(1) && longitude.toFixed(1)==current_location[1].toFixed(1)){
+  if (latitude.toFixed(2)==current_location[0].toFixed(2) && longitude.toFixed(2)==current_location[1].toFixed(2)){
     //alert("YAY you have arrived succesfully!point redeemd!");
     var email = localStorage.getItem('user_email')
     addTravel(email,latitude,longitude);
