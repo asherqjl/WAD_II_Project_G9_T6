@@ -278,7 +278,7 @@ const reward = Vue.createApp({
               'success',
               
             )
-            window.location.href = "FangTing.html"
+            window.location.href = "Rewards.html"
           }else{
             Swal.fire({
               icon: 'error',
