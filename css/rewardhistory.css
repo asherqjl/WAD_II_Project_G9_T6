@@ -24,7 +24,8 @@ header {
 .titledesc{
     border: none;
     background-color:rgba(83, 83, 83, 0.555);
-    padding:40px
+    padding:25px
+    
   }
   h1 {
     text-transform: uppercase;
