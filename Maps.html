@@ -29,9 +29,16 @@
     <div id="navdiv">
         <include-navbar></include-navbar>
     </div>
-
+    <div class="searchbar" style="padding-top: 30px; ">
+        <div class="row">
+            <div class="col-md-12 col-sm-12" style="padding-top: 10px;">
+                <h2 class="d-none d-sm-block" style="margin-bottom:0px !important;">Maps</h2>
+            </div>
+        </div>
+    </div>
+        
     <div class="searchbar">
-        <div class="row g-2 my-2">
+        <div class="row g-2 my-2"style="margin-top:0px !important;">
             <div class="col-md-12 col-sm-12">
                 
 
@@ -60,6 +67,8 @@
     * The key parameter will contain your own API key 
     * The callback parameter executes the initMap() function
     -->
+    
+<!-- calling google map api-->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT6sTbyN3xQA9bTHQYcyFVXsqAXT54zfE&callback=initMap"
         async defer></script>
 
@@ -88,7 +97,7 @@ input.addEventListener("keyup", function(event) {
 var infowindow;
 
 
-
+//initialze google map by using google map api
 function initMap() {
         const map = new google.maps.Map(document.getElementById("map"), {
         
@@ -106,7 +115,7 @@ function initMap() {
   
         
             
-
+//calling function to pin the markers and infowindow
             setMarkers(map);
 
             const icons = {
@@ -138,6 +147,7 @@ function initMap() {
     }
   };
 
+//Creating legend of markers in google map on left side of map  
 var legend = document.getElementById("legend");
 
    for (var key in icons) {
@@ -157,18 +167,13 @@ var legend = document.getElementById("legend");
 
             }
 
-            // Data for the markers consisting of a name, a LatLng and a zIndex for the
-            // order in which these markers should display on top of each other.
+           
     
 
-    //const location_list=[[1.360261, 103.9892345],[1.360261, 103.9892345]];
-    // [{lantitie:1.3,longitute:103}]
-    
-    //console.log(location_list);
+
     
 
-  //  const hardcode_locations=[{latitude:1.360261,longitude:103.9892345},[1.2890235,103.8484538],[1.3016419,103.838816],[1.395499,103.924187],[1.256148,103.821552]
-//,[1.2540421,103.8238084],[1.3600727,103.9897102],[1.360208,103.989759],[1.255179,103.8218107],[1.28218,103.84415],[1.2711456,103.8195228]];
+// retreiving current location (latitude,longitude) by using geolocation api 
 var array = [];
 navigator.geolocation.getCurrentPosition(function(position) {
    var lat = position.coords.latitude;
@@ -208,7 +213,11 @@ function matchPosition(latitude,longitude,current_location){
     
     
     var keyword = document.getElementById("keyword");
-
+//function that retrieves attraction details from api that we found STB website, then it will pin markers of attraction location on google map based on user's keyword. 
+//user can enter keyword about attraction name or description or category, etc. Then either press Enter Key or press the search Button 
+//By default before user key-in keyword, it will use keyword : "Museum"
+//When user reaches near the attraction, they can click the marker of that attraction, then infoWindow will open up
+//infoWindow displays, name, categocry, description and button that user can press to redeem point.
     function setMarkers(map){
       
             var options = {
@@ -367,7 +376,7 @@ function matchPosition(latitude,longitude,current_location){
     
 
     
-        
+//below is function to add details to travelhistory database when user press "i arrived here" button to redeem point 
     function addTravel(email, longitude, latitude){
         var currPoints = localStorage.getItem("user_points");
         const url = './db/addTravelHistory.php'
@@ -409,6 +418,7 @@ function matchPosition(latitude,longitude,current_location){
         <!-- Footer -->
     <!-- <script src="js/attraction.js"></script> -->
 </div>  
+</div>
 </div>
     <div class="footer">
         <p class="small text-muted">Made with ❤ by IS216 Team 6 <br>
