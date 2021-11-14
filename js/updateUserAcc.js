@@ -31,7 +31,7 @@ window.onload = function() {
     updateForm.onsubmit = update;
     
     function update(e){
-        console.log(localStorage.getItem('user_name'));
+        // console.log(localStorage.getItem('user_name'));
         e.preventDefault();
         if(newUserPassword.value!=='' && cfmNewPassword.value!=='' && newUserPassword.value == cfmNewPassword.value){
             let transaction = db.transaction(['user_acc'], 'readwrite');
@@ -59,9 +59,17 @@ window.onload = function() {
                         };
 
                         request3.onsuccess = function() {
-                            alert("Update Successful");
-                            localStorage.setItem('user_name', newUserName.value);
-                            window.location.href="home.html"; 
+                            // alert("Update Successful");
+                            Swal.fire({    
+                                icon: 'success',
+                                title: 'Update Success!',
+                                text:"Update Successful !",
+                                confirmButtonColor: 'green'
+                                }).then(function() {
+                                    localStorage.setItem('user_name', newUserName.value);
+                                    window.location.href = "home.html";
+                                })
+                            
                         };
 
                     }  
@@ -82,7 +90,7 @@ window.onload = function() {
 
             // If there is still another data item to iterate through, keep running this code
             if(cursor) {
-                console.log(cursor.value)
+                // console.log(cursor.value)
                 if (cursor.value.user_name == userNameLoggedIn) {
                     newUserName.value = cursor.value.user_name;
                     newUserEmail.value = cursor.value.email;

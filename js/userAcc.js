@@ -35,7 +35,7 @@ window.onload = function() {
     request.onsuccess = function() {
         console.log('Database opened successfully');
         db = request.result;
-        displayData();
+        //displayData();
         
     }
     
@@ -77,12 +77,19 @@ window.onload = function() {
 
     // Define the register() function 
     function register(e) {
-        checkEmailUserName(userName.value,userEmail.value);
         // prevent default - we don't want the form to submit in the conventional way
         e.preventDefault();
+
+        checkEmailUserName(userName.value,userEmail.value);
+
         // validate the forms first before allowing registration
         if (localStorage.getItem('checking')=='false'){
-            alert(localStorage.getItem('errMsg')); 
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: localStorage.getItem('errMsg'),
+                confirmButtonColor: 'tomato'
+                })
             userName.value = '';
             userEmail.value = '';
             cfmPwd.value = '';
@@ -114,13 +121,21 @@ window.onload = function() {
             // Report on the success of the transaction completing, when everything is done
             transaction.oncomplete = function() {
                 var usernamee = userName.value;
-                alert('Registration Successful '+usernamee+' !');
+                // alert('Registration Successful '+usernamee+' !');
                 // Session
                 localStorage.setItem('user_name', userName.value);
                 localStorage.setItem('user_points', 0);
                 localStorage.setItem('user_email', userEmail.value);
                 localStorage.setItem("redeemed",false);
-                window.location.href="home.html";                
+                Swal.fire({    
+                    icon: 'success',
+                    title: 'Registration Success!',
+                    text:"Wecome "+usernamee+" !",
+                    confirmButtonColor: 'green'
+                    }).then(function() {
+                        window.location.href = "home.html";
+                    })
+                           
                 userName.value = '';
                 // update the display of data to show the newly added item, by running displayData() again.
                 displayData();
@@ -129,7 +144,13 @@ window.onload = function() {
                 console.log('Transaction not opened due to error');
             };
         } else {
-            alert("Invalid Password!")
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Invalid Password !',
+                confirmButtonColor: 'tomato'
+                })
+            // alert("Invalid Password!")
         }
     };
     // Admin Account
@@ -180,7 +201,7 @@ window.onload = function() {
             } else {
                 console.log('')
             } 
-
+            console.log(userNameFound, userEmailFound);
             if(userNameFound!==0 || userEmailFound!==0){
                 //errMsg += 'Username / Email already exist !';
                 localStorage.setItem('checking', false);
@@ -210,20 +231,33 @@ window.onload = function() {
                     var currentUserName = cursor.value.user_name;
                     var currentEmail = cursor.value.email;
                     var currentPoints = cursor.value.points;
-                    alert(currentUserName + ' Login Successful!');
+                    Swal.fire({    
+                        icon: 'success',
+                        title: 'Login Success!',
+                        text:"Wecome "+currentUserName+" !",
+                        confirmButtonColor: 'green'
+                        }).then(function() {
+                            window.location.href = "home.html";
+                        })
                     
                     // Session
                     localStorage.setItem('user_name', currentUserName);
                     localStorage.setItem('user_points', currentPoints);
                     localStorage.setItem('user_email', currentEmail);
                     
-                    window.location.href="home.html";                
+                    // window.location.href="home.html";                
                     return
                 } 
                 
                 cursor.continue();
             } else {
-                alert('Invalid Password/Username/Email details !');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Invalid Password/Username/Email !',
+                    confirmButtonColor: 'tomato'
+                    })
+                // alert('Invalid Password/Username/Email details !');
             }
         }
     };
