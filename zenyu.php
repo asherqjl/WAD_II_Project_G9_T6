@@ -149,7 +149,7 @@ var legend = document.getElementById("legend");
                                 title:"visited attraction"
                             })
 
-                            var content='<div><h2>You visited this attraction on: '+attraction.time_visited+'</h2></div>'
+                            var content='<div><h3>You visited this attraction on : <br>'+attraction.time_visited+'</h3></div>'
                             infowindow=new google.maps.InfoWindow()
                             google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
                             return function() {
