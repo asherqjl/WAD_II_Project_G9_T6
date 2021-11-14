@@ -13,7 +13,7 @@
         <script src="https://unpkg.com/vue@next"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <title>Smiling Across Local SG</title>      
-
+    
     </head>
 
     <body>
@@ -21,28 +21,28 @@
         <div id="navdiv">
             <include-navbar></include-navbar>
         </div>
-        >
         
-        <div id="app3">
-            <div class="searchbar">
-                <div class="row g-2 my-2">
-                    <div class="col-md-12 col-sm-12">
-                        
-        
-                   
-               
+        <div class="main">
+            <div id="app3">
+                <div class="searchbar">
+                    <div class="row g-2 my-2">
+                        <div class="col-md-12 col-sm-12">
+                            
+            
+                    
+                
 
-            <!-- <div class="d-flex justify-content-center "> -->
-                <!-- <table class="table bg-white w-75"> -->
-                    <!-- <tr v-for="travel in travel_history"> -->
-                        <!-- <td><h2>{{travel.location_name}}</h2><br/>{{travel.category}}</td> -->
-                        <!-- <td>{{travel.time_visited}}</td> -->
-                    <!-- </tr> -->
-                <!-- </table> -->
-            <!-- </div> -->
-        
-        <div id="map2" class="map-responsive"></div>
-        <div id="legend"><h6>Legend</h6></div>
+                <!-- <div class="d-flex justify-content-center "> -->
+                    <!-- <table class="table bg-white w-75"> -->
+                        <!-- <tr v-for="travel in travel_history"> -->
+                            <!-- <td><h2>{{travel.location_name}}</h2><br/>{{travel.category}}</td> -->
+                            <!-- <td>{{travel.time_visited}}</td> -->
+                        <!-- </tr> -->
+                    <!-- </table> -->
+                <!-- </div> -->
+            
+            <div id="map2" class="map-responsive"></div>
+            <div id="legend"><h6>Legend</h6></div>
         
 
     </body>
@@ -130,7 +130,7 @@ var legend = document.getElementById("legend");
                     })  */
                     // GET request
                     var email = localStorage.getItem('user_email')
-                    url="http://localhost/WAD_II_Project_G9_T6/db/getTravelHistory.php"
+                    url="./db/getTravelHistory.php"
                     const data= {email: email}
                     axios.get(url,{
                 params: data
@@ -142,14 +142,14 @@ var legend = document.getElementById("legend");
                             const attraction=lat_lng_list[i];
 
                             var marker=new google.maps.Marker({
-                                position:{lat:parseFloat(attraction.latitude),lng:parseFloat(attraction.longitude)},
+                                position:{lat:parseFloat(attraction.longitude),lng:parseFloat(attraction.latitude)},
                                 map,
                                 icon:image,
                                 shape:shape,
                                 title:"visited attraction"
                             })
 
-                            var content='<div><h2>You visited this attraction on: '+attraction.time_visited+'</h2></div>'
+                            var content='<div><h3>You visited this attraction on : <br>'+attraction.time_visited+'</h3></div>'
                             infowindow=new google.maps.InfoWindow()
                             google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
                             return function() {

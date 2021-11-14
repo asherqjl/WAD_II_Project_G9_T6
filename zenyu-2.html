@@ -149,7 +149,7 @@ const app4 = Vue.createApp({
             })  */
             // GET request
             var email = localStorage.getItem('user_email')
-            url="http://localhost/WAD_II_Project_G9_T6/db/getRewardHistory.php"
+            url="./db/getRewardHistory.php"
             const data= {email: email}
 
             axios.get(url, {
