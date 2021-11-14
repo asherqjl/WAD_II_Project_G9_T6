@@ -88,6 +88,7 @@
 
                 }
             },
+            // On load, extract user's reward history from MySQL database starting with most recent
             mounted:function()  {
                     var email = localStorage.getItem('user_email')
                     url="./db/getRewardHistory.php"
@@ -107,6 +108,7 @@
                     }) 
                     
                 },
+                // Pagination for reward history list 
                 methods:{
                     prevPage(){
                         if (this.current_page > 1) {
@@ -130,7 +132,8 @@
                         // Validate page
                         if (page < 1) page = 1
                         if (page > this.numPages()) page = this.numPages()  
-
+                        
+                        
                         if(this.reward_history.length !==0){
 
                             listing_table.innerHTML = `<thead><tr>
@@ -151,6 +154,7 @@
                             listing_table.innerHTML+=`</tbody>`
                             page_span.innerHTML = page
                             
+                            
                             if (page == 1) {
                                 btn_prev.style.visibility = "hidden"
                             } else {
@@ -169,6 +173,8 @@
 
 
                     },
+
+                    // Helper function to computer total number of pages
                     numPages(){
                         return Math.ceil(this.reward_history.length / this.records_per_page )
                     }
