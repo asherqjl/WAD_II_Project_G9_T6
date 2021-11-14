@@ -269,10 +269,7 @@ window.onload = function() {
             // If there is still another data item to iterate through, keep running this code
             if(cursor) {
                 cursor.continue();
-            } else {
-                // if there are no more cursor items to iterate through, say so
-                console.log('Cursor is empty / Table is empty')
-            }
+            } 
         };
         //objectStore.clear();
 

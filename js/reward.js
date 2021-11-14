@@ -60,11 +60,6 @@ const reward = Vue.createApp({
     };
 }, 
   created(){
-    // var productDict ={};
-    // console.log(this.sorttype)
-    // this.AutoCloseTimer();
-
-
     var options = {
       method: 'GET',
       url: 'https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list',
@@ -94,30 +89,6 @@ const reward = Vue.createApp({
     
   },
   methods:{
-    AutoCloseTimer(){
-      let timerInterval
-      Swal.fire({
-        title: 'Auto close alert!',
-        html: 'I will close in <b></b> milliseconds.',
-        timer: 2000,
-        timerProgressBar: true,
-        didOpen: () => {
-          Swal.showLoading()
-          const b = Swal.getHtmlContainer().querySelector('b')
-          timerInterval = setInterval(() => {
-            b.textContent = Swal.getTimerLeft()
-          }, 100)
-        },
-        willClose: () => {
-          clearInterval(timerInterval)
-        }
-      }).then((result) => {
-        /* Read more about handling dismissals below */
-        if (result.dismiss === Swal.DismissReason.timer) {
-          console.log('I was closed by the timer')
-        }
-      })
-    },
     redeempoint(productprice){
       // split dollar sign and number e.g. $ 49.99
       var splitprice = productprice.split("$ ");
@@ -137,40 +108,22 @@ const reward = Vue.createApp({
       }else{
         points = 1500
       }
-      // console.log(points)
       return points
       
     },
     ProductDetails(productdata) {
-      console.log(productdata.results.length)
       for (i=0; i<productdata.results.length; i++){
         // put the data into a dictionary {{product: productname, category：category, img：image, price：price},}
-        // var productDetails=[]; 
         var productName = productdata.results[i].name;
         var productcategory = productdata.results[i].categoryName;
         var productimage = productdata.results[i].images[0].url;
         var productprice = productdata.results[i].price.formattedValue;
         var points = this.redeempoint(productprice);
 
-        // productDetails.push(category);
-        // productDetails.push(image);
-        // productDetails.push(price);
-      
-        // productDetails = {category:productcategory, image:productimage, price:productprice};
-
         if(!this.productDict[productimage]){
-          // this.productDict[productName] = productDetails;
           this.productDict.push({product:productName,category:productcategory, image:productimage, point:points, price:productprice}) ;
         }
-        // else{
-        //   productName += "_2";
-        //   // this.productDict[productName] = productDetails;
-        //   this.productDict.push({product:productName,category:productcategory, image:productimage, price:productprice});
-        // }
 
-        // console.log(productName)
-        // console.log(Object.keys(this.productDict).length);
-        // console.log(this.productDict[0])
       
         // retrive category data and put in a dictionary with total number of count {ladies:0, kids:0, men:0}
         if (!this.productCat[productcategory]){
@@ -179,19 +132,15 @@ const reward = Vue.createApp({
           this.productCat[productcategory] +=1;        
         }
       }
-      // console.log(Object.keys(this.productDict).length);
-      // console.log(this.productDict)
+
       
       return this.productDict;
     },
     filterbycategories(data){
-      console.log(data) 
       var filterdata = [];
       if(this.searchfield !=""){
         data=this.searchproduct()
       }
-      console.log(this.searchfield)
-      // console.log(t)
       
       if(this.filterpoint.length !=0 && this.filtertype.length !=0){
         var firstdata = [];
@@ -208,7 +157,6 @@ const reward = Vue.createApp({
           var maxNu = this.filterpoint[i].split("_")[1];
           
           for (var j=0; j<Object.keys(firstdata).length; j++){
-            //console.log(firstdata[j].point, maxNu)
             if (firstdata[j].point>=minNu && firstdata[j].point<=maxNu){
               filterdata.push(firstdata[j])
             }
@@ -245,18 +193,12 @@ const reward = Vue.createApp({
       if(filterdata.length==0){
         this.msg ="Sorry, no product found!"
       }
-      // console.log(filterdata);
       
       this.productfilter = filterdata;
       this.sortbytype();
       return this.productfilter;
-
-      // console.log(this.filtertype);
-      // return this.productDict;
     },
     sortbytype(){
-      // console.log(this.productfilter.length)
-      console.log(this.sorttype)
       if(this.sorttype=="Points"){
         if(this.iconButton =="<button class='btn btn-block' style='background-color: #FF9900'><i class='fas fa-sort-amount-down-alt' style='color:white' ></i></button>"){
           this.productfilter.sort( function ( a, b ) { return a.point - b.point; } )
@@ -280,8 +222,6 @@ const reward = Vue.createApp({
       }
     },
     changebutton(){
-      console.log("hi")
-      console.log(this.sorttype)
       if(this.sorttype=="Name"){
         this.iconButton = "<button class='btn btn-block' style='background-color: #FF9900'><i class='fas fa-sort-alpha-down' style='color:white'></i></button>"
       }else{
@@ -311,10 +251,9 @@ const reward = Vue.createApp({
       
     },
     confirmation(productpoint,productname,productimg,productcategory){
-      console.log(productimg);
       Swal.fire({
        
-        title: 'Are you sure?',
+        title: 'Are you sure want to redeem?',
         text: "You won't be able to revert this!",
         // icon: 'warning',
         imageUrl: productimg,
@@ -328,9 +267,7 @@ const reward = Vue.createApp({
         width: 'auto',
       }).then((result) => {
         if (result.isConfirmed) {
-          // this.addReward(productname,productimg,productpoint);
           if(this.userpoints>=productpoint){
-            // alert("YAYAYYAYA")
             this.userpoints -= productpoint;
             this.addReward(productname,productimg,productpoint);
             localStorage.setItem("user_points",this.userpoints);
@@ -355,12 +292,10 @@ const reward = Vue.createApp({
     addReward(item_name, img_url, points_used,){
       
       var email = localStorage.getItem('user_email')
-      console.log(email)
       const url = './db/addRewardHistory.php'
       const data = { email: email, item_name: item_name,
                       img_url: img_url, points_used: points_used
                       }
-      console.log(data)
           axios.get(url, {
                   params: data
           })
@@ -377,4 +312,22 @@ const reward = Vue.createApp({
 })
 const rw = reward.mount('#reward');
 
+mybutton = document.getElementById("TopBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
 

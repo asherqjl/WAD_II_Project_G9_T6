@@ -41,6 +41,7 @@
         </div>
       </header>
     <div id='reward'>
+        <button onclick="topFunction()" id="TopBtn" title="Go to top"><i class="fas fa-angle-double-up"></i></button>
         <div class="intro ">
             <div class="introcontent ">
                 <p class="subheader" style="padding-top:40px;">Welcome to our Rewards Program!</p>
@@ -94,7 +95,6 @@
     
         <div class="p-3 main" >
             
-            <!-- <hr class="my-4"> -->
             <p style="  font-weight: bold;font-size: 36px; padding-top:40px;padding-left:40px;padding-right:40px;text-align: center;">Check out these deals, brought to you by our Rewards</p>
             <p class="introdesc" style="text-align:center; padding-bottom:40px">Stay tuned to more exciting deals</p>
     
@@ -105,8 +105,7 @@
                 
                             <h5 class="font-weight-bold" style="font-size:24px; color:#103E92; font-weight:bold">Categories</h5>
                             <div class="py-3 form-check list-inline list-group btn-group" role="group" data-toggle="buttons" >
-                            
-                                    <label class="btn btn-light"  v-for="(value,key) in productCat" ><input type="checkbox" :id="key" :value="key" v-model="filtertype" @change="filterbycategories(productDict)">{{key}}<span class="badge badge-primary badge-pill">{{value}}</span></label>
+                                    <label class="btn btn-light  d-flex justify-content-between mb-1 "  v-for="(value,key) in productCat" ><input type="checkbox" :id="key" :value="key" v-model="filtertype" @change="filterbycategories(productDict)">{{key}}<span class="badge badge-primary badge-pill">{{value}}</span></label>
     
                             </div>
                             <div class="py-3">
@@ -123,16 +122,16 @@
                                 <div class = "row">  
                                     <div class = "col">
                                         <div class="row g-3 mt-2 justify-content-center">
-                                            <div class="col-12"> 
-                                                <div class="mx-auto" style="width: 70%;">
+                                            <div class="col-12" > 
+                                                <div class="mx-auto" style="width: 100%;">
                                                     <div class="input-group mb-3 my-3" >
-                                                        <input type="text" class="form-control me-3" placeholder="Search by Product Name" v-model="searchfield" @change="filterbycategories(productDict)" @keyup.enter ="searchproduct()"> 
+                                                        <input type="text" class="form-control" placeholder="Search: Product Name" v-model="searchfield" @change="filterbycategories(productDict)" @keyup.enter ="searchproduct()" > 
                                                         
                                                         <button class="btn btn-block" style="background-color: #FF9900"><i class="fas fa-search" style="color:white" @click="searchproduct()"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <div class="col-md-2"> <button class="btn btn-secondary btn-block"><i class="fas fa-search" @click="searchproduct()"></i></button> </div> -->
+                               
                                         </div>                        
                                         <br>
                                         <div class="row" :value="displayproduct" v-show="displayproduct.length!=0">
@@ -153,13 +152,11 @@
                                             </div>
                                             <div class ="mb-3" :value="sorttype" @click="sortbytype()" >&nbsp;&nbsp;&nbsp;
                                                 <span  v-html="iconButton"  @click="clickIcon()" ></span>
-                                                <!-- <span  v-if="sorttype==='Points'" v-html="iconButton1" @click="clickIcon()" ></span> -->
-                                                <!-- <span v-else v-html="iconButton2" :value="sorttype" @click="clickIcon()" ></span> -->
+                  
                                                 
                                             </div>
                                             <div class="text-muted m-2 ml-auto mr-lg-3 ms-auto" id="res">Showing {{productfilter.length}} results</div>
-                                            <!-- <div class ="mb-3">&nbsp;&nbsp;&nbsp;<button class="btn btn-secondary btn-block"><i class="fas fa-sort-amount-down-alt"></i></button>&nbsp;&nbsp;&nbsp;<button class="btn btn-secondary btn-block"><i class="fas fa-sort-amount-up"></i></button>
-                                            </div> -->
+
                                             
                                             
                                         </div>
@@ -184,110 +181,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <div class="col-sm-12 col-md-6 col-lg-3">
-                                                <div class="card mb-5">
-                                                    <img src="../project/item2.jfif" class="card-img-top mt-4 img-fluid" alt="item2">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title text-dark">Travel Bag</h5>
-                                                        <p class="card-text text-dark">300 Points</p>
-                                                        <div class = "text-center">
-                                                            <button type="button" class="btn btn-outline-primary">Redeem</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-6 col-lg-3">
-                                                <div class="card mb-5 ">
-                                                    <img src="../project/item3.jfif" class="card-img-top mt-4 img-fluid" alt="item3">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title text-dark">Luggage</h5>
-                                                        <p class="card-text text-dark">500 Points</p>
-                                                        <div class = "text-center">
-                                                            <button type="button" class="btn btn-outline-primary">Redeem</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-6 col-lg-3">
-                                                <div class="card mb-5">
-                                                    <img src="../project/item4.jfif" class="card-img-top mt-4 img-fluid" alt="item4">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title text-dark">Sun-Screen</h5>
-                                                        <p class="card-text text-dark">100 Points</p>
-                                                        <div class = "text-center">
-                                                            <button type="button" class="btn btn-outline-primary">Redeem</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div> -->
                                         </div>
-                                        <!-- <span id="dots"></span> -->
-                                        <!-- 2nd row-->
-                                        <!-- <span id = "more"> -->
-                                            <!-- <div class="row">
-                                                <div class=" col-sm-12 col-md-6 col-lg-3">
-                                                    <div class="card mb-5">
-                                                        <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item4">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title text-dark">Sun-Screen</h5>
-                                                            <p class="card-text text-dark">100 Points</p>
-                                                            <p class="card-text text-dark">Lorem ipsum dolor sit amet
-                                                                consectetur adipisicing elit. </p>
-                                                            <div class = "text-center">
-                                                                <button type="button" class="btn btn-outline-primary">Redeem</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-md-6 col-lg-3">
-                                                    <div class="card mb-5">
-                                                        <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item6">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title text-dark">Universal Adapter</h5>
-                                                            <p class="card-text text-dark">300 Points</p>
-                                                            <p class="card-text text-dark">Lorem ipsum dolor sit amet
-                                                                consectetur adipisicing elit. </p>
-                                                            <div class = "text-center">
-                                                                <button type="button" class="btn btn-outline-primary">Redeem</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-md-6 col-lg-3">
-                                                    <div class="card mb-5 ">
-                                                        <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item5">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title text-dark">Bag</h5>
-                                                            <p class="card-text text-dark">100 Points</p>
-                                                            <p class="card-text text-dark">Lorem ipsum dolor sit amet
-                                                                consectetur adipisicing elit. </p>
-                                                            <div class = "text-center">
-                                                                <button type="button" class="btn btn-outline-primary">Redeem</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-md-6 col-lg-3">
-                                                    <div class="card mb-5 ">
-                                                        <img src="../project/item1.jfif" class="card-img-top mt-4 img-fluid" alt="item6">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title text-dark">Universal Adapter</h5>
-                                                            <p class="card-text text-dark">300 Points</p>
-                                                            <p class="card-text text-dark">Lorem ipsum dolor sit amet
-                                                                consectetur adipisicing elit. </p>
-                                                            <div class = "text-center">
-                                                                <button type="button" class="btn btn-outline-primary">Redeem</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div> -->
-                                        <!-- </span> -->
-                    
-                                        <!-- <div class = "text-center">
-                                            <button onclick = "myFunction()" type="button" id="myBtn" class="btn btn-light btn-outline-secondary">Show More</button>
-                                        </div> -->
-                                    
+                                    </div>
                                 </div>
                             </div>
     
@@ -295,8 +190,12 @@
                 </div>
             </div>
             
-            </div>
+            
         </div>
+    </div>
+    <div class="footer">
+        <p class="small text-muted">Made with ❤️ by IS216 Team 6 <br>
+        © SmilingAcrossLocal Copyrights. All rights reserved.</p>
     </div>
     <script src="js/navbar.js"></script>
     <script type="text/javascript" src="js/sessions.js"></script>
