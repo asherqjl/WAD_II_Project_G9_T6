@@ -1,11 +1,13 @@
 .carousel-inner img {
-    width: 100%;
-    height: 100% ;
+    width: 100vw;
+    height: 100vh ;
     opacity: 80%;
     filter: brightness(50%)
   }
 
-
+.carusel-caption{
+  bottom:6.25em !important;
+}
 .carousel-inner h6{
 color:  white;
 font-family: monospace ;
