@@ -21,28 +21,28 @@
         <div id="navdiv">
             <include-navbar></include-navbar>
         </div>
-        >
         
-        <div id="app3">
-            <div class="searchbar">
-                <div class="row g-2 my-2">
-                    <div class="col-md-12 col-sm-12">
-                        
-        
-                   
-               
+        <div class="main">
+            <div id="app3">
+                <div class="searchbar">
+                    <div class="row g-2 my-2">
+                        <div class="col-md-12 col-sm-12">
+                            
+            
+                    
+                
 
-            <!-- <div class="d-flex justify-content-center "> -->
-                <!-- <table class="table bg-white w-75"> -->
-                    <!-- <tr v-for="travel in travel_history"> -->
-                        <!-- <td><h2>{{travel.location_name}}</h2><br/>{{travel.category}}</td> -->
-                        <!-- <td>{{travel.time_visited}}</td> -->
-                    <!-- </tr> -->
-                <!-- </table> -->
-            <!-- </div> -->
-        
-        <div id="map2" class="map-responsive"></div>
-        <div id="legend"><h6>Legend</h6></div>
+                <!-- <div class="d-flex justify-content-center "> -->
+                    <!-- <table class="table bg-white w-75"> -->
+                        <!-- <tr v-for="travel in travel_history"> -->
+                            <!-- <td><h2>{{travel.location_name}}</h2><br/>{{travel.category}}</td> -->
+                            <!-- <td>{{travel.time_visited}}</td> -->
+                        <!-- </tr> -->
+                    <!-- </table> -->
+                <!-- </div> -->
+            
+            <div id="map2" class="map-responsive"></div>
+            <div id="legend"><h6>Legend</h6></div>
         
 
     </body>
@@ -130,7 +130,7 @@ var legend = document.getElementById("legend");
                     })  */
                     // GET request
                     var email = localStorage.getItem('user_email')
-                    url="http://localhost/WAD_II_Project_G9_T6/db/getTravelHistory.php"
+                    url="./db/getTravelHistory.php"
                     const data= {email: email}
                     axios.get(url,{
                 params: data
