@@ -1,0 +1,10 @@
+GUIDE ON HOW TO SET UP DATABASE FOR SMILEACROSSLOCALSG
+
+1) Enter phpMyAdmin 
+2) Import SQL database under directory './db/CreateSQL/create.sql'
+
+
+
+*For Admin Account:
+1) On sign up page, sign up with email "sunjun@admin.com"
+
