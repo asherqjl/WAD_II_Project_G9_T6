@@ -61,34 +61,26 @@
             setMarkers(map);
             const icons = {
     
-    VistedAttraction: {
-      name: "Visited Attraction",
-      icon: "https://img.icons8.com/external-wanicon-lineal-color-wanicon/64/000000/external-check-user-interface-wanicon-lineal-color-wanicon.png",
-    }
-  };
+        VistedAttraction: {
+        name: "Visited Attraction",
+        icon: "https://img.icons8.com/external-wanicon-lineal-color-wanicon/64/000000/external-check-user-interface-wanicon-lineal-color-wanicon.png",
+        }
+    };
 
 var legend = document.getElementById("legend");
 
-   for (var key in icons) {
-      const type = icons[key];
-      const name = type.name;
-      const icon = type.icon;
-      const div = document.createElement("div");
+    for (var key in icons) {
+        const type = icons[key];
+        const name = type.name;
+        const icon = type.icon;
+        const div = document.createElement("div");
 
     div.innerHTML = '<img src="' + icon + '" width=23" height="23"> ' + name;
     legend.appendChild(div);
-  }
+    }
 
-  map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById('legend')); 
-            
-  
-        
-            
-
-
-
-
-            }
+    map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById('legend')); 
+}
         
             function setMarkers(map)  {
                 const image = {
