@@ -6,5 +6,7 @@ GUIDE ON HOW TO SET UP DATABASE FOR SMILEACROSSLOCALSG
 
 
 *For Admin Account:
-1) On sign up page, sign up with email "sunjun@admin.com"
+1) On login page, login with email: "sunjun@admin.com" password: 654321
+
+
 
