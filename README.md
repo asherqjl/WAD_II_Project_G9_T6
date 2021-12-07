@@ -6,7 +6,7 @@ SmilingAcrossLocal incentivizes travelling around Singapore with interactive fea
 2) Google map displaying attractions’ location on google map, adding up points if user actually arrive at attraction
 3) User can use points to redeem rewards
 
-Online deployment:https://smilingacrosslocal.000webhostapp.com/ 
+Online deployment : https://smilingacrosslocal.000webhostapp.com/ 
 # Prerequisite 
 Guide on how to set up database for SMILEACROSSLOCALSG to use interactive features 
 1) Enter phpMyAdmin 
