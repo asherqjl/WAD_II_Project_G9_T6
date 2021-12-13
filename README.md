@@ -4,7 +4,7 @@ SmilingAcrossLocal incentivizes travelling around Singapore with interactive fea
 
 1) Allows user to search attraction by keyword, categorize by type and nearby MRT station
 2) Google map displaying attractions’ location on google map, adding up points if logged-in user physically arrive at attraction
-3) User can use points to redeem rewards
+3) User can use accumulated points to redeem rewards
 4) User can view Travel history, Reward redemption history
 
 Online deployment : https://smilingacrosslocal.000webhostapp.com/ 
