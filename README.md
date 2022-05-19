@@ -7,8 +7,9 @@ SmilingAcrossLocal incentivizes travelling around Singapore with interactive fea
 3) User can use accumulated points to redeem rewards
 4) User can view Travel history, Reward redemption history
 
-Demo: https://www.youtube.com/watch?v=NyvhSkMnM1w
-Online deployment : https://smilingacrosslocal.000webhostapp.com/ 
+Demo) https://www.youtube.com/watch?v=NyvhSkMnM1w
+
+Online deployment) https://smilingacrosslocal.000webhostapp.com/ 
 
 # Prerequisite
 Guide on how to set up database for SMILEACROSSLOCALSG to use interactive features 
